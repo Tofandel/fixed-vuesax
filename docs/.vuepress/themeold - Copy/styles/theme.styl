@@ -4,8 +4,6 @@
 @require './custom-blocks'
 @require './arrow'
 
-// new theme vuesax
-
 @font-face {
   font-family: "OpenSans";
   src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
@@ -120,9 +118,6 @@ b
 .demo
   margin-top 10px
 
-
-// new theme vuesax
-
 html, body
   padding 0
   margin 0
@@ -133,10 +128,11 @@ body
   -moz-osx-font-smoothing grayscale
   font-size 16px
   color $textColor
+  overflow-x hidden
 
 .page
   padding-left $sidebarWidth
-
+  // padding-bottom 100px;
 .navbar
   position fixed
   z-index 20
@@ -144,10 +140,8 @@ body
   left 0
   right 0
   height $navbarHeight
-  background-color #fff
   box-sizing border-box
-
-  // vuesax
+  // padding
   transition all .3s ease
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.0);
 
@@ -171,11 +165,9 @@ body
   left 0
   bottom 0
   box-sizing border-box
-  overflow-y auto
-
-  //vuesax
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.040)
   // border-right 1px solid $borderColor
+  overflow-y auto
 
 .content:not(.custom)
   max-width $contentWidth
@@ -226,6 +218,7 @@ strong
   font-weight 600
 
 h1, h2, h3, h4, h5, h6
+
   font-weight 600
   line-height 1.25
   .content:not(.custom) > &
@@ -254,8 +247,8 @@ h3
 a.header-anchor
   font-size 0.85em
   float left
-  margin-left -0.87em
-  padding-right 0.23em
+  margin-left -0.5em
+  padding-right 0.1em
   margin-top 0.125em
   opacity 0
   &:hover

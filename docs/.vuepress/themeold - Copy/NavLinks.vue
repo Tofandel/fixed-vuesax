@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-links" v-if="userLinks.length || repoLink">
+  <nav class="nav-links" v-if="userLinks.length || githubLink">
     <!-- user links -->
     <div
       class="nav-item"
@@ -8,22 +8,29 @@
       <DropdownLink v-if="item.type === 'links'" :item="item"/>
       <NavLink v-else :item="item"/>
     </div>
-    <!-- repo link -->
-    <a v-if="repoLink"
-      :href="repoLink"
-      class="repo-link flaticon-github"
+    <!-- github link -->
+    <!-- <a v-if="githubLink"
+      :href="githubLink"
+      class="github-link"
       target="_blank"
       rel="noopener noreferrer">
-      <!-- {{ repoLabel }} -->
-      <!-- <OutboundLink/> -->
-    </a>
+      GitHub
+      <OutboundLink/>
+    </a> -->
+    <div v-if="$vueThemes.linksHome&&$page.frontmatter.home?$vueThemes.linksHome.includes(link):true" v-for="link in Object.keys($vueThemes.links)" class="nav-item iconx">
+      <a
+      target="_blank"
+      :class="[returnLink(link)]"
+      :href="$vueThemes.links[link]">
+      </a>
+    </div>
   </nav>
 </template>
 
 <script>
 import OutboundLink from './OutboundLink.vue'
 import DropdownLink from './DropdownLink.vue'
-import { resolveNavLinkItem } from './util'
+import { isActive, resolveNavLinkItem } from './util'
 import NavLink from './NavLink.vue'
 
 export default {
@@ -34,7 +41,7 @@ export default {
     },
     nav () {
       const { locales } = this.$site
-      if (locales && Object.keys(locales).length > 1) {
+      if (locales) {
         let currentLink = this.$page.path
         const routes = this.$router.options.routes
         const themeLocales = this.$site.themeConfig.locales || {}
@@ -69,31 +76,20 @@ export default {
         })
       }))
     },
-    repoLink () {
+    githubLink () {
       const { repo } = this.$site.themeConfig
       if (repo) {
         return /^https?:/.test(repo)
           ? repo
           : `https://github.com/${repo}`
       }
-    },
-    repoLabel () {
-      if (!this.repoLink) return
-      if (this.$site.themeConfig.repoLabel) {
-        return this.$site.themeConfig.repoLabel
-      }
-
-      const repoHost = this.repoLink.match(/^https?:\/\/[^/]+/)[0]
-      const platforms = ['GitHub', 'GitLab', 'Bitbucket']
-      for (let i = 0; i < platforms.length; i++) {
-        const platform = platforms[i]
-        if (new RegExp(platform, 'i').test(repoHost)) {
-          return platform
-        }
-      }
-
-      return 'Source'
-    },
+    }
+  },
+  methods: {
+    isActive,
+    returnLink(link){
+      return `flaticon-${link}`
+    }
   }
 }
 </script>

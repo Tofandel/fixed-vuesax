@@ -3,19 +3,22 @@
     <SidebarButton @toggle-sidebar="$emit('toggle-sidebar')"/>
     <router-link :to="$localePath" class="home-link">
       <div class="con-logo">
-        <img class="logo"
-        v-if="$site.themeConfig.logo"
-        :src="$withBase($site.themeConfig.logo)">
+
+        <div :class="{'visible':scroll}" class="con-logo-normal">
+          <img  class="logo"
+          v-if="$site.themeConfig.logo"
+          :src="$withBase($site.themeConfig.logo)">
+
+        </div>
       </div>
       <span class="site-name"
-        v-if="$siteTitle"
+        v-if="$title&&!$site.themeConfig.logo"
         :class="{ 'can-hide': $site.themeConfig.logo }">
-        <!-- {{ $siteTitle }} -->
+        {{ $title }}
       </span>
     </router-link>
     <div class="links">
-      <AlgoliaSearchBox v-if="isAlgoliaSearch" :options="algolia"/>
-      <SearchBox v-else-if="$site.themeConfig.search !== false"/>
+      <SearchBox v-if="$site.themeConfig.search !== false"/>
       <NavLinks class="can-hide"/>
     </div>
   </header>
@@ -23,24 +26,21 @@
 
 <script>
 import SidebarButton from './SidebarButton.vue'
-import AlgoliaSearchBox from '@AlgoliaSearchBox'
 import SearchBox from './SearchBox.vue'
 import NavLinks from './NavLinks.vue'
 
 export default {
-  components: { SidebarButton, NavLinks, SearchBox, AlgoliaSearchBox },
+  components: { SidebarButton, NavLinks, SearchBox },
   data(){
     return {
+      scroll:false,
       shadow:false,
     }
   },
-  computed: {
-    algolia () {
-      return this.$themeLocaleConfig.algolia || this.$site.themeConfig.algolia || {}
+  computed:{
+    data () {
+      return this.$page.frontmatter
     },
-    isAlgoliaSearch () {
-      return this.algolia && this.algolia.apiKey && this.algolia.indexName
-    }
   },
   mounted(){
 
@@ -52,16 +52,16 @@ export default {
       }
     })
   },
+
 }
 </script>
 
 <style lang="stylus">
 @import './styles/config.styl'
-//vuesax
 .shadow {
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.050) !important
 }
-.logo {
+.con-logo-normal {
   transition: all .3s ease
   // opacity: 0;
   // transform: translate(0,-100%);
@@ -70,7 +70,6 @@ export default {
 .visible
   opacity: 1;
   transform: translate(0);
-//vuesax
 
 .navbar
   height: 3rem !important;
@@ -84,7 +83,7 @@ export default {
   a, span, img
     display inline-block
   .logo
-    height $navbarHeight - 0.7rem
+    height $navbarHeight - 0.6rem
     min-width $navbarHeight - 1.4rem
     margin-right 0.8rem
     vertical-align top
@@ -93,12 +92,12 @@ export default {
     font-weight 600
     color $textColor
     position relative
+    line-height: 2.3rem
   .links
     font-size 0.9rem
     position absolute
     right 1.5rem
-    top 0rem
-
+    top 0px
 @media (max-width: $MQMobile)
   .navbar
     padding-left 4rem

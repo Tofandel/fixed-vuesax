@@ -1,9 +1,9 @@
 <template>
-  <div class="">
-    <div class="logo-g">
-      <img  v-if="data.heroImage" :src="$withBase(data.heroImage)" alt="hero">
-    </div>
-
+  <transition name="fade">
+    <div class="">
+      <div class="logo-g">
+        <img  v-if="data.heroImage" :src="$withBase(data.heroImage)" alt="hero">
+      </div>
   <div class="home">
     <div v-if="data.heroImage" :class="{'doc-activo':doc}" class="doc-img">
       <img :src="$withBase(data.heroImage)" alt="">
@@ -24,9 +24,9 @@
         <NavLink class="action-button" :item="actionLink"/>
       </p>
       <p class="actions">
-        <!-- {{data.vueThemes.actionsLinks}} -->
+        <!-- {{vT.actionsLinks}} -->
         <ul>
-          <li @mouseenter="doc=true" @mouseleave="doc=false" v-for="action in data.vueThemes.actionsLinks">
+          <li @mouseenter="doc=true" @mouseleave="doc=false" v-for="action in vT.actionsLinks">
             <router-link
               class="nav-link"
               :to="action.link"
@@ -34,20 +34,15 @@
             >{{action.text}}</router-link>
           </li>
           <li>
-            <a @mouseenter="git=true" @mouseleave="git=false" class="flaticon-github fgithub" :href="data.vueThemes.github">
+            <a @mouseenter="git=true" @mouseleave="git=false" class="flaticon-github fgithub" :href="vT.github">
               <span class="stargazers_count">{{star}}</span>
             </a>
           </li>
         </ul>
       </p>
     </div>
+
     </div>
-    <!-- <div class="features" v-if="data.features && data.features.length">
-      <div class="feature" v-for="feature in data.features">
-        <h2>{{ feature.title }}</h2>
-        <p>{{ feature.details }}</p>
-      </div>
-    </div> -->
     <div class="contenedor">
 
 
@@ -81,14 +76,13 @@
       {{ data.footer }}
     </div> -->
     <div class="con-contribuitors">
-      <!-- <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/> -->
+      <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/>
     </div>
   </div>
 
-
       <Footer/>
   </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -105,6 +99,15 @@ export default {
     }
   },
   computed: {
+      contributors() {
+        return this.$page.frontmatter.contributors
+      },
+      title() {
+        return this.$page.frontmatter.titleContributors
+      },
+    vT(){
+      return this.$page.frontmatter.vueThemes
+    },
     data () {
       return this.$page.frontmatter
     },
@@ -121,7 +124,10 @@ export default {
   .then(response => response.json())
   .then(json => {
     this.star = json.stargazers_count
+
   })
+
+
   }
 }
 </script>

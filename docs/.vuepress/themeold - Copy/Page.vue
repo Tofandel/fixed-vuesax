@@ -1,50 +1,59 @@
 <template>
-  <div class="page">
+  <transition name="fade">
+  <div v-if="this.$page.frontmatter.home" class="page">
     <div class="color">
       <div class="colorMover">
 
       </div>
     </div>
+    <transition name="fade">
     <Content :custom="false"/>
+    </transition>
     <div class="content edit-link" v-if="editLink">
       <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
       <OutboundLink/>
     </div>
     <div class="content">
       <api />
-      <!-- <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/> -->
+      <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/>
     </div>
     <div class="content page-nav" v-if="prev || next">
       <p class="inner">
         <span v-if="prev" class="prev">
-          ← <router-link v-if="prev" class="prev" :to="prev.path">
+           <i class="material-icons">keyboard_arrow_left</i><router-link v-if="prev" class="prev" :to="prev.path">
             {{ prev.title || prev.path }}
           </router-link>
         </span>
         <span v-if="next" class="next">
           <router-link v-if="next" :to="next.path">
             {{ next.title || next.path }}
-          </router-link> →
+          </router-link> <i class="material-icons">keyboard_arrow_right</i>
         </span>
       </p>
     </div>
-    <slot name="bottom"/>
+
     <Footer/>
   </div>
+  </transition>
 </template>
 
 <script>
 import api from './api.vue'
 import contributors from './contributors.vue'
-import easing from './easing.js'
-import Footer from './Footer.vue'
 import OutboundLink from './OutboundLink.vue'
 import { resolvePage, normalize, outboundRE, endingSlashRE } from './util'
-
+import easing from './easing.js'
+import Footer from './Footer.vue'
 export default {
   components: { OutboundLink, api, Footer, contributors },
   props: ['sidebarItems'],
   computed: {
+    contributors() {
+      return this.$page.frontmatter.contributors
+    },
+    title() {
+      return this.$page.frontmatter.titleContributors
+    },
     prev () {
       const prev = this.$page.frontmatter.prev
       if (prev === false) {
@@ -70,8 +79,7 @@ export default {
         repo,
         editLinks,
         docsDir = '',
-        docsBranch = 'master',
-        docsRepo = repo
+        docsBranch = 'master'
       } = this.$site.themeConfig
 
       let path = normalize(this.$page.path)
@@ -81,10 +89,10 @@ export default {
         path += '.md'
       }
 
-      if (docsRepo && editLinks) {
-        const base = outboundRE.test(docsRepo)
-          ? docsRepo
-          : `https://github.com/${docsRepo}`
+      if (repo && editLinks) {
+        const base = outboundRE.test(repo)
+          ? repo
+          : `https://github.com/${repo}`
         return (
           base.replace(endingSlashRE, '') +
           `/edit/${docsBranch}/` +
@@ -99,6 +107,59 @@ export default {
         this.$site.themeConfig.editLinkText ||
         `Edit this page`
       )
+    }
+  },
+  mounted(){
+    this.linksx()
+  },
+  updated(){
+
+    this.linksx()
+  },
+  methods:{
+    linksx(){
+      let _this = this
+      let ax = document.querySelectorAll('.header-anchor')
+      ax.forEach((item)=>{
+        item.addEventListener('click',function(event){
+          event.preventDefault()
+          _this.irSection(event.target.hash)
+        })
+      })
+      let am = document.querySelectorAll('.sidebar-link')
+      am.forEach((item)=>{
+        item.__vue__.$listener = []
+        // getEventListeners().click.forEach((e)=>{e.remove()})
+        item.addEventListener('click',function(event){
+          event.preventDefault()
+          // _this.irSection(event.target.hash)
+        })
+      })
+    },
+    irSection(idx){
+      let conx = document.getElementById(idx.replace('#',''));
+      scrollTo(document.documentElement, conx.offsetTop, 500);
+
+
+      function scrollTo(element, to, duration) {
+        var start = element.scrollTop,
+        change = to - start,
+        currentTime = 0,
+        increment = 20;
+
+        var animateScroll = function(){
+          currentTime += increment;
+          var val = easing.easeInOutCirc(currentTime, start, change, duration);
+          element.scrollTop = val;
+          if(currentTime < duration) {
+            setTimeout(animateScroll, increment);
+          }
+        };
+        animateScroll();
+
+
+      }
+
     }
   }
 }
@@ -259,4 +320,5 @@ function find (page, items, offset) {
         margin-left: 10px
 .header-anchor
   transition: all .3s ease !important;
+
 </style>
