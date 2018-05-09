@@ -1,21 +1,48 @@
 <template>
+  <transition name="fade">
+    <div class="">
+      <div class="logo-g">
+        <img  v-if="data.heroImage" :src="$withBase(data.heroImage)" alt="hero">
+      </div>
   <div class="home">
+    <div v-if="data.heroImage" :class="{'doc-activo':doc}" class="doc-img">
+      <img :src="$withBase(data.heroImage)" alt="">
+    </div>
+    <div :class="{'git-activo':git}" class="flaticon-github git-img">
+
+    </div>
+    <div :class="{'homeBackgroundComponent':data.heroBackgroundComponent}" class="home-init">
+      <div class="heroBackgroundComponent" :is="data.heroBackgroundComponent">
+
+      </div>
     <div class="hero">
-      <img v-if="data.heroImage" :src="$withBase(data.heroImage)" alt="hero">
-      <h1>{{ data.heroText || $title || 'Hello' }}</h1>
-      <p class="description">
-        {{ data.tagline || $description || 'Welcome to your VuePress site' }}
-      </p>
+
+      <h1 v-if="data.heroText" v-html="data.heroText"></h1>
+      <h1 v-else>{{$title || 'hello'}}</h1>
+      <p v-html="data.tagline || $description || 'Welcome to your VuePress site'" class="description"></p>
       <p class="action" v-if="data.actionText && data.actionLink">
         <NavLink class="action-button" :item="actionLink"/>
       </p>
+      <p class="actions">
+        <!-- {{vT.actionsLinks}} -->
+        <ul>
+          <li @mouseenter="doc=true" @mouseleave="doc=false" v-for="action in vT.actionsLinks">
+            <router-link
+              class="nav-link"
+              :to="action.link"
+              :exact="action.link === '/'"
+            >{{action.text}}</router-link>
+          </li>
+          <li>
+            <a @mouseenter="git=true" @mouseleave="git=false" class="flaticon-github fgithub" :href="vT.github">
+              <span class="stargazers_count">{{star}}</span>
+            </a>
+          </li>
+        </ul>
+      </p>
     </div>
-    <!-- <div class="features" v-if="data.features && data.features.length">
-      <div class="feature" v-for="feature in data.features">
-        <h2>{{ feature.title }}</h2>
-        <p>{{ feature.details }}</p>
-      </div>
-    </div> -->
+
+    </div>
     <div class="contenedor">
 
 
@@ -49,13 +76,13 @@
       {{ data.footer }}
     </div> -->
     <div class="con-contribuitors">
-      <!-- <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/> -->
+      <contributors :title="title" :repo="this.$site.themeConfig.repo" :contributors="contributors"/>
     </div>
-
+  </div>
 
       <Footer/>
   </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -64,7 +91,23 @@ import Footer from './Footer.vue'
 import contributors from './contributors.vue'
 export default {
   components: { NavLink, Footer, contributors },
+  data(){
+    return {
+      star:0,
+      git:false,
+      doc:false,
+    }
+  },
   computed: {
+      contributors() {
+        return this.$page.frontmatter.contributors
+      },
+      title() {
+        return this.$page.frontmatter.titleContributors
+      },
+    vT(){
+      return this.$page.frontmatter.vueThemes
+    },
     data () {
       return this.$page.frontmatter
     },
@@ -74,6 +117,17 @@ export default {
         text: this.data.actionText
       }
     }
+  },
+  mounted(){
+    console.log("entro");
+     fetch('https://api.github.com/repos/lusaxweb/vuesax')
+  .then(response => response.json())
+  .then(json => {
+    this.star = json.stargazers_count
+
+  })
+
+
   }
 }
 </script>

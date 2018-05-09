@@ -46,7 +46,11 @@ export function isActive (route, path) {
   }
   const routePath = normalize(route.path)
   const pagePath = normalize(path)
-  return routePath === pagePath
+  if (endingSlashRE.test(routePath) || endingSlashRE.test(pagePath)) {
+    return routePath === pagePath
+  } else {
+    return routePath.indexOf(pagePath) === 0
+  }
 }
 
 export function resolvePage (pages, rawPath, base) {

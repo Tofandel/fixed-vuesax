@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar">
     <NavLinks/>
-    <slot name="top"/>
     <ul class="sidebar-links" v-if="items.length">
       <li v-for="(item, i) in items">
         <SidebarGroup v-if="item.type === 'group'"
@@ -13,7 +12,6 @@
         <SidebarLink v-else :item="item"/>
       </li>
     </ul>
-    <slot name="bottom"/>
   </div>
 </template>
 
@@ -85,14 +83,18 @@ function resolveOpenGroupIndex (route, items) {
     padding 0.5rem 0 0.75rem 0
     a
       font-weight 600
-    .nav-item, .repo-link
+    .nav-item, .github-link
       display block
       line-height 1.25rem
       font-size 1.1em
       padding 0.5rem 0 0.5rem 1.5rem
   .sidebar-links
-    padding 1.5rem 0
-
+    padding 1rem 0
+    >li:first-child
+      // background: rgb(240, 182, 168)
+      .sidebar-heading
+        border-top: 0px !important
+        cursor: default;
 @media (max-width: $MQMobile)
   .sidebar
     .nav-links

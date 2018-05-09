@@ -11,7 +11,7 @@
 
 .content
   pre, pre[class*="language-"]
-    background-color $codeBgColor
+    background-color $codeBgColor !important
     line-height 1.4
     border-radius 6px
     padding 1.25rem 1.5rem
@@ -23,7 +23,7 @@
     code
       color #fff
       padding 0
-      background-color transparent
+      background-color none
       border-radius 0
     &:before
       position absolute
@@ -34,8 +34,8 @@
   .highlighted-line
     background-color rgba(0, 0, 0, 66%)
     display block
-    margin 0 -1.5rem
-    padding 0 1.5rem
+    margin 0.1rem -1.5rem 0
+    padding 0.1rem 1.8rem
 
 pre[class="language-js"], pre[class="language-javascript"]
   &:before
