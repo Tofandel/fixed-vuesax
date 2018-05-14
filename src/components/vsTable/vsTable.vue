@@ -68,6 +68,7 @@
 
 import vsTableColum from './vsTableColum.vue'
 export default {
+  name:'vs-table',
   components:{
     vsTableColum
   },

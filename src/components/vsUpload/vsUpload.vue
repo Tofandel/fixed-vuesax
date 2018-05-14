@@ -11,8 +11,8 @@
     <div class="">
 
     </div>
-    <div :style="{'background':colorx}" ref="conimg" :class="{'oculto':url==''}" class="con-img">
-      <div class="header">
+    <div :style="{'background':colorx}" ref="conimg" :class="{'oculto':url==''}" class="con-img-upload">
+      <div class="header-upload">
         <div @click="xUrl(),colorx='rgb(255, 255, 255)'" class="x-img">
           <i class="material-icons">close</i>
         </div>
@@ -49,7 +49,7 @@
   </div>
 
 
-  <transition name="fade">
+  <transition name="fade-upload">
   <div @click="quitarView($event)" v-show="view" ref="viewx" class="view-upload">
     <div @click="view=false" class="x-view">
       <i class="material-icons">close</i>
@@ -348,16 +348,16 @@ export default {
   align-items: center;
   justify-content: flex-start;
 }
-.fade-enter-active img, .fade-leave-active img {
+.fade-upload-enter-active img, .fade-upload-leave-active img {
   transition: all .3s;
 }
-.fade-enter img, .fade-leave-to img /* .fade-leave-active below version 2.1.8 */ {
+.fade-upload-enter img, .fade-upload-leave-to img /* .fade-upload-leave-active below version 2.1.8 */ {
   transform: scale(.6);
 }
-.fade-enter-active, .fade-leave-active {
+.fade-upload-enter-active, .fade-upload-leave-active {
   transition: all .3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-upload-enter, .fade-upload-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 
@@ -479,7 +479,7 @@ export default {
   margin-left: 10px;
   font-size: 20px;
 }
-.con-img {
+.con-img-upload {
   height: auto;
   width: 300px;
   display: flex;
@@ -503,7 +503,7 @@ export default {
   /* opacity: 0; */
   transform: scale(.7);
 }
-.con-img img {
+.con-img-upload img {
   position: relative;
   top: 0;
   right: 0;

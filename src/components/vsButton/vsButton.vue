@@ -1,10 +1,10 @@
 <template lang="html">
-
     <button
     ref="btnvuesax"
     @mouseenter="hoverx=true,$emit('mouseenter')"
     @mouseleave="hoverx=false,$emit('mouseleave')"
     :style="{
+      'width':vsWidth,
       'color':vsColorText?/[#()]/.test(vsColorText)?vsColorText:`rgb(var(--${vsColorText}))`:'',
       'border-radius':vsRadius,
       'background':backgroundx,
@@ -37,6 +37,10 @@ import color from '../../utils/color.js'
 export default {
   name:'vs-button',
   props:{
+    vsWidth:{
+      type:String,
+      default:'auto'
+    },
     vsHtml:{
       type:String,
       default:null
@@ -129,23 +133,21 @@ export default {
 
         }
       }
-
-      // if(!this.classList.contains('activo')){
-      let time = 0.7
-      if (this.classList.contains('filled')||event.target.clientWidth>100) {
-        let s = event.target.clientWidth-10
+      let time = 0.5
+      if (event.target.clientWidth>100) {
+        let s = event.target.clientWidth + 60
+        time = event.target.clientWidth/s
+      } else if (this.classList.contains('filled')) {
+        let s = event.target.clientWidth
         time = event.target.clientWidth/s
       }
-      // console.log(time);
         spanx.style.transition = 'width '+time+'s ease,height '+time+'s ease,opacity '+time/1.5+'s ease'
         spanx.style.left = x+'px';
         spanx.style.top = y+'px';
         spanx.style.width = event.target.clientWidth*3+'px';
         spanx.style.height = event.target.clientWidth*3+'px';
         spanx.style.opacity = '1';
-        // spanx.style.borderRadius = '0px'
         this.classList.add('activo')
-      // }
       if(this.classList.contains('filled')){
         setTimeout( ()=> {
           spanx.style.left = x+'px';
@@ -161,7 +163,11 @@ export default {
     vsColorx(){
       let _this = this
       let btn = this.$refs.btnvuesax
-      let colorx = null
+      let colorx = function(opacity){
+        var rgb = _this.vsColor.replace(/^(rgb|rgba)\(/,'').replace(/\)$/,'').replace(/\s/g,'').split(',');
+        // console.log(rgb);
+        return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${opacity})`;
+      }
       if(this.vsColor){
 
       if(/[#()]/.test(this.vsColor)){
@@ -171,16 +177,8 @@ export default {
           colorx = function(opacity){
             return `rgba(${c.r},${c.g},${c.b},${opacity})`;
           }
-          console.log("paso coloe");
+          // console.log("paso coloe");
 
-        } else {
-
-          colorx = function(opacity){
-            var rgb = _this.vsColor.replace(/^(rgb|rgba)\(/,'').replace(/\)$/,'').replace(/\s/g,'').split(',');
-            console.log(rgb);
-            return `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${opacity})`;
-          }
-          console.log("paso coloe");
         }
       }
 
@@ -217,7 +215,6 @@ export default {
   }
 },
     btnBlur(evt){
-      // console.log(evt);
       if(!evt.target.classList.contains('filled')){
       evt.target.classList.remove('activo');
       let spanx = evt.target.querySelector('.relleno')
@@ -226,7 +223,7 @@ export default {
         spanx.style.width = '0px';
         spanx.style.height = '0px';
         spanx.remove()
-      }, 300);
+      }, 200);
     }
     }
   }
@@ -243,7 +240,7 @@ export default {
     outline: none;
     background: rgb(238, 238, 238);
     color: rgba(0, 0, 0, 0.7);
-    transition: all .3s ease;
+    transition: all .2s ease;
     overflow: hidden;
     position: relative;
     backface-visibility: hidden;
@@ -270,7 +267,6 @@ export default {
     left: 0px;
     top: 0px;
     border-radius: 50%;
-    /* transition: width .6s ease,height .6s ease,opacity .3s ease; */
     transform: translate(-50%,-50%);
     z-index: 100;
     opacity: 0;
@@ -405,7 +401,7 @@ export default {
   .text {
     position: relative;
     z-index: 200;
-    transition: all .3s ease;
+    transition: all .2s ease;
     padding: 12px;
     padding-left: 15px;
     padding-right: 15px;
@@ -493,7 +489,7 @@ export default {
     height: 2px;
     content: '';
     z-index: 100;
-    transition: all .3s ease;
+    transition: all .2s ease;
     transform: translate(-50%);
   }
   button[class*='-line-down']:hover .lineax {

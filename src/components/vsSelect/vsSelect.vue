@@ -1,27 +1,16 @@
 <template lang="html">
   <div :class="{'abierto':visible,'disabledx':disabled}" @click="clickSelect" ref="vsSelect" class="vs-select">
-
     <label for="">{{label}}</label>
-    <!-- @click="visible=!visible,clickInputSelect()" -->
-    <div :title="seleccionado" class="con-input-select">
+    <button type="button" @focus="visible=true" @blur="visible=false" @click="clickInputSelect" :title="seleccionado" class="con-input-select">
       <span>{{seleccionado}}</span>
       <i class="i-icon material-icons">expand_more</i>
-      <!--  -->
-      <!-- <input      type="text" name="" value=""> -->
-      <!-- <select  name="">
-
-      </select> -->
-      <!-- class="input-hidden" -->
-      <select  class="input-hidden"  :value="value"  @focus="visible=true,clickInputSelect()" @blur="blurx(),clickOptionSelect($event)" @change="clickOptionSelect($event)" ref="inputHidden" name="">
-        <option v-for="option,index in options" :selected="seleccionadoValue==option.value" :value="option.value"></option>
-      </select>
-      <!-- <button  type="button" name="button"></button> -->
-    </div>
-    <transition name="fade">
-      <!-- v-show="validaAncho" -->
-    <div  ref="conUlSelect"  :class="{'visiblex':visible}" v-if="visible" :style="{'top':topx+'px','left':leftx+'px','width':widthx+'px'}" class="con-ul-select">
+    </button>
+    <transition name="fade-select">
+    <div  ref="conUlSelect"  :class="{'visiblex':visible}" v-show="visible" :style="{'top':topx+'px','left':leftx+'px','width':widthx+'px'}" class="con-ul-select">
       <ul :class="{'scrollx':scroll}">
-        <li :class="{'activo':seleccionadoValue==option.value}" :style="{'transition':'transform .2s ease '+index/30+'s , background .2s ease,opacity .2s ease '+index/30+'s'}" v-for="option,index in options" @click="clickOption($event)" :data-value="option.value">{{option.text}}</li>
+        <li  :style="{'transition':'transform .2s ease '+index/30+'s , background .2s ease,opacity .2s ease '+index/30+'s'}" v-for="option,index in options"  >
+          <button @focus="visible=true" @blur="visible=false" :class="{'activo':seleccionadoValue==option.value}" :data-value="option.value" @click="clickOption($event)" type="button" name="button">{{option.text}}</button>
+        </li>
       </ul>
     </div>
     </transition>
@@ -130,7 +119,7 @@ export default {
     },
     clickOptionSelect(evt){
       // console.log("paso select change");
-      this.visible=false
+      // this.visible=false
       this.$emit('input',evt.target.value);
       this.$emit('change',evt.target.value);
     },
@@ -176,7 +165,7 @@ export default {
         return item.className.search('con-ul-select')!=-1
       })
       if(parents.length==0){
-        this.visible=false
+        // this.visible=false
       }
     })
     window.addEventListener('touchmove', (e) => {
@@ -185,7 +174,7 @@ export default {
         return item.className.search('con-ul-select')!=-1
       })
       if(parents.length==0){
-        this.visible=false
+        // this.visible=false
       }
     })
 },
@@ -223,17 +212,16 @@ export default {
 .scrollx::-webkit-scrollbar-thumb{
   background: rgba(230, 230, 230,1) !important;
 }
-.fade-enter-active, .fade-leave-active {
-  transition: all .4s;
+.fade-select-enter-active {
+  transition: transform .3s, opacity .3s;
 }
-/* .fade-enter-active li, .fade-leave-active li {
-  transition: all .5s;
-} */
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-select-leave-active {
+  transition: transform .150s, opacity .150s;
+}
+.fade-select-enter, .fade-select-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
   transform: translate(0,0px) scale(0.950) !important;
   box-shadow: 0px 10px 0px -5px rgba(0, 0, 0, 0);
-
 }
 
   .input-hidden {
@@ -275,9 +263,11 @@ border: 0;
     position: relative;
     display: inline-block;
     width: 100%;
-    transition: all .3s ease;
+    transition: all .2s ease;
     color: rgba(0, 0, 0, 0.8);
     overflow: hidden;
+    text-align: left;
+    background: rgb(255, 255, 255);
   }
   .con-input-select span{
     white-space: nowrap;
@@ -299,36 +289,41 @@ border: 0;
       backface-visibility: hidden;
       padding: 5px;
       transform: translate3d(0,0,0);
+      max-height: 300px;
+      overflow: hidden;
+
   }
   .visiblex  {
     border-radius: 5px !important;
   }
   .con-ul-select ul{
 
-    overflow: hidden;
+    /* overflow: auto; */
     /* padding-right: 5px; */
     /* overflow: auto; */
-    transition: all .3s ease;
+    transition: all .2s ease;
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-left: 0px !important;
+    box-sizing: border-box;
   }
   .scrollx {
     padding-right: 5px;
   }
     .visiblex ul {
       overflow: auto !important;
-          max-height:300px;
-          height: 100%;
+      max-height:300px;
+      height: 100%;
     }
   .con-ul-select li {
     backface-visibility: hidden;
-    padding: 10px;
+
     /* padding-bottom: 7px;
     padding-top: 6px; */
     cursor: pointer;
     margin-bottom: 4px;
-    background: rgb(255, 255, 255);
-    padding-left: 5px;
+
+
     width: 100%;
     border-radius: 4px;
     transform: translate(0);
@@ -337,10 +332,18 @@ border: 0;
 
     color: rgba(0, 0, 0, 0.7);
   }
-  .con-ul-select li:last-child {
-    margin-bottom: 0px;
+  .con-ul-select li button {
+    padding: 10px;
+    width: 100%;
+    padding-left: 5px;
+    background: rgb(255, 255, 255);
+    text-align: left;
+    margin: 0px !important
   }
-  .con-ul-select li:hover {
+  .con-ul-select li:last-child {
+    /* margin-bottom: 10px; */
+  }
+  .con-ul-select li:hover button {
     background: rgb(248, 248, 248);
   }
 
@@ -361,7 +364,7 @@ border: 0;
     transform: translate(0,-50%);
     font-weight: lighter;
     color: rgba(0, 0, 0, 0.5);
-    transition: all .3s ease;
+    transition: all .2s ease;
     font-size: 18px;
   }
   .abierto .i-icon  {

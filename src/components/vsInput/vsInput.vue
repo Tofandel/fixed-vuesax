@@ -1,8 +1,13 @@
 <template lang="html">
-  <div :class="[validar,{'con-focus':focusx,'vsIconx':vsIcon, 'vs-icon-after':vsIconAfter, 'disabledx':disabled}]" class="con-input">
+  <div
+  :style="{
+    'width':vsWidth
+  }"
+  :class="[validar,{'con-focus':focusx,'vsIconx':vsIcon, 'vs-icon-after':vsIconAfter, 'disabledx':disabled}]" class="con-input">
     <label :class="{'focusLabel':focusx, 'disabledxlabel':disabled}" class="label" for="">{{vsLabel}}</label>
 
     <input
+
     :type="vsType ? vsType :'text'"
     :style="{'border':`1px solid ${focusx?backgroundx:'rgba(0, 0, 0, 0.150)'}`,'caretColor': backgroundx}"
     :disabled="disabled"
@@ -12,7 +17,7 @@
     v-on="listeners"
     class="vs-input">
 
-    <span v-if="!vsLabelPlaceholder" @click="$refs.inputx.focus()" :class="{'noPlaceholder':value.length>0?true:focusx}" class="placeholder">{{vsPlaceholder}}</span>
+    <span v-if="!vsLabelPlaceholder" @click="$refs.inputx.focus()" :class="{'noPlaceholder':value?value.length>0:false?true:focusx}" class="placeholder">{{vsPlaceholder}}</span>
     <span :style="{'color':focusx?backgroundx:'rgba(0, 0, 0, 0.30)'}" v-if="vsLabelPlaceholder" @click="$refs.inputx.focus()" :class="{'noPlaceholderLabel':value.length>0?true:focusx}" class="placeholder">{{vsLabelPlaceholder}}</span>
 
     <span v-if="vsIcon" class="iconx"><i class="material-icons">{{vsIcon}}</i></span>
@@ -52,6 +57,7 @@ export default {
   inheritAttrs: false,
   name:'vs-input',
   props:[
+    'vsWidth',
     'value',
     'vsLabelPlaceholder',
     'vsPlaceholder',
@@ -71,6 +77,11 @@ export default {
   data(){
     return {
       focusx:false,
+    }
+  },
+  mounted(){
+    if(this.value == undefined){
+      console.warn("Vuesax: The property of the input v-model is necessary to function properly vs-input component", this.$el)
     }
   },
   computed:{

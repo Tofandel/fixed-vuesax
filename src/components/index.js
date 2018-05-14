@@ -1,37 +1,33 @@
-import vsButton from './vsButton/vsButton.vue'
-import vsSelect from './vsSelect/vsSelect.vue'
-import vsNotifications from './vsNotifications/vsNotifications.js'
-import vsSwitch from './vsSwitch/vsSwitch.vue'
-import vsCheckbox from './vsCheckbox/vsCheckbox.vue'
-import vsRadio from './vsRadio/vsRadio.vue'
-import vsInput from './vsInput/vsInput.vue'
-import {message} from './vsMessageBox/vsMessageBox.js'
-import {confirm} from './vsMessageBox/vsMessageBox.js'
-import {prompt} from './vsMessageBox/vsMessageBox.js'
-import vsTabs from './vsTabs/vsTabs.vue'
-import vsTab from './vsTabs/vsTab.vue'
-import vsSlider from './vsSlider/vsSlider.vue'
-import vsInputNumber from './vsInputNumber/vsInputNumber.vue'
-import vsUpload from './vsUpload/vsUpload.vue'
-import {vsLoading} from './vsLoading/vsLoading.js'
-import {vsLoadingClose} from './vsLoading/vsLoading.js'
+import vsButton from './vsButton'
+import vsSelect from './vsSelect'
+import vsSwitch from './vsSwitch'
+import vsCheckbox from './vsCheckBox'
+import vsRadio from './vsRadio'
+import vsInput from './vsInput'
+import vsTabs from './vsTabs'
+import vsTab from './vsTab'
+import vsSlider from './vsSlider'
+import vsInputNumber from './vsInputNumber'
+import vsUpload from './vsUpload'
+import vsPopup from './vsPopup'
+import vsDropdown from './vsDropDown'
+import vsDropdownItem from './vsDropDown'
+import vsAlert from './vsAlert'
+import vsChip from './vsChip'
+import vsChips from './vsChips'
+import vsProgress from './vsProgress'
+import vsCard from './vsCard'
+// import vsAnchor from './vsAnchor'
+// import vsLink from './vsAnchor'
 
-// nuevos si terminar
-import vsPopup from './vsPopup/vsPopup.vue'
-import vsDropdown from './vsDropDown/vsDropDown.vue'
-import vsDropdownItem from './vsDropDown/vsDropdownItem.vue'
-import vsAnchor from './vsAnchor/vsAnchor.vue'
-import vsLink from './vsAnchor/vsLink.vue'
-import vsAlert from './vsAlert/vsAlert.vue'
 
 //layout
-import vsRow from '../layout/vsRow.vue'
-import vsCol from '../layout/vsCol.vue'
+import vsRow from '../layout/vsRow/'
+import vsCol from '../layout/vsCol/'
 
-//theme
-import vsTheme from '../utils/theme.js'
 
-export const vsComponents = {
+
+export {
   vsButton,
   vsSelect,
   vsSwitch,
@@ -43,25 +39,18 @@ export const vsComponents = {
   vsSlider,
   vsInputNumber,
   vsUpload,
-
-  //nuevos sin terminar
   vsPopup,
-  vsDropdown,
-  vsDropdownItem,
-  vsAnchor,
-  vsLink,
   vsAlert,
-  //layout
+  vsChip,
+  vsChips,
+  vsProgress,
+  vsCard,
   vsRow,
   vsCol,
-}
 
-export const vsFunctions = {
-  vsNotifications,
-  message,
-  confirm,
-  prompt,
-  vsLoading,
-  vsLoadingClose,
-  vsTheme,
+  // en proceso
+  // vsDropdown,
+  // vsDropdownItem,
+  // vsAnchor,
+  // vsLink,
 }
