@@ -18,5 +18,10 @@ export default {
 <style lang="stylus" scoped>
   .vs-list
     > div:first-of-type
-      border-top-left-radius 8px
+      border-radius 8px 8px 0px 0px
+      border-top: 1px solid rgb(235, 235, 235) !important
+    > div:last-child
+      border-radius 0px 0px 8px 8px
+      border-bottom: 1px solid rgb(235, 235, 235) !important
+
 </style>

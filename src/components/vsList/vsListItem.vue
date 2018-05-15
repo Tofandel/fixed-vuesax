@@ -1,5 +1,9 @@
 <template lang="html">
   <div class="vs-list-item">
+    <div class="list-avatar">
+      <slot name="avatar">
+      </slot>
+    </div>
     <div v-if="vsIcon" class="list-icon">
       <i class="material-icons">{{vsIcon}}</i>
     </div>
@@ -14,10 +18,15 @@
 </template>
 
 <script>
+import vsAvatar from '../vsAvatar/vsAvatar'
 import color from '../../utils/color.js'
 export default {
   name:'vs-list-item',
   props: {
+    vsAvatar:{
+      type:[Boolean,String],
+      default:false,
+    },
     vsTitle:{
       type:String,
       default:null,
@@ -36,9 +45,10 @@ export default {
 
 <style lang="stylus" scoped>
   .vs-list-item + .vs-list-item
-    border-top 3px solid rgb(240,240,240)
+    border-top 1px solid rgb(235,235,235)
   .vs-list-item
-    border-left 3px solid rgb(240,240,240)
+    border-left 1px solid rgb(235,235,235)
+    border-right 1px solid rgb(235,235,235)
     display flex
     justify-content center
     align-items center
@@ -46,6 +56,11 @@ export default {
     font-weight 500
     position relative
     white-space nowrap
+    .list-avatar
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     .list-icon
       display flex
       justify-content center
