@@ -1,6 +1,4 @@
----
-home: false
----
+
 # Getting Started
 
 <box header>
