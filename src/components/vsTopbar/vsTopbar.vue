@@ -2,7 +2,7 @@
   <div
     class="vs-topbar"
     :style="{
-      'background':vsColor?/[#()]/.test(vsColor)?`rgba(${vsColor.replace(/[rgb()]/g,'')},1)`:`rgba(var(--${vsColor}),1)`:'rgb(244,244,244)',
+      'background':vsColor?/[#()]/.test(vsColor)?vsColor:`rgba(var(--${vsColor}),1)`:'rgb(244,244,244)',
       'color':colorx
     }">
     <slot>
