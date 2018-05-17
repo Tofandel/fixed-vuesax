@@ -3,7 +3,10 @@
     <ul :class="['vs-pagination', vsType ? `vs-pager-${vsType}` : '', vsRounded ? 'vs-pager-rounded' : '']">
       <li><button @click="previousPage()" :disabled="onFirstPage() ? true : false"><i class="material-icons">{{vsPrevIcon}}</i></button></li>
       <li v-for="(page, index) in pages" :key="index">
-        <button @click="goTo(page)" :class="onCurrentPage(page)" :disabled="isEllipsis(page) ? true : false">{{page}}</button>
+        <button :style="{
+          'background':onCurrentPage(page)&&vsType?vsColor?/[#()]/.test(vsColor)?vsColor:`rgba(var(--${vsColor}),1)`:'rgb(var(--primary))':null
+          }"
+          @click="goTo(page)" :class="onCurrentPage(page)" :disabled="isEllipsis(page) ? true : false">{{page}}</button>
       </li>
       <li><button @click="nextPage()" :disabled="onLastPage() ? true : false"><i class="material-icons">{{vsNextIcon}}</i></button></li>
       <li v-if="vsGoto" class="goto"><vs-input vs-type="number" v-model="go" @change="goTo" min="1" :max="vsTotal"/></li>
@@ -16,6 +19,10 @@
 export default {
   name:'vs-pagination',
   props:{
+    vsColor:{
+      type:String,
+      default:'primary'
+    },
     vsTotal:{
       type:Number,
       required:true
@@ -144,13 +151,12 @@ export default {
     padding-left 0
     // list-style none
     // border-radius .25rem
-
     button
     .vs-ellipsis
       min-height 40px
       min-width 40px
       margin 3px
-      color dark
+      color rgba(0, 0, 0, 0.7)
       padding 3px 10px
       line-height 2
       text-align center
@@ -160,11 +166,12 @@ export default {
       background-color transparent
       &.vs-active
         color primary
+        font-weight bold
         cursor default
       &:hover
         color primary
       &:focus
-        outline dotted 1px primary
+        // outline dotted 1px primary
       &:active
         opacity .7
 
@@ -182,7 +189,7 @@ export default {
       background-color transparent;
       &:hover
         background-color rgba(30, 30, 30, .07)
-          
+
   .vs-pager-filled
     button
       background-color defaultx
@@ -192,7 +199,7 @@ export default {
         color #fff
         background-color primary
         box-shadow none
-        
+
   .vs-pager-rounded
     // li:first-child button
     // li:last-child button
@@ -204,7 +211,7 @@ export default {
 
 <style lang="stylus">
   .vs-pagination
-      
+
     li.goto .con-input
       width 60px
       margin-top 5px

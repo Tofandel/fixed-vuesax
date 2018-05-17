@@ -1,11 +1,11 @@
 <template lang="html">
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 3064.91 3402.71">
     <defs>
-      <linearGradient id="linear-gradient" x1="1392.44" y1="75.85" x2="1123.92" y2="-701.96" gradientTransform="translate(1450.67 695.77) rotate(154.05)" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos" x1="1392.44" y1="75.85" x2="1123.92" y2="-701.96" gradientTransform="translate(1450.67 695.77) rotate(154.05)" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#ffd215"/>
         <stop offset="1" stop-color="#ff105c"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-2" x1="81.82" y1="1818.11" x2="2335.34" y2="1818.11" gradientTransform="matrix(-0.84, -0.71, -0.67, 0.79, 4000.42, 1391.24)" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-2" x1="81.82" y1="1818.11" x2="2335.34" y2="1818.11" gradientTransform="matrix(-0.84, -0.71, -0.67, 0.79, 4000.42, 1391.24)" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#8b0094"/>
         <stop offset="0.07" stop-color="#94018f"/>
         <stop offset="0.19" stop-color="#ae0583"/>
@@ -15,56 +15,55 @@
         <stop offset="0.84" stop-color="#ff912d"/>
         <stop offset="1" stop-color="#ffd215"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-3" x1="3.78" y1="1865.56" x2="2884.31" y2="1865.56" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#linear-gradient-2"/>
-      <linearGradient id="linear-gradient-4" x1="2097.94" y1="2052.71" x2="2097.94" y2="2709.2" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-3" x1="3.78" y1="1865.56" x2="2884.31" y2="1865.56" gradientTransform="matrix(1, 0, 0, 1, 0, 0)" xlink:href="#linear-gradient-trofeos-2"/>
+      <linearGradient id="linear-gradient-trofeos-4" x1="2097.94" y1="2052.71" x2="2097.94" y2="2709.2" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#e5e5e5"/>
         <stop offset="0.58" stop-color="#f7f7f7"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-5" x1="570.47" y1="1761.71" x2="570.47" y2="2053.76" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-5" x1="570.47" y1="1761.71" x2="570.47" y2="2053.76" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#e5e5e5"/>
         <stop offset="0.39" stop-color="#e9e9e9"/>
         <stop offset="0.78" stop-color="#f5f5f5"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-6" x1="1439.94" y1="994.71" x2="1439.94" y2="1890.16" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-6" x1="1439.94" y1="994.71" x2="1439.94" y2="1890.16" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#e5e5e5"/>
         <stop offset="0.59" stop-color="#e7e7e7"/>
         <stop offset="0.8" stop-color="#eee"/>
         <stop offset="0.95" stop-color="#f9f9f9"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-7" x1="887.44" y1="1924.71" x2="887.44" y2="2619.71" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-7" x1="887.44" y1="1924.71" x2="887.44" y2="2619.71" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#e5e5e5"/>
         <stop offset="0.42" stop-color="#f2f2f2"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-8" x1="1670.44" y1="994.71" x2="1670.44" y2="3007.71" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-8" x1="1670.44" y1="994.71" x2="1670.44" y2="3007.71" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#e5e5e5"/>
         <stop offset="0.42" stop-color="#e8e8e8"/>
         <stop offset="0.75" stop-color="#f2f2f2"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-9" x1="2101.35" y1="2320.84" x2="1630.23" y2="3136.84" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-9" x1="2101.35" y1="2320.84" x2="1630.23" y2="3136.84" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#f1f1f1"/>
         <stop offset="0.55" stop-color="#f6f6f6"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-10" x1="2327.44" y1="2052.71" x2="2327.44" y2="3402.71" xlink:href="#linear-gradient-4"/>
-      <linearGradient id="linear-gradient-11" x1="1589.57" y1="1344.53" x2="832.23" y2="2656.28" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-10" x1="2327.44" y1="2052.71" x2="2327.44" y2="3402.71" xlink:href="#linear-gradient-trofeos-4"/>
+      <linearGradient id="linear-gradient-trofeos-11" x1="1589.57" y1="1344.53" x2="832.23" y2="2656.28" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#f1f1f1"/>
         <stop offset="0.6" stop-color="#f3f3f3"/>
         <stop offset="0.91" stop-color="#fbfbfb"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
-      <linearGradient id="linear-gradient-12" x1="693.82" y1="1968.34" x2="436.61" y2="2413.84" gradientUnits="userSpaceOnUse">
+      <linearGradient id="linear-gradient-trofeos-12" x1="693.82" y1="1968.34" x2="436.61" y2="2413.84" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#f1f1f1"/>
         <stop offset="0.67" stop-color="#f3f3f3"/>
         <stop offset="0.91" stop-color="#fafafa"/>
         <stop offset="1" stop-color="#fff"/>
       </linearGradient>
     </defs>
-    <title>Asset 11</title>
     <g id="Layer_2" data-name="Layer 2">
       <g id="Layer_1-2" data-name="Layer 1">
         <polygon class="cls-1" points="1132.94 306.71 1158.49 291.59 1128.94 221.71 1297.94 122.71 1354.32 155.52 1402.94 127.71 1460.56 180.35 1483.94 166.71 1541.94 198.71 1541.94 235.71 1623.94 254.71 1534.54 383.77 1642.94 320.71 1724.94 369.71 1683.2 425.77 1773.94 477.71 1536.94 786.71 1368.94 887.71 1132.94 306.71"/>
@@ -513,33 +512,33 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .cls-1 {
   fill: #febb00;
 }
 
 .cls-2 {
-  fill: url(#linear-gradient);
+  fill: url(#linear-gradient-trofeos);
 }
 
 .cls-3 {
-  fill: url(#linear-gradient-2);
+  fill: url(#linear-gradient-trofeos-2);
 }
 
 .cls-4 {
-  fill: url(#linear-gradient-3);
+  fill: url(#linear-gradient-trofeos-3);
 }
 
 .cls-5 {
-  fill: url(#linear-gradient-4);
+  fill: url(#linear-gradient-trofeos-4);
 }
 
 .cls-6 {
-  fill: url(#linear-gradient-5);
+  fill: url(#linear-gradient-trofeos-5);
 }
 
 .cls-7 {
-  fill: url(#linear-gradient-6);
+  fill: url(#linear-gradient-trofeos-6);
 }
 
 .cls-8 {
@@ -547,7 +546,7 @@ export default {
 }
 
 .cls-9 {
-  fill: url(#linear-gradient-7);
+  fill: url(#linear-gradient-trofeos-7);
 }
 
 .cls-10 {
@@ -588,15 +587,15 @@ export default {
 }
 
 .cls-17 {
-  fill: url(#linear-gradient-8);
+  fill: url(#linear-gradient-trofeos-8);
 }
 
 .cls-18 {
-  fill: url(#linear-gradient-9);
+  fill: url(#linear-gradient-trofeos-9);
 }
 
 .cls-19 {
-  fill: url(#linear-gradient-10);
+  fill: url(#linear-gradient-trofeos-10);
 }
 
 .cls-20 {
@@ -645,11 +644,11 @@ export default {
 }
 
 .cls-31 {
-  fill: url(#linear-gradient-11);
+  fill: url(#linear-gradient-trofeos-11);
 }
 
 .cls-32 {
-  fill: url(#linear-gradient-12);
+  fill: url(#linear-gradient-trofeos-12);
 }
 
 .cls-33 {
