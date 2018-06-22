@@ -1,6 +1,7 @@
 <template lang="html">
   <li v-show="visible" class="vs-component">
     <button
+      :disabled="disabled?true:disabledx"
       v-bind="$attrs"
       v-on="listeners"
       :style="styles"
@@ -30,6 +31,10 @@ export default {
   inheritAttrs:false,
   name:'vs-select-item',
   props:{
+    disabled:{
+      type:Boolean,
+      default:false
+    },
     vsValue:{
       default:null,
     },
@@ -55,18 +60,38 @@ export default {
       if(this.visible){
         let valueInputx = this.valueInputx.split(',')
         if(valueInputx[valueInputx.length-1] == ''){
+          this.getText = this.vsText
           return
         }
-        console.log(valueInputx[valueInputx.length-1]);
-        var re = new RegExp(valueInputx[valueInputx.length-1],"g");
+        function MaysPrimera(string){
+          return string.charAt(0).toUpperCase() + string.slice(1);
+        }
 
-        let text = this.vsText.replace(re,`<b>${this.valueInputx}</b>`)
-        console.log(text);
+        let valuex = valueInputx[valueInputx.length-1]
+        var re = new RegExp(valuex,"i");
+        if(this.vsText.toUpperCase().indexOf(valuex.toUpperCase()) == 0){
+          console.log('primera letra');
+          valuex = MaysPrimera(valuex)
+        }
+        let text = this.vsText.replace(re,`<span class="searchx">${valuex}</span>`)
         this.getText = text
+      } else {
+        this.getText = this.vsText
       }
     }
   },
   computed:{
+    disabledx(){
+      if(this.$parent.vsMultiple){
+      if(this.isActive){
+        return false
+      } else {
+        return this.$parent.vsMaxSelected == this.$parent.value.length
+      }
+    } else {
+      return false
+    }
+    },
     isActive(){
       return this.$parent.vsMultiple?this.getValue.indexOf(this.vsValue) != -1:this.getValue == this.vsValue
     },
@@ -130,8 +155,6 @@ export default {
         lengthx = this.$parent.$children.length - 1
       }
       let nextElement = getNextLi(this.$el[orientationObject],orientationObject)
-      // console.log(this.$el[orientationObject]);
-      console.log("nextElement>",nextElement);
       if(nextElement){
         nextElement.querySelector('.vs-select-item-btn').focus()
       } else {
@@ -164,7 +187,9 @@ export default {
         this.$parent.valuex = text
         this.$parent.addMultiple(this.vsValue)
       }
-
+      this.$parent.$children.map((item)=>{
+        item.valueInputx = ''
+      })
     },
 
     // methods colors
@@ -182,4 +207,12 @@ export default {
   padding: 5px;
   width: 100%;
   margin: 0px !important;
+  text-transform: capitalize;
+  &:disabled
+    opacity: .5;
+  span.searchx
+    background: rgba(0, 0, 0, 0.07);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    color: inherit;
 </style>
