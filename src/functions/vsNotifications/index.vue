@@ -12,8 +12,17 @@
     v-if="active"
     :class="[`vs-noti-${position}`,`vs-noti-${color}`,{'activeNoti':active}]"
      class="vs-component vs-notifications">
-    <h3>{{title}}</h3>
-    <p>{{text}}</p>
+     <div class="content-noti">
+       <div class="con-text-noti">
+         <h3 v-html="title"></h3>
+         <p v-html="text"></p>
+
+         <slot/>
+       </div>
+       <i v-if="icon" class="vs-icon-noti material-icons">
+         {{icon}}
+       </i>
+     </div>
     <span :style="fillingStyle" class="filling"></span>
   </div>
 </transition>
@@ -22,12 +31,14 @@
 <script>
 export default {
   data:()=>({
+    fullWidth:false,
+    icon:null,
     color:'primary',
     colorText:'rgb(255, 255, 255)',
     active:true,
     text:null,
     title:null,
-    position:'top-right',
+    position:'bottom-right',
     time:3000,
     cords:{
       top:null,
@@ -36,6 +47,8 @@ export default {
       bottom:null,
     },
     widthx:0,
+    fixed:false,
+
   }),
   created(){
     setTimeout( () => {
@@ -48,9 +61,11 @@ export default {
       this.widthx = this.$refs.noti.clientWidth
     }, 0);
 
-    setTimeout( () => {
-      this.closeNoti()
-    }, this.time);
+    if(!this.fixed){
+      setTimeout( () => {
+        this.closeNoti()
+      }, this.time);
+    }
   },
   computed:{
     fillingStyle(){
@@ -67,12 +82,15 @@ export default {
       return {
         ...this.cords,
         color: this.colorText,
+        width: this.fullWidth?`calc(100% - 14px)`:``,
+        maxWidth: this.fullWidth?'none':`350px`
       }
     }
   },
   methods:{
     clickNoti(){
       this.active = false
+      this.click?this.click():null
     },
     beforeEnter(el) {
       el.style.opacity = 0
@@ -85,17 +103,16 @@ export default {
     leave(el, done) {
       el.style.opacity = 0
       let transformx = el.style.transform
-      if(this.cords.left == '50%'){
+      if(this.cords.left == '50%' || this.fullWidth){
         transformx += ` translateY(${this.cords.top?'-':''}100%)`
       } else {
         transformx += ` translateX(${this.cords.left?'-':''}100%)`
       }
-      console.log("transformx",transformx);
       el.style.transform = transformx
       setTimeout( () => {
         done()
         this.moverNotis()
-      }, 100);
+      }, 150);
     },
     closeNoti(){
       this.active = false
@@ -123,13 +140,11 @@ export default {
       }
     },
     moverNotis(){
-      // console.log("paso en posision");
         let notisx = document.querySelectorAll('.vs-noti-'+this.position);
-        console.log(notisx);
         for (var i = 0; i < notisx.length; i++) {
           let hx = 10
           for (var i2 = 0; i2 < i; i2++) {
-            hx += notisx[i2].clientHeight + 10
+            hx += notisx[i2].clientHeight + 6
           }
           if(this.position.search('center')==-1){
             if(this.position.search('top')!=-1){
@@ -166,30 +181,53 @@ export default {
   position: fixed;
   z-index: 200000;
   padding: 5px;
-  // margin: 5px;
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 10px;
   overflow: hidden;
   transition: all .3s ease;
   cursor: default;
+  max-width: 350px;
+  min-width: 200px;
+  &:active
+    opacity: .8
+  .content-noti
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .con-text-noti
+      width: 100%;
+    .vs-icon-noti
+      position: relative;
+      display: flex;
+      z-index: 100;
+      display: block;
+      padding: 5px;
+      background: rgba(255, 255, 255,.1)
+      border-radius: 6px;
+      font-size: 20px;
+      animation: openicon .4s ease;
   h3,p
     z-index: 100;
     position: relative;
     animation: open .4s ease;
   h3
-    font-size: 18px;
+    font-size: 16px;
     padding: 5px;
     padding-bottom: 0px;
   p
-    font-size: 15px;
+    font-size: 14px;
     padding: 5px;
+    padding-right: 10px;
   &.vs-noti-active
     h3,p
       opacity: 1;
   .filling
+    display: block;
     position: absolute;
-    transition: all .5s ease;
+    transition: all .45s ease;
     z-index: 1;
     transform: translate(0,-50%);
 for colorx, i in $vs-colors
@@ -207,6 +245,16 @@ for colorx, i in $vs-colors
   }
   100% {
     transform: translate(0px);
+    opacity: 1
+  }
+}
+@keyframes openicon {
+  0% {
+    opacity: 0;
+    transform: scale(.4);
+  }
+  100% {
+    transform: scale(1);
     opacity: 1
   }
 }
