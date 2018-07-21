@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
-    <vs-slider v-model="value1"/>
-    <vs-slider disabled="true" v-model="value2"/>
+    <vs-slider color="warning" v-model="value1"/>
+    <vs-slider color="danger" ticks step=10 v-model="value2"/>
   </div>
 </template>
 
@@ -9,8 +9,8 @@
 export default {
   data(){
     return {
-      value1:67,
-      value2:34
+      value1:[60,90],
+      value2:[30,40]
     }
   }
 }

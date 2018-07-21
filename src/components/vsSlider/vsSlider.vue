@@ -1,333 +1,404 @@
 <template lang="html">
-  <div 
-    :class="{'s-d':disabled}" 
-    class="con-slider"
+  <div
+    :class="[
+      `vs-slider-${color}`,
+      {'disabledx':disabled}
+    ]"
+    class="con-vs-slider"
+    @mousewheel.prevent="mousewheelx"
+    @keydown.left="keydownLeft"
+    @keydown.right="keydownRight">
 
-  >
-    <!-- @touchstart="clickLinea($event)" -->
-    <div
-      ref="lineaSlider"
-      class="linea-slider"
-      @click="clickLinea">
+    <button
+      ref="slider"
+      :disabled="disabled"
+      class="vs-slider"
+      @click="clickSlider($event),actived = true">
+      <span
+        :style="styleLineOne"
+        :class="{'hasTransition':effect}"
+        class="vs-slider-line-one"></span>
+      <span class="vs-slider-line-two"></span>
 
-      <div
-        ref="lineaPintada"
-        :style="{'background':vsColor,'width':sliderValue+'%','max-width':ancho?ancho+'px':'auto'}"
-        class="linea-pintada">
-        <div
+      <span
+        :class="{'run-effect':effect}"
+        :style="styleEfect"
+        class="vs-slider-line-efect"></span>
 
-          ref="circle"
-          :style="{'background':vsColor}"
-          tabindex="0"
-          class="circle-slider"
-          @mouseenter="showToolTip=true"
-          @mouseleave="showToolTip=false"
-          @mousedown="mousedownx"
-          @touchstart="mousedownx($event)"
-          @focus="showToolTip=true"
-          @blur="showToolTip=false"
-          @keydown.left="onLeftKeyDown"
-          @keydown.right="onRightKeyDown">
-          <!-- :style="{'background':vsColor}" -->
-          <span 
-            :style="{'border':'2px solid '+vsColor}" 
-            class="circle-interno">
-            <span/>
-          </span>
+      <!-- vsTicks -->
+      <span
+        v-for="(tick,index) in countTicks"
+        v-if="ticks&&tick"
+        :class="{'isEnd':index == countTicks-1}"
+        :style="styleTicks(index)"
+        class="vs-slider-ticks">
+      </span>
+    </button>
+    <button
+      ref="circle1"
+      :disabled="disabled"
+      :class="{
+        'hasTransition':effect,
+        'isIquals':isIquals,
+        'changeValue':changeValue,
+        'isEndValue':value == max
+      }"
+      :style="styleCircle"
+      class="vs-circle-slider vs-circles-slider"
+      @touchstart="activeFocus($event),actived = true"
+      @mousedown="activeFocus($event),actived = true">
+      <span
+        :style="styleText"
+        class="text-circle-slider">
+        {{ valueCircle1 }}
+        <span v-if="textFixed">
+          {{ textFixed }}
+        </span>
+        <i
+          v-if="icon"
+          class="material-icons">
+          {{ icon }}
+        </i>
+      </span>
 
-          <div 
-            :style="{'background':vsColor}" 
-            :class="{'hoverx':showToolTip}" 
-            class="con-numero-slider">
-            <span>{{ Math.round(sliderValue)>100?100:Math.round(sliderValue) }}{{ vsNotPercentage?'':'%' }}</span>
-          </div>
+    </button>
+    <button
+      v-if="Array.isArray(value)"
+      ref="circle2"
+      :disabled="disabled"
+      :class="{
+        'hasTransition':effect,
+        'isIquals':isIquals,
+        'changeValue':changeValue,
+        'isEndValue':value == max
+      }"
+      :style="styleCircleTwo"
+      class="vs-circle-slider-two vs-circles-slider"
+      @touchstart="activeFocus($event),two = true,actived = true"
+      @mousedown="activeFocus($event),two = true,actived = true">
 
-        </div>
-      </div>
-      <!--
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
-      @mousedown="onButtonDown"
-      :class="{ 'hover': hovering, 'dragging': dragging }"
-      :style="wrapperStyle"
-      ref="button"
-      tabindex="0"
-      @focus="handleMouseEnter"
-      @blur="handleMouseLeave"
-      @keydown.left="onLeftKeyDown"
-      @keydown.right="onRightKeyDown"
-      @keydown.down.prevent="onLeftKeyDown"
-      @keydown.up.prevent="onRightKeyDown" -->
+      <span
+        :style="styleText"
+        class="text-circle-slider">
+        {{ valueCircle2 }}
+        <span v-if="textFixed">
+          {{ textFixed }}
+        </span>
+        <i
+          v-if="icon"
+          class="material-icons">
+          {{ icon }}
+        </i>
+      </span>
 
-    </div>
+    </button>
   </div>
 </template>
 
 <script>
+import _color from '../../utils/color.js'
 export default {
   name:'VsSlider',
-  props: {
-    disabled: {
-      type: [Boolean, String],
-      default: false
-    },
-    value: {
-      type: Number,
-      default: 0
-    },
-    vsColor: {
-      type: String,
-      default:'rgb(var(--primary))'
-    },
-    vsMin: {
-      type: Number
-    },
-    vsStep: {
-      type: Number,
-      default: 1
-    },
-    vsNotPercentage:{
-      type:[Boolean],
+  props:{
+    value:{},
+    disabled:{
       default:false,
+      type:Boolean
+    },
+    color:{
+      default:'primary',
+      type:String
+    },
+    max:{
+      default:100,
+      type:Number
+    },
+    min:{
+      default:0,
+      type:Number
+    },
+    ticks:{
+      default:false,
+      type:Boolean
+    },
+    step:{
+      default: 1,
+      type:Number
+    },
+    icon:{
+      default:null,
+      type:String
+    },
+    textFixed:{
+      default:null,
+      type:String
     }
   },
-  data(){
-    return {
-      sliderValue:this.value,
-      numeroMostrar:this.value,
-      showToolTip:false,
-      valuex:0,
-      ancho:0,
+  data:()=>({
+    leftx:0,
+    leftTwo:0,
+    effect:false,
+    two:false,
+    actived:false,
+    changeValue:false,
+    valueCircle1:0,
+    valueCircle2:0,
+  }),
+  computed:{
+    isIquals(){
+      return Array.isArray(this.value)?this.value[0] == this.value[1]:false
+    },
+    countTicks(){
+      return this.max + 1
+    },
+    /*
+     * styles component
+     */
+    styleSlider() {
+      return {
+        background:_color.getColor(this.color,1)
+      }
+    },
+    styleLineOne() {
+      let widthx = this.leftTwo - this.leftx
+      let leftx = this.leftx
+      if(this.leftx > this.leftTwo) {
+        widthx = this.leftx - this.leftTwo
+        leftx = this.leftTwo
+      }
+      return {
+        width:`${widthx}%`,
+        left:`${leftx}%`,
+        background:_color.getColor(this.color,1)
+      }
+    },
+    styleCircle() {
+      return {
+        left:`${this.leftx}%`,
+        border:`2px solid ${_color.getColor(this.color,1)}`
+      }
+    },
+    styleCircleTwo() {
+      return {
+        left:`${this.leftTwo}%`,
+        border:`2px solid ${_color.getColor(this.color,1)}`
+      }
+    },
+    styleEfect(){
+      return {
+        left:`${this.leftx}%`,
+      }
+    },
+    styleText(){
+      return {
+        background: _color.getColor(this.color,1)
+      }
     }
   },
   watch:{
     value(){
-      this.sliderValue = this.value
+      if(!this.actived) {
+        this.changePosition()
+      }
+      this.changeValue = true
+      setTimeout(()=>{
+        this.changeValue = false
+      },300)
+      this.$emit('change',this.value)
     },
-    numeroMostrar(){
-      this.$emit('change',this.sliderValue)
-    }
-  },
-  created(){
-    this.sliderValue = this.value
-  },
-  mounted(){
-    this.ancho = this.$refs.lineaSlider.offsetWidth
-    window.addEventListener('resize',this.resizex)
-  },
-  methods:{
-    resizex(){
-      this.ancho = this.$refs.lineaSlider.offsetWidth
-      this.setSliderValue(this.numeroMostrar)
-    },
-    setSliderValue(value){
-      if(value <= 100 && value >= 0) {
-        this.sliderValue = value;
+    leftx() {
+      if(Array.isArray(this.value)){
+        if(this.leftx > this.leftTwo){
+          this.valueCircle1 = this.value[1]
+        } else {
+          this.valueCircle1 = this.value[0]
+        }
+      } else {
+        this.valueCircle1 = this.value
       }
     },
-    onRightKeyDown() {
-      this.setSliderValue(this.sliderValue + this.vsStep);
-      this.$emit('input', this.sliderValue)
+    leftTwo: {
+      handler: function() {
+        if(this.leftTwo > this.leftx){
+          this.valueCircle2 = this.value[1]
+        } else {
+          this.valueCircle2 = this.value[0]
+        }
+
+      },
+      deep: true
+    }
+  },
+  mounted(){
+    this.changePosition()
+  },
+
+  methods:{
+    mousewheelx(evt){
+      if(!Array.isArray(this.value)) {
+        if(evt.wheelDelta > 0){
+          let val = this.value + this.step
+          if (this.value >= this.max) {
+            val = this.max
+          }
+          this.leftx = val
+          this.$emit('input', val)
+        } else {
+          let val = this.value - this.step
+          if(this.value <= this.min){
+            val = this.min
+          }
+          this.leftx = val
+          this.$emit('input', val)
+        }
+      }
     },
-    onLeftKeyDown() {
-      this.setSliderValue(this.sliderValue - this.vsStep);
-      this.$emit('input', this.sliderValue)
+    keydownLeft(){
+      if(!Array.isArray(this.value)) {
+        let val = this.value - this.step
+        if(this.value == this.min){
+          val = this.min
+        }
+        this.leftx = val
+        this.$emit('input', val)
+      }
     },
-    mousedownx(event){
-      // event.preventDefault();
+    keydownRight(){
+      if(!Array.isArray(this.value)) {
+        let val = this.value + this.step
+        if (this.value >= this.max) {
+          val = this.max
+        }
+        this.leftx = val
+        this.$emit('input', val)
+      }
+    },
+    changePosition(){
+      let lengthPerStep = 100 / ((this.max - this.min) / this.step);
+      if(Array.isArray(this.value)){
+        this.leftx =  Math.round((this.value[1] - this.min) / (this.max - this.min) * 100)
+        this.leftTwo = Math.round((this.value[0] - this.min) / (this.max - this.min) * 100)
+      } else {
+        this.leftx = Math.round(this.value / lengthPerStep) * lengthPerStep
+      }
+    },
+    styleTicks(index){
+      let lengthPerStep = 100 / ((this.max - this.min) / this.step);
+      let steps = Math.round(index / lengthPerStep);
+      return {
+        left: steps * lengthPerStep + '%'
+      }
+    },
+    activeFocus(){
       window.addEventListener('mousemove', this.mouseMovex);
       window.addEventListener('mouseup', this.removeEvents);
       window.addEventListener('touchmove', this.mouseMovex);
       window.addEventListener('touchend', this.removeEvents);
     },
-    mouseMovex(event){
-      if(this.disabled){
-        return
-      }
-      this.showToolTip = true
-      let lineaPintada = this.$refs.lineaPintada
-      let linea = this.$refs.lineaSlider
-      let circle = this.$refs.circle
-      let x;
-      if(event.type=='touchmove'){
-        x = event.targetTouches[0].clientX
+    mouseMovex(evt){
+      let slider = this.$refs.slider
+      let leftx
+      /*
+      * change position left circle and bar
+      */
+      if(evt.type=='touchmove'){
+        leftx = event.targetTouches[0].clientX - slider.getBoundingClientRect().left
       } else {
-        x = event.clientX
-      }
-      let valorx = x - (linea.getBoundingClientRect().left - circle.offsetWidth/2)
-      if(this.vsMin){
-        if((valorx / this.ancho) * 100<=this.vsMin){
-          valorx = valorx
-        }
-      } else {
-        if(Math.sign(valorx)==-1){
-          valorx=0
-        }
+        leftx = evt.clientX - slider.getBoundingClientRect().left
       }
 
-      if (valorx>this.ancho) {
-        valorx = this.ancho
+
+      if(Math.sign(leftx)==-1 ){
+        leftx = 0
+      } else if (leftx > slider.clientWidth) {
+        leftx = slider.clientWidth
       }
 
-      this.valuex = valorx
-
-      let obtenerPorcentaje = 0
-      let porcentajex = 0
-        // if(this.vsMin){
-        //
-        // } else {
-      obtenerPorcentaje = (valorx / this.ancho) * 100
-      porcentajex = Math.round(obtenerPorcentaje)
-        // }
-        // circle.style.left = valorx  + 'px'
-        // lineaPintada.style.width = valorx + 10  + 'px'
-      this.setSliderValue(porcentajex)
-      this.numeroMostrar = porcentajex
-      this.$emit('input',porcentajex)
-      // }
-      // circle.style.left = (e.clientX - circle.offsetWidth/2) - this.ancho/2 + 'px'
+      this.changeLeft(leftx)
     },
-    removeEvents(event){
-      if(this.disabled){
-        return
-      }
-      this.showToolTip = false
-      let obtenerPorcentaje = (this.valuex / this.ancho) * 100
-      let porcentajex = Math.round(obtenerPorcentaje)
-
-      this.setSliderValue(porcentajex)
-      this.$emit('input',porcentajex)
-      window.removeEventListener('mousemove', this.mouseMovex);
+    removeEvents(){
+      this.two = this.actived = false
       window.removeEventListener('mouseup', this.removeEvents);
+      window.removeEventListener('mousemove', this.mouseMovex);
       window.removeEventListener('touchmove', this.mouseMovex);
       window.removeEventListener('touchend', this.removeEvents);
     },
-    clickLinea(evt){
-      let { className } = evt.target;
-      if(className !== 'linea-slider' && className !== 'linea-pintada' || this.disabled)
-      {
-        return
+    clickSlider(evt){
+      let slider = this.$refs.slider
+      let leftx = evt.clientX - slider.getBoundingClientRect().left
+      this.effect = true
+      setTimeout(()=>{
+        this.effect = false
+      },200)
+
+      let obtenerPorcentaje = (leftx / slider.clientWidth) * 100
+      let porcentajex = Math.round(obtenerPorcentaje)
+
+      if(Array.isArray(this.value)){
+        if(Math.abs(porcentajex - this.leftx) > Math.abs(porcentajex - this.leftTwo)){
+          this.two = true
+        } else {
+          this.two = false
+        }
       }
-      this.showToolTip = true;
-      const sliderOffsetLeft = this.$refs.lineaSlider.getBoundingClientRect().left;
-      let obtenerPorcentaje = (evt.clientX - sliderOffsetLeft) / this.ancho * 100
-      let porcentajex = Math.round(obtenerPorcentaje);
-      this.numeroMostrar = porcentajex;
-      this.$emit('input',porcentajex + 1)
+
+      this.changeLeft(leftx)
+    },
+    changeLeft(leftx){
+      let slider = this.$refs.slider
+      let obtenerPorcentaje = (leftx / slider.clientWidth) * 100
+      let porcentajex = Math.round(obtenerPorcentaje)
+      // let val = Math.round(porcentajex / 100 * (this.max))
+
+      const lengthPerStep = 100 / ((this.max - this.min) / this.step);
+      const steps = Math.round(porcentajex / lengthPerStep);
+      let val = steps * lengthPerStep * (this.max - this.min) * 0.01 + this.min;
+      val = Math.round(val)
+
+
+      // let val = Math.round(porcentajex * (this.max - this.min) * 0.01 + this.min)
+      if(this.ticks){
+        // val =  Math.round(porcentajex / 100 * (this.max / this.step)) * this.step
+        if(val > this.max) {
+          val = this.max
+          this[this.two?'leftTwo':'leftx'] = 100
+        } else {
+          this[this.two?'leftTwo':'leftx'] = Math.round(steps * lengthPerStep)
+        }
+      } else {
+        this[this.two?'leftTwo':'leftx'] = Math.round(steps * lengthPerStep)
+      }
+
+
+      if(Array.isArray(this.value)){
+        let valueNew = val
+        if(val == this.max){
+          valueNew = this.max
+        }
+        let vals = this.value
+        let min = Math.round(this.leftTwo / 100 * (this.max / this.step)) * this.step
+        let max = Math.round(this.leftx / 100 * (this.max / this.step)) * this.step
+        if(this.two){
+          if(min < max){
+            this.$emit('input',[valueNew,vals[1]])
+          } else if (min > max) {
+            this.$emit('input',[vals[0],valueNew])
+          } else {
+            this.$emit('input',[valueNew,valueNew])
+          }
+        } else {
+          if(min > max){
+            this.$emit('input',[valueNew,vals[1]])
+          } else if (min < max) {
+            this.$emit('input',[vals[0],valueNew])
+          } else {
+            this.$emit('input',[valueNew,valueNew])
+          }
+        }
+      } else {
+        this.$emit('input',val)
+      }
     }
   }
 }
 </script>
-
-<style lang="css">
-.s-d {
-  /* pointer-events: none; */
-
-  cursor: default;
-}
-.s-d .circle-slider{
-  background: rgb(200, 200, 200) !important;
-  cursor: default !important;
-
-}
-.s-d .circle-interno {
-  opacity: 0 !important;
-}
-.s-d .circle-slider .con-numero-slider {
-  background: rgb(60, 60, 60) !important;
-}
-.s-d .linea-pintada {
-  background: rgb(200, 200, 200) !important;
-}
-.con-slider {
-  width: 100%;
-  padding: 10px;
-}
-.linea-slider {
-  position: relative;
-  width: 100%;
-  background: rgb(235, 235, 235);
-  height: 6px;
-  border-radius: 3px;
-  cursor: pointer;
-}
-.circle-slider {
-  /* left: 0px; */
-  top: 50%;
-  position: absolute;
-  transform: translate(0%,-50%);
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  transition: transform .3s ease;
-  /* background: rgb(var(--primary)); */
-  backface-visibility: visible;
-  background: rgb(255, 255, 255);
-  right: 0px;
-}
-.circle-interno {
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  transform: scale(1);
-  content: '';
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  transition: all .3s ease;
-  background: rgb(255, 255, 255);
-  backface-visibility: hidden;
-  box-sizing: border-box;
-}
-.circle-slider:active {
-  /* transform:translate(0%,-50%) scale(1.1); */
-}
-.circle-slider:active .circle-interno {
-  transform: scale(0);
-  opacity: 1;
-}
-.linea-pintada {
-  width: 0px;
-  height: 100%;
-  background: rgb(var(--primary));
-  border-radius: 3px;
-  position: relative;
-}
-.con-numero-slider {
-  position: absolute;
-  top: -7px;
-  left: 50%;
-  transform: translate(-50%,-60%) scale(.5);
-  padding: 4px;
-  background: rgb(var(--primary));
-  border-radius: 5px;
-  transition: all .2s ease;
-  opacity: 0;
-  visibility:hidden;
-  font-size: 0.75em;
-}
-.con-numero-slider span {
-  z-index: 100;
-  display: block;
-  position: relative;
-  color: rgb(255, 255, 255);
-}
-.con-numero-slider::after {
-  position: absolute;
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-radius: 1px;
-  background: inherit;
-  /* background: rgb(182, 137, 204); */
-  left: 50%;
-  bottom: -7px;
-  transform: rotate(45deg) translate(-68%);
-  z-index: 10;
-}
-.hoverx {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%,-100%);
-}
-</style>

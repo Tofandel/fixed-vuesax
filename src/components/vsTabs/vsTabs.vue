@@ -1,29 +1,30 @@
 <template lang="html">
-  <div 
-    :class="[`vs-tabs-${vsColor}`,`vs-tabs-position-${vsPosition}`]" 
+  <div
+    :class="[`vs-tabs-${vsColor}`,`vs-tabs-position-${vsPosition}`]"
     class="con-vs-tabs vs-tabs" >
-    <div 
-      :style="styleTabs" 
+    <div
+      :style="styleTabs"
       class="con-ul-tabs">
-      <ul 
-        ref="ul" 
-        :class="[`ul-tabs-${vsAlignment}`]" 
+      <ul
+        ref="ul"
+        :class="[`ul-tabs-${vsAlignment}`]"
         class="ul-tabs">
-        <li 
-          v-for="(child,index) in children" 
-          :class="{'activeChild':childActive == index}" 
-          @mouseover="hover = true" 
-          @mouseout="hover = false" 
+        <li
+          v-for="(child,index) in children"
+          :class="{'activeChild':childActive == index}"
+          @mouseover="hover = true"
+          @mouseout="hover = false"
           @click="activeChild($event,index)">
           <button
             v-bind="child.attrs"
+            type="button"
             v-on="child.listeners">
             {{ child.label }}
           </button>
         </li>
       </ul>
-      <span 
-        :style="stylex" 
+      <span
+        :style="stylex"
         class="line-vs-tabs"/>
     </div>
     <div class="con-slot-tabs">
@@ -82,7 +83,6 @@ export default {
   },
   mounted(){
     this.changePositionLineCreated()
-    console.log(this.$children[this.childActive].active)
     this.$children[this.childActive].active = true
     if(this.vsPosition == 'left' || this.vsPosition == 'left'){
       this.$children[this.childActive].vertical = true
@@ -150,7 +150,6 @@ export default {
         this.topx = evt.target.offsetTop
         this.heightx = evt.target.offsetHeight
         this.widthx = 2
-        console.log(evt.target.offsetHeight)
       } else {
         this.leftx = evt.target.offsetLeft
         this.widthx = evt.target.offsetWidth

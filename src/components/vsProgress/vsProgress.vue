@@ -71,6 +71,11 @@ export default {
       percent: 0
     }
   },
+  watch:{
+    vsPercent(){
+      this.percent = this.vsPercent
+    }
+  },
   computed: {
     colorx(){
       if(this.vsColor){
