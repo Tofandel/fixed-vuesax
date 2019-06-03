@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vs-navbar v-model="activeItem" class="nabarx">
+    <vs-navbar collapse v-model="activeItem" class="nabarx">
       <div slot="title">
         <vs-navbar-title>
           Hello world
