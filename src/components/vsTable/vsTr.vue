@@ -1,5 +1,5 @@
 <template>
-  <div v-fragments>
+  <tbody>
     <tr
       ref="tableTr"
       :class="[`tr-table-state-${state}`,
@@ -32,7 +32,7 @@
     <vs-tr-expand :active="expanded" :colspan="colspan">
       <slot name="expand"></slot>
     </vs-tr-expand>
-  </div>
+  </tbody>
 </template>
 <script>
   import VsTrExpand from './vsTrExpand';
