@@ -1,8 +1,8 @@
 <template>
-  <td
-    ref="td"
-    :class="{'td-edit': $slots.edit}"
-    class="td vs-table--td">
+  <td v-if="!activeEdit"
+      ref="td"
+      :class="{'td-edit': $slots.edit}"
+      class="td vs-table--td">
     <span @click="clicktd">
       <vs-icon
         v-if="$slots.edit"
@@ -13,15 +13,31 @@
         v-if="$slots.edit"
         class="empty">{{data ? '' : 'Empty'}}</span></span>
   </td>
+  <td v-else>
+    <button
+      class="tr-expand--save"
+      @click="saveEdit">
+      <i class="material-icons">
+        done
+      </i>
+    </button>
+    <slot name="edit"></slot>
+    <button
+      class="tr-expand--close"
+      @click="closeEdit">
+      <i class="material-icons">
+        clear
+      </i>
+    </button>
+  </td>
 </template>
 <script>
-  import Vue from 'vue';
-  import trExpand from './vsTrExpand.vue';
 
   export default {
     name: 'VsTd',
     props: {
       data: {
+        type: null,
         default: null,
       },
     },
@@ -41,36 +57,15 @@
           e.parentNode.appendChild(i);
         }
       },
-      clicktd(evt) {
+      clicktd() {
         if (this.$slots.edit) {
-          const tr = evt.target.closest('tr');
-          if (!this.activeEdit) {
-            const trx = Vue.extend(trExpand);
-            const instance = new trx();
-            instance.$props.colspan = 5;
-            instance.$props.close = true;
-            instance.$slots.default = this.$slots.edit;
-            instance.vm = instance.$mount();
-            instance.$on('click', this.close);
-            const nuevo_parrafo = document.createElement('tr').appendChild(instance.vm.$el);
-            this.insertAfter(tr, nuevo_parrafo);
-            this.activeEdit = true;
-            setTimeout(() => {
-              window.addEventListener('click', this.closeEdit);
-            }, 20);
-          }
+          this.activeEdit = !this.activeEdit;
         }
       },
       closeEdit(evt) {
         if (!evt.target.closest('.tr-expand') && !evt.target.closest('.vs-select--options')) {
-          this.close();
+          this.activeEdit = false;
         }
-      },
-      close() {
-        const tr = this.$refs.td.closest('tr');
-        this.activeEdit = false;
-        tr.parentNode.removeChild(tr.nextSibling);
-        window.removeEventListener('click', this.closeEdit);
       },
       saveEdit() {
         this.activeEdit = false;

@@ -1,40 +1,64 @@
 <template>
-  <tr
-    ref="tableTr"
-    :class="[`tr-table-state-${state}`, {'is-selected':isSelected, 'selected': data, 'is-expand': expanded, 'activeEdit':
-      activeEdit, 'hoverFlat': $parent.hoverFlat}]"
-    class="tr-values vs-table--tr"
-    @dblclick="dblclicktr"
-    @click="clicktr">
-    <td
-      v-if="$parent.multiple || $slots.expand"
-      :class="{'active-expanded': expanded}"
-      class="td-check">
-      <vs-checkbox
-        v-if="$parent.multiple"
-        :checked="isSelected"
-        size="small"
-        @change="handleCheckbox"/>
+  <div v-fragments>
+    <tr
+      ref="tableTr"
+      :class="[`tr-table-state-${state}`,
+               {
+                 'is-selected':isSelected,
+                 'selected': data,
+                 'tr-expandedx is-expand': expanded,
+                 'activeEdit':activeEdit,
+                 'hoverFlat': $parent.hoverFlat
+               }]"
+      class="tr-values vs-table--tr"
+      @dblclick="dblclicktr"
+      @click="clicktr">
+      <td
+        v-if="$parent.multiple || $slots.expand"
+        :class="{'active-expanded': expanded}"
+        class="td-check">
+        <vs-checkbox
+          v-if="$parent.multiple"
+          :checked="isSelected"
+          size="small"
+          @change="handleCheckbox"/>
 
-      <vs-icon v-if="$slots.expand">
-        keyboard_arrow_down
-      </vs-icon>
-    </td>
-    <slot></slot>
-  </tr>
+        <vs-icon v-if="$slots.expand">
+          keyboard_arrow_down
+        </vs-icon>
+      </td>
+      <slot></slot>
+    </tr>
+    <vs-tr-expand v-if="expanded" :colspan="colspan">
+      <slot name="expand"></slot>
+    </vs-tr-expand>
+  </div>
 </template>
 <script>
-  import Vue from 'vue';
-  import trExpand from './vsTrExpand.vue';
+  import VsTrExpand from './vsTrExpand';
 
   export default {
     name: 'VsTr',
+    components: { VsTrExpand },
+    directives: {
+      fragments: {
+        inserted: function (el) {
+          const children = Array.from(el.children);
+          const parent = el.parentElement;
+          children.forEach((item) => {
+            parent.appendChild(item);
+          });
+          parent.removeChild(el);
+        },
+      },
+    },
     props: {
       state: {
         type: String,
         default: null,
       },
       data: {
+        type: null,
         default: null,
       },
     },
@@ -89,30 +113,12 @@
       dblclicktr() {
         this.$parent.dblclicktr(this.data, true);
       },
-      clicktd(evt) {
+      clicktd() {
         if (this.$parent.multiple || !this.$slots.expand) return;
-        const tr = evt.target.closest('tr');
-        if (this.expanded) {
-          tr.parentNode.removeChild(tr.nextSibling);
-          tr.classList.remove('tr-expandedx');
-          this.expanded = false;
-        } else {
-          tr.classList.add('tr-expandedx');
-          const trx = Vue.extend(trExpand);
-          const instance = new trx();
-          instance.$props.colspan = this.colspan;
-          instance.$slots.default = this.$slots.expand;
-          instance.vm = instance.$mount();
-          var newTR = document.createElement('tr').appendChild(instance.vm.$el);
-          this.insertAfter(tr, newTR);
-          this.expanded = true;
-        }
+        this.expanded = !this.expanded;
       },
       collapseExpandedData() {
         if (this.expanded) {
-          const tr = this.$refs.tableTr;
-          tr.parentNode.removeChild(tr.nextSibling);
-          tr.classList.remove('tr-expandedx');
           this.expanded = false;
         }
       },
