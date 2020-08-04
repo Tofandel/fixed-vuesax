@@ -67,7 +67,8 @@
     computed: {
       style() {
         return {
-          coords: {},
+          left: this.cords.left,
+          top: this.cords.top,
           transitionDelay: this.activeTooltip ? this.delay : '0s',
           background: _color.getColor(this.color, 1),
           width: this.widthx,
