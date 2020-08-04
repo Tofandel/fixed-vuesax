@@ -61,7 +61,7 @@ module.exports = {
     'vue/singleline-html-element-content-newline': ['warn', {
       ignoreWhenNoAttributes: true,
       ignoreWhenEmpty: true,
-      ignores: ['span', 'pre', 'textarea', 'v-btn', 'v-icon', 'b-tag', 'b-icon'],
+      ignores: ['span', 'pre', 'textarea', 'v-btn', 'v-icon', 'b-tag', 'b-icon', 'i'],
     }],
     'vue/html-self-closing': ['error', {
       html: {

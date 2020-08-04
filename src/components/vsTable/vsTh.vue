@@ -29,8 +29,8 @@
       currentSort: 0,
       sortStatuses: [
         null,
-        'asc',
         'desc',
+        'asc',
       ],
     }),
     computed: {
@@ -46,7 +46,7 @@
     },
     methods: {
       sortValue() {
-        this.currentSort = this.currentSort !== 2 ? this.currentSort + 1 : 0;
+        this.currentSort = (this.currentSort + 1) % 3;
         this.$parent.sort(this.sortKey, this.sortStatuses[this.currentSort]);
       },
       resetSort() {

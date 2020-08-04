@@ -1,7 +1,6 @@
 <template>
   <transition name="tr-expand">
     <tr
-      v-show="active"
       class="tr-expand">
       <td :colspan="colspan">
         <div v-if="active" class="content-tr-expand">
@@ -32,7 +31,6 @@
         default: 1,
         type: Number,
       },
-      active: Boolean,
     },
   };
 </script>

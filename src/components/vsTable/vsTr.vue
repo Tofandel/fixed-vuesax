@@ -91,18 +91,11 @@
       });
     },
     created() {
-      if (this.$slots.expand) this.$parent.hasExpadableData = true;
+      if (this.$slots.expand) this.$parent.hasExpandableData = true;
     },
     methods: {
       handleCheckbox() {
         this.$parent.handleCheckbox(this.data);
-      },
-      insertAfter(e, i) {
-        if (e.nextSibling) {
-          e.parentNode.insertBefore(i, e.nextSibling);
-        } else {
-          e.parentNode.appendChild(i);
-        }
       },
       clicktr(evt) {
         this.$parent.clicktr(this.data, true);

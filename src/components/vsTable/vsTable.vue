@@ -27,7 +27,7 @@
             class="vs-table--thead">
             <tr>
               <th
-                v-if="multiple || hasExpadableData"
+                v-if="multiple || hasExpandableData"
                 class="td-check">
                 <span
                   v-if="multiple"
@@ -120,12 +120,11 @@
     },
     data: () => ({
       headerWidth: '100%',
-      trs: [],
       datax: [],
       searchx: null,
       currentx: 1,
       maxItemsx: 5,
-      hasExpadableData: false,
+      hasExpandableData: false,
       currentSortKey: null,
       currentSortType: null,
     }),
@@ -152,7 +151,7 @@
         if (typeof (this.datax) === 'object') {
           return (this.datax ? !Object.keys(this.datax).length : false) && this.search;
         } else {
-          return (this.datax ? !!this.datax.length : false) && this.search;
+          return (this.datax ? !this.datax.length : false) && this.search;
         }
       },
       isCheckedLine() {
