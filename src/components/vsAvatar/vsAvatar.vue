@@ -77,7 +77,9 @@
     computed: {
       avatarClass() {
         const classes = {};
-        classes[this.size] = true;
+        if (this.size) {
+          classes[this.size] = true;
+        }
         if (_color.isColor(this.color)) {
           classes[`con-vs-avatar-${this.color}`] = true;
         }
