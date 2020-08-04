@@ -12,12 +12,11 @@
       ref="slider"
       :disabled="disabled"
       class="vs-slider"
-      @click="clickSlider($event),actived = true">
+      @click="clickSlider">
       <span
         :style="styleLineOne"
         :class="{'hasTransition':effect}"
-        class="vs-slider-line-one"></span>
-      <span class="vs-slider-line-two"></span>
+        class="vs-slider-line-one"></span> <span class="vs-slider-line-two"></span>
 
       <span
         :class="{'run-effect':effect}"
@@ -25,13 +24,14 @@
         class="vs-slider-line-efect"></span>
 
       <!-- vsTicks -->
-      <span
-        v-for="(tick,index) in countTicks"
-        v-if="ticks&&tick"
-        :class="{'isEnd':index == countTicks-1}"
-        :style="styleTicks(index)"
-        class="vs-slider--tick">
-      </span>
+      <template v-if="ticks">
+        <span
+          v-for="index in countTicks"
+          :key="index"
+          :class="{'isEnd':index >= countTicks-1}"
+          :style="styleTicks(index + 1)"
+          class="vs-slider--tick"></span>
+      </template>
     </button>
     <button
       ref="circle1"
@@ -40,19 +40,16 @@
         'hasTransition':effect,
         'isEquals':isEquals,
         'changeValue':changeValue,
-        'isEndValue':value == max
+        'isEndValue':value >= max
       }"
       :style="styleCircle"
       class="vs-circle-slider vs-circles-slider vs-slider--circles vs-slider--circle"
-      @touchstart="activeFocus($event),actived = true"
-      @mousedown="activeFocus($event),actived = true">
+      @touchstart="activeFocus"
+      @mousedown="activeFocus">
       <span
         :style="styleText"
-        class="text-circle-slider vs-slider--circle-text">
-        {{valueCircle1}}
-        <span v-if="textFixed">
-          {{textFixed}}
-        </span>
+        class="text-circle-slider vs-slider--circle-text"> {{valueCircle1}} <span v-if="textFixed">
+          {{textFixed}} </span>
         <vs-icon
           :icon-pack="iconPack"
           :icon="icon"/>
@@ -66,36 +63,32 @@
         'hasTransition':effect,
         'isEquals':isEquals,
         'changeValue':changeValue,
-        'isEndValue':value == max
+        'isEndValue':value >= max
       }"
       :style="styleCircleTwo"
       class="vs-circle-slider-two vs-circles-slider vs-slider--circles vs-slider--circle-two"
-      @touchstart="activeFocus($event),two = true,actived = true"
-      @mousedown="activeFocus($event),two = true,actived = true">
+      @touchstart="activeFocusTwo"
+      @mousedown="activeFocusTwo">
       <span
         :style="styleText"
-        class="text-circle-slider vs-slider--circle-text">
-        {{valueCircle2}}
-        <span v-if="textFixed">
-          {{textFixed}}
-        </span>
-        <i
-          v-if="icon"
-          translate="no"
-          class="material-icons notranslate">
-          {{icon}}
-        </i>
-      </span>
+        class="text-circle-slider vs-slider--circle-text"> {{valueCircle2}} <span v-if="textFixed">
+          {{textFixed}} </span> <i
+        v-if="icon"
+        translate="no"
+        class="material-icons notranslate"> {{icon}} </i> </span>
     </button>
   </div>
 </template>
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsSlider',
     props: {
-      value: {},
+      value: {
+        type: null,
+      },
       disabled: {
         default: false,
         type: [Boolean, String],
@@ -150,10 +143,10 @@
     }),
     computed: {
       isEquals() {
-        return Array.isArray(this.value) ? this.value[0] == this.value[1] : false;
+        return Array.isArray(this.value) ? this.value[0] === this.value[1] : false;
       },
       countTicks() {
-        return this.max + 1;
+        return this.max;
       },
       /*
        * styles component
@@ -263,7 +256,7 @@
         if (!Array.isArray(this.value)) {
           let val = parseFloat(this.value) - parseFloat(this.step);
           val = this.stepDecimals ? this.toDecimal(val) : Math.round(val);
-          if (this.value == this.min) {
+          if (val < this.min) {
             val = this.min;
           }
           this.leftx = val;
@@ -297,7 +290,12 @@
           left: steps * lengthPerStep + '%',
         };
       },
+      activeFocusTwo() {
+        this.two = true;
+        this.activeFocus();
+      },
       activeFocus() {
+        this.actived = true;
         window.addEventListener('mousemove', this.mouseMovex);
         window.addEventListener('mouseup', this.removeEvents);
         window.addEventListener('touchmove', this.mouseMovex);
@@ -309,14 +307,14 @@
         /*
          * change position left circle and bar
          */
-        if (evt.type == 'touchmove') {
+        if (evt.type === 'touchmove') {
           leftx =
-            event.targetTouches[0].clientX - slider.getBoundingClientRect().left;
+            evt.targetTouches[0].clientX - slider.getBoundingClientRect().left;
         } else {
           leftx = evt.clientX - slider.getBoundingClientRect().left;
         }
 
-        if (Math.sign(leftx) == -1) {
+        if (leftx < 0) {
           leftx = 0;
         } else if (leftx > slider.clientWidth) {
           leftx = slider.clientWidth;
@@ -332,6 +330,7 @@
         window.removeEventListener('touchend', this.removeEvents);
       },
       clickSlider(evt) {
+        this.actived = true;
         const slider = this.$refs.slider;
         const leftx = evt.clientX - slider.getBoundingClientRect().left;
         this.effect = true;
@@ -341,13 +340,7 @@
         const percentX = Math.round((leftx / slider.clientWidth) * 100);
 
         if (Array.isArray(this.value)) {
-          if (
-            Math.abs(percentX - this.leftx) > Math.abs(percentX - this.leftTwo)
-          ) {
-            this.two = true;
-          } else {
-            this.two = false;
-          }
+          this.two = Math.abs(percentX - this.leftx) > Math.abs(percentX - this.leftTwo);
         }
 
         this.changeLeft(leftx);
@@ -370,7 +363,7 @@
 
         if (Array.isArray(this.value)) {
           let valueNew = val;
-          if (val == this.max) {
+          if (val > this.max) {
             valueNew = this.max;
           }
           const vals = this.value;

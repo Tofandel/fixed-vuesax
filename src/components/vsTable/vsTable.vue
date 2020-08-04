@@ -98,6 +98,7 @@
         type: Boolean,
       },
       data: {
+        type: Array,
         default: null,
       },
       notSpacer: {
@@ -126,7 +127,7 @@
       },
       currentPage: {
         default: 1,
-        type: Number | String,
+        type: [Number | String],
       },
       sst: {
         default: false,
@@ -268,8 +269,12 @@
         const { currentSortKey, currentSortType } = this;
 
         function compare(a, b) {
-          if (a[currentSortKey] < b[currentSortKey]) { return currentSortType === 'desc' ? 1 : -1; }
-          if (a[currentSortKey] > b[currentSortKey]) { return currentSortType === 'desc' ? -1 : 1; }
+          if (a[currentSortKey] < b[currentSortKey]) {
+            return currentSortType === 'desc' ? 1 : -1;
+          }
+          if (a[currentSortKey] > b[currentSortKey]) {
+            return currentSortType === 'desc' ? -1 : 1;
+          }
           return 0;
         }
 
