@@ -1,3 +1,16 @@
+.table
+  display: table
+  .tr
+    display: table-row
+  .td
+    display: table-cell
+  .thead
+    display: table-header-group
+  .tfoot
+    display: table-footer-group
+  .th
+    display: table-caption
+
 .vs-con-table
   background: rgb(251,251,251)
   border-radius: 5px
@@ -25,13 +38,13 @@
     .tr-values
       &:nth-child(2n)
         background: transparent !important
-  table
+  .vs-table
     font-size: .8rem
     width: 100%
     border-collapse: collapse
     tbody
       width: 100%
-  td
+  .td
     border: 0px
     padding: 2px 8px
     // border-left: 1px solid rgba(0,0,0,.04)
@@ -102,10 +115,10 @@
     // width: 0px
   &:nth-child(2n)
     background: rgb(0,0,0)
-  tr:not(.tr-expand)
+  .tr:not(.tr-expand)
     // border-bottom: 1px solid rgba(0,0,0,.03)
   .tr-expand
-    td
+    .td
       padding: 0px
       overflow: hidden
       .con-expand
@@ -122,7 +135,7 @@
   //   background: rgb(255,255,255)
   //   padding: 6px 0px
   //   position: relative
-  tr
+  .tr
     transition: all .3s ease
     background: rgb(255,255,255)
     // border-radius: 5px
@@ -144,10 +157,10 @@
       ~ tbody
         z-index: 10
 
-    td
+    .td
       padding: 10px
     .tr-expand
-      td
+      .td
         padding 0px
     &.selected
       cursor: pointer
@@ -226,7 +239,7 @@
 //   z-index 100
 //   padding-top: 5px
   // border-bottom: 1px solid rgba(0,0,0,.06)
-  th
+  .th
     padding: 6px 10px
     padding-top: 5px
     padding-bottom: 3px
@@ -282,7 +295,7 @@ for colorx, i in $vs-colors
       color: getColor(colorx, 1)
       background: getColor(colorx, .05) !important
       box-shadow: 0px 0px 1px 0px getColor(colorx, 1) !important
-      td
+      .td
         &:first-child
           border-left: 1px solid rgba(0,0,0,.0) !important
 
@@ -308,7 +321,7 @@ for colorx, i in $vs-colors
 
 
 .tr-expand
-  td
+  .td
     .content-tr-expand
       padding: 10px
       position relative
@@ -345,7 +358,7 @@ for colorx, i in $vs-colors
 
 .vuesax-app-is-rtl
   .vs-con-table
-    td
+    .td
       &.td-check
         .vs-icon
           transform translate(-7px) rotate(90deg)

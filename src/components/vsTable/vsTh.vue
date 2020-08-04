@@ -1,9 +1,9 @@
 <template>
-  <th
+  <div
     colspan="1"
     rowspan="1"
     @click="sortValue">
-    <div class="vs-table-text">
+    <div class="th vs-table-text">
       <slot></slot>
       <span
         v-if="isColumnSelectedForSort && currentSort"
@@ -13,7 +13,7 @@
           class="th-sort-icon"/>
       </span>
     </div>
-  </th>
+  </div>
 </template>
 <script>
   export default {

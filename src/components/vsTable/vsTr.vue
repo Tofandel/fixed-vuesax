@@ -1,22 +1,22 @@
 <template>
-  <fragment>
-    <tr
+  <div>
+    <div
       ref="tableTr"
-      :class="[`tr-table-state-${state}`,
-               {
-                 'is-selected':isSelected,
-                 'selected': data,
-                 'tr-expandedx is-expand': expanded,
-                 'activeEdit':activeEdit,
-                 'hoverFlat': $parent.hoverFlat
-               }]"
+      :class="[ 'tr', `tr-table-state-${state}`,
+                {
+                  'is-selected':isSelected,
+                  'selected': data,
+                  'tr-expandedx is-expand': expanded,
+                  'activeEdit':activeEdit,
+                  'hoverFlat': $parent.hoverFlat
+                }]"
       class="tr-values vs-table--tr"
       @dblclick="dblclicktr"
       @click="clicktr">
-      <td
+      <div
         v-if="$parent.multiple || $slots.expand"
         :class="{'active-expanded': expanded}"
-        class="td-check">
+        class="td td-check">
         <vs-checkbox
           v-if="$parent.multiple"
           :checked="isSelected"
@@ -26,21 +26,20 @@
         <vs-icon v-if="$slots.expand">
           keyboard_arrow_down
         </vs-icon>
-      </td>
+      </div>
       <slot></slot>
-    </tr>
+    </div>
     <vs-tr-expand v-if="expanded" active :colspan="colspan">
       <slot name="expand"></slot>
     </vs-tr-expand>
-  </fragment>
+  </div>
 </template>
 <script>
   import VsTrExpand from './vsTrExpand';
-  import Fragment from '../Fragment';
 
   export default {
     name: 'VsTr',
-    components: { Fragment, VsTrExpand },
+    components: { VsTrExpand },
     directives: {
       fragments: {
         inserted: function (el) {

@@ -1,5 +1,5 @@
 <template>
-  <td
+  <div
     ref="td"
     :class="{'td-edit': $slots.edit}"
     class="td vs-table--td">
@@ -15,19 +15,17 @@
           class="empty">{{data ? '' : 'Empty'}}</span></span>
     </template>
     <template v-else>
-      <button
+      <vs-button
+        icon="done"
         class="tr-expand--save"
-        @click="saveEdit">
-        <i class="material-icons">done</i>
-      </button>
+        @click="saveEdit"/>
       <slot name="edit"></slot>
-      <button
+      <vs-button
+        icon="clear"
         class="tr-expand--close"
-        @click="closeEdit">
-        <i class="material-icons">clear</i>
-      </button>
+        @click="closeEdit"/>
     </template>
-  </td>
+  </div>
 </template>
 
 <script>

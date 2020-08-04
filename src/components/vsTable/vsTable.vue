@@ -19,16 +19,16 @@
       <div
         :style="styleConTbody"
         class="vs-con-tbody vs-table--tbody ">
-        <table
+        <div
           ref="table"
           class="vs-table vs-table--tbody-table">
-          <thead
+          <div
             ref="thead"
-            class="vs-table--thead">
-            <tr>
-              <th
+            class="thead vs-table--thead">
+            <div class="tr">
+              <div
                 v-if="multiple || hasExpandableData"
-                class="td-check">
+                class="td td-check">
                 <span
                   v-if="multiple"
                   class="con-td-check">
@@ -39,12 +39,12 @@
                     size="small"
                     @click="changeCheckedMultiple"/>
                 </span>
-              </th>
+              </div>
               <slot name="thead"></slot>
-            </tr>
-          </thead>
+            </div>
+          </div>
           <slot :data="datax"></slot>
-        </table>
+        </div>
       </div>
       <div
         v-if="isNoData"
