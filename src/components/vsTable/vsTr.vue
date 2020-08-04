@@ -29,7 +29,7 @@
       </td>
       <slot></slot>
     </tr>
-    <vs-tr-expand v-if="expanded" :colspan="colspan">
+    <vs-tr-expand :active="expanded" :colspan="colspan">
       <slot name="expand"></slot>
     </vs-tr-expand>
   </div>

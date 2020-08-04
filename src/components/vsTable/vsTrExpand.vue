@@ -1,10 +1,10 @@
 <template>
   <transition name="tr-expand">
     <tr
-      v-if="active"
+      v-show="active"
       class="tr-expand">
       <td :colspan="colspan">
-        <div class="content-tr-expand">
+        <div v-if="active" class="content-tr-expand">
           <slot></slot>
 
           <button
@@ -32,12 +32,7 @@
         default: 1,
         type: Number,
       },
-    },
-    data: () => ({
-      active: false,
-    }),
-    mounted() {
-      this.active = true;
+      active: Boolean,
     },
   };
 </script>
