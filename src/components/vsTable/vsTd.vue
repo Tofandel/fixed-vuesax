@@ -1,60 +1,85 @@
 <template>
-  <div
+  <td
     ref="td"
     :class="{'td-edit': $slots.edit}"
     class="td vs-table--td">
-    <template v-if="!activeEdit">
-      <span @click="clicktd">
-        <vs-icon
-          v-if="$slots.edit"
-          class="icon-edit"
-          icon="edit"/>
-        <slot></slot>
-        <span
-          v-if="$slots.edit"
-          class="empty">{{data ? '' : 'Empty'}}</span></span>
-    </template>
-    <template v-else>
-      <vs-button
-        icon="done"
-        class="tr-expand--save"
-        @click="saveEdit"/>
-      <slot name="edit"></slot>
-      <vs-button
-        icon="clear"
-        class="tr-expand--close"
-        @click="closeEdit"/>
-    </template>
-  </div>
+    <span @click="clicktd">
+      <vs-icon
+        v-if="$slots.edit"
+        class="icon-edit"
+        icon="edit"/>
+      <slot></slot>
+      <span
+        v-if="$slots.edit"
+        class="empty">{{data ? '' : 'Empty'}}</span></span>
+  </td>
 </template>
-
 <script>
+  import Vue from 'vue';
+  import trExpand from './vsTrExpand.vue';
+
   export default {
     name: 'VsTd',
     props: {
       data: {
-        type: null,
         default: null,
       },
     },
-    data() {
-      return {
-        activeEdit: false,
-      };
+    data: () => ({
+      activeEdit: false,
+    }),
+    watch: {
+      activeEdit() {
+        this.$parent.activeEdit = this.activeEdit;
+      },
+    },
+    beforeDestroy() {
+      this.close();
     },
     methods: {
-      clicktd() {
+      insertAfter(e, i) {
+        if (e.nextSibling) {
+          e.parentNode.insertBefore(i, e.nextSibling);
+        } else {
+          e.parentNode.appendChild(i);
+        }
+      },
+      clicktd(evt) {
         if (this.$slots.edit) {
-          this.activeEdit = !this.activeEdit;
+          const tr = evt.target.closest('tr');
+          if (!this.activeEdit) {
+            const trx = Vue.extend(trExpand);
+            const instance = new trx({
+              propsData: {
+                colspan: this.$parent.colspan,
+                close: true,
+              },
+              parent: this,
+            });
+            instance.$slots.default = this.$slots.edit;
+            instance.$mount();
+            instance.$on('close', this.close);
+            const exp = document.createElement('tr').appendChild(instance.$el);
+            this.insertAfter(tr, exp);
+            this.activeEdit = true;
+            setTimeout(() => {
+              window.addEventListener('click', this.closeEdit);
+            }, 20);
+          }
         }
       },
       closeEdit(evt) {
         if (!evt.target.closest('.tr-expand') && !evt.target.closest('.vs-select--options')) {
-          this.activeEdit = false;
+          this.close();
         }
       },
-      saveEdit() {
-        this.activeEdit = false;
+      close() {
+        if (this.activeEdit) {
+          const tr = this.$refs.td.closest('tr');
+          this.activeEdit = false;
+          tr.parentNode.removeChild(tr.nextSibling);
+          window.removeEventListener('click', this.closeEdit);
+        }
       },
     },
   };

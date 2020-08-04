@@ -6,14 +6,10 @@
         <div v-if="active" class="content-tr-expand">
           <slot></slot>
 
-          <button
-            v-if="close"
+          <vs-button
+            icon="done"
             class="tr-expand--close"
-            @click="$emit('click', $event)">
-            <i class="material-icons">
-              clear
-            </i>
-          </button>
+            @click="$emit('close', $event)"/>
         </div>
       </td>
     </tr>
