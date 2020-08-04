@@ -41,22 +41,12 @@
         default: null,
       },
     },
-    data: () => ({
-      activeEdit: false,
-    }),
-    watch: {
-      activeEdit() {
-        this.$parent.activeEdit = this.activeEdit;
-      },
+    data() {
+      return {
+        activeEdit: false,
+      };
     },
     methods: {
-      insertAfter(e, i) {
-        if (e.nextSibling) {
-          e.parentNode.insertBefore(i, e.nextSibling);
-        } else {
-          e.parentNode.appendChild(i);
-        }
-      },
       clicktd() {
         if (this.$slots.edit) {
           this.activeEdit = !this.activeEdit;
