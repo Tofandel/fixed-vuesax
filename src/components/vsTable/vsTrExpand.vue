@@ -3,7 +3,7 @@
     <tr
       class="tr-expand">
       <td :colspan="colspan">
-        <div v-if="active" class="content-tr-expand">
+        <div class="content-tr-expand">
           <slot></slot>
 
           <vs-button
@@ -18,6 +18,7 @@
 
 <script>
   export default {
+    name: 'VsTrExpand',
     props: {
       close: {
         type: Boolean,
