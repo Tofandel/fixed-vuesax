@@ -7,6 +7,9 @@
           <slot></slot>
 
           <vs-button
+            v-if="close"
+            type="border"
+            color="success"
             icon="done"
             class="tr-expand--close"
             @click="$emit('close', $event)"/>
