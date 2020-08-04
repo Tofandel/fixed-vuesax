@@ -11,31 +11,31 @@
   </transition>
 </template>
 <script>
-  import utils from '../../utils'
+  import utils from '../../utils';
   export default {
-    name:'ViewUpload',
-    props:{
-      active:{
-        default:false,
-        type:Boolean
+    name: 'ViewUpload',
+    props: {
+      active: {
+        default: false,
+        type: Boolean,
       },
-      src:{
-        default:null,
-        type:String
-      }
+      src: {
+        default: null,
+        type: String,
+      },
     },
-    mounted(){
-      utils.insertBody(this.$refs.view)
+    mounted() {
+      utils.insertBody(this.$refs.view);
     },
-    upload(){
-      utils.insertBody(this.$refs.view)
+    upload() {
+      utils.insertBody(this.$refs.view);
     },
-    methods:{
-      closeView(evt){
-        if(evt.target.tagName != 'IMG'){
-          this.$parent.viewActive = false
+    methods: {
+      closeView(evt) {
+        if (evt.target.tagName != 'IMG') {
+          this.$parent.viewActive = false;
         }
-      }
-    }
-  }
+      },
+    },
+  };
 </script>

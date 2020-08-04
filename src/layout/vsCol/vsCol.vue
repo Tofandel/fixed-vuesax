@@ -14,7 +14,7 @@
       'margin-left':vsOffset*100/12+'%',
       'width':vsW*100/12+'%'}"
     class="vs-col">
-    <slot/>
+    <slot></slot>
   </div>
 </template>
 
@@ -28,19 +28,19 @@
       },
       vsXs: {
         type: [Number, String],
-        default: ''
+        default: '',
       },
       vsSm: {
         type: [Number, String],
-        default: ''
+        default: '',
       },
       vsLg: {
         type: [Number, String],
-        default: ''
+        default: '',
       },
       vsOffset: {
         type: [Number, String],
-        default: 0
+        default: 0,
       },
       vsType: {
         type: String,
@@ -56,10 +56,10 @@
       },
       vsOrder: {
         default: null,
-        type: [String, Number]
-      }
-    }
-  }
+        type: [String, Number],
+      },
+    },
+  };
 </script>
 
 <style lang="css">
@@ -226,6 +226,5 @@
       display: none !important;
     }
   }
-
 
 </style>

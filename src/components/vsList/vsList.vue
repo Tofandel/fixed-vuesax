@@ -1,12 +1,12 @@
 <template lang="html">
   <div
     class="vs-list">
-    <slot/>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-export default {
-  name:'VsList'
-}
+  export default {
+    name: 'VsList',
+  };
 </script>

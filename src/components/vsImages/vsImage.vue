@@ -14,21 +14,21 @@
   </li>
 </template>
 <script>
-export default {
-  name: 'VsImage',
-  inheritAttrs: false,
-  props:{
-    src:{
-      default: null,
-      type: String
-    }
-  },
-  computed:{
-    styleImage () {
-      return {
-        backgroundImage: `url(${this.src})`
-      }
-    }
-  }
-}
+  export default {
+    name: 'VsImage',
+    inheritAttrs: false,
+    props: {
+      src: {
+        default: null,
+        type: String,
+      },
+    },
+    computed: {
+      styleImage() {
+        return {
+          backgroundImage: `url(${this.src})`,
+        };
+      },
+    },
+  };
 </script>

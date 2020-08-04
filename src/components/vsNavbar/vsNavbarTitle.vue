@@ -4,7 +4,7 @@
   </h3>
 </template>
 <script>
-export default {
-  name:'VsNavbarTitle',
-}
+  export default {
+    name: 'VsNavbarTitle',
+  };
 </script>

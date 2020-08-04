@@ -9,7 +9,7 @@
   </li>
 </template>
 <script>
-export default {
-  name:'VsNavbarGroup',
-}
+  export default {
+    name: 'VsNavbarGroup',
+  };
 </script>

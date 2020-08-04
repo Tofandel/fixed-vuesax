@@ -13,53 +13,52 @@
   </li>
 </template>
 <script>
-import _color from '../../utils/color.js'
-export default {
-  name:'VsNavbarItem',
-  props:{
-    index: {
-      type: [Number, String],
-      default: null
-    }
-  },
-  data:()=>({
-    hover: false
-  }),
-  computed:{
-    getActiveTextColor () {
-      return this.$parent.$props.activeTextColor
+  import _color from '../../utils/color.js';
+  export default {
+    name: 'VsNavbarItem',
+    props: {
+      index: {
+        type: [Number, String],
+        default: null,
+      },
     },
-    isActiveItem () {
-      return this.$parent.value == this.index
-    },
-    styleAfter () {
-      return {
-        background: _color.getColor(this.getActiveTextColor)
-      }
-    },
-    styleHover () {
-      if (this.isActiveItem) {
+    data: () => ({
+      hover: false,
+    }),
+    computed: {
+      getActiveTextColor() {
+        return this.$parent.$props.activeTextColor;
+      },
+      isActiveItem() {
+        return this.$parent.value == this.index;
+      },
+      styleAfter() {
         return {
-          color: _color.getColor(this.getActiveTextColor)
+          background: _color.getColor(this.getActiveTextColor),
+        };
+      },
+      styleHover() {
+        if (this.isActiveItem) {
+          return {
+            color: _color.getColor(this.getActiveTextColor),
+          };
+        } else {
+          return {
+            color: this.hover ? _color.getColor(this.getActiveTextColor) : _color.getColor(this.$parent.$props.textColor),
+          };
         }
-      } else {
-        return {
-          color: this.hover?_color.getColor(this.getActiveTextColor) : _color.getColor(this.$parent.$props.textColor)
-        }
-      }
-
-    }
-  },
-  methods:{
-    clickItem () {
-      this.$parent.changeIndex(this.index)
+      },
     },
-    mouseout () {
-      this.hover = false
+    methods: {
+      clickItem() {
+        this.$parent.changeIndex(this.index);
+      },
+      mouseout() {
+        this.hover = false;
+      },
+      mouseover() {
+        this.hover = true;
+      },
     },
-    mouseover () {
-      this.hover = true
-    }
-  }
-}
+  };
 </script>

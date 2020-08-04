@@ -38,20 +38,20 @@
 <script>
   export default {
     name: 'VsCard',
-    props:{
+    props: {
       actionable: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       fixedHeight: {
         default: false,
-        type: Boolean
-      }
+        type: Boolean,
+      },
     },
     methods: {
       hasSlot(slot) {
-        return this.$slots[slot]
-      }
-    }
-  }
+        return this.$slots[slot];
+      },
+    },
+  };
 </script>

@@ -2,18 +2,17 @@
   <div class="con-upload">
     <view-upload
       v-if="viewActive"
-      :src="viewSrc" />
-
+      :src="viewSrc"/>
 
     <div class="con-img-upload">
       <!-- <transition-group v-for="(img,index) in getFilesFilter" :key="index" name="upload"> -->
       <div
         v-for="(img,index) in getFilesFilter"
+        :key="index"
         :class="{
           'fileError':img.error,
           'removeItem':itemRemove.includes(index)
         }"
-        :key="index"
         class="img-upload">
         <button
           class="btn-x-file"
@@ -39,17 +38,17 @@
           <i
             translate="no"
             class="material-icons notranslate">
-            {{ img.percent >= 100?img.error?'report_problem':'cloud_done':'cloud_upload' }}
+            {{img.percent >= 100?img.error?'report_problem':'cloud_done':'cloud_upload'}}
           </i>
-          <span>{{ img.percent }} %</span>
+          <span>{{img.percent}} %</span>
         </button>
         <img
           v-if="img.src"
+          :key="index"
           :style="{
             maxWidth:img.orientation == 'h'?'100%':'none',
             maxHeight:img.orientation == 'w'?'100%':'none'
           }"
-          :key="index"
           :src="img.src"
           @touchend="viewImage(img.src,$event)"
           @click="viewImage(img.src,$event)">
@@ -62,12 +61,11 @@
             description
           </i>
           <span>
-            {{ img.name }}
+            {{img.name}}
           </span>
         </h4>
       </div>
       <!-- </transition-group > -->
-
 
       <div
         :class="{
@@ -83,7 +81,7 @@
           type="file"
           @change="getFiles">
         <span class="text-input">
-          {{ text }}
+          {{text}}
         </span>
         <span
           :style="{
@@ -110,211 +108,207 @@
   </div>
 </template>
 <script>
-  import viewUpload from './viewUpload'
+  import viewUpload from './viewUpload';
   var lastTap = 0;
   export default {
     name: 'VsUpload',
-    components:{
-      viewUpload
+    components: {
+      viewUpload,
     },
-    inheritAttrs:false,
-    props:{
-      fileName:{
-        default:null,
-        type:String
+    inheritAttrs: false,
+    props: {
+      fileName: {
+        default: null,
+        type: String,
       },
-      text:{
-        default:'Upload File',
-        type:String
+      text: {
+        default: 'Upload File',
+        type: String,
       },
-      textMax:{
-        default:'Maximum of files reached',
-        type:String
+      textMax: {
+        default: 'Maximum of files reached',
+        type: String,
       },
-      limit:{
-        default:null,
-        type:[Number,String]
+      limit: {
+        default: null,
+        type: [Number, String],
       },
-      action:{
-        default:null,
-        type:String
+      action: {
+        default: null,
+        type: String,
       },
-      headers:{
-        default:null,
-        type:Object
+      headers: {
+        default: null,
+        type: Object,
       },
       data: {
         default: null,
-        type: Object
+        type: Object,
       },
-      automatic:{
+      automatic: {
         default: false,
-        type: Boolean
+        type: Boolean,
       },
       showUploadButton: {
         default: true,
-        type: Boolean
+        type: Boolean,
       },
       singleUpload: {
         default: false,
-        type: Boolean
-      }
+        type: Boolean,
+      },
     },
-    data:()=>({
-      inputValue:null,
-      type:null,
-      srcs:[],
-      filesx:[],
-      itemRemove:[],
-      percent:0,
-      viewActive:false,
-      viewSrc:null,
+    data: () => ({
+      inputValue: null,
+      type: null,
+      srcs: [],
+      filesx: [],
+      itemRemove: [],
+      percent: 0,
+      viewActive: false,
+      viewSrc: null,
     }),
-    computed:{
+    computed: {
       getFilesFilter() {
-        let files = this.srcs.filter((item) => {
-          return !item.remove
-        })
+        const files = this.srcs.filter((item) => {
+          return !item.remove;
+        });
 
-        return files
+        return files;
       },
-      postFiles(){
+      postFiles() {
         let postFiles = Array.prototype.slice.call(this.filesx);
-        postFiles = postFiles.filter((item)=>{
-          return !item.hasOwnProperty('remove')
-        })
-        return postFiles.length
+        postFiles = postFiles.filter((item) => {
+          return !item.hasOwnProperty('remove');
+        });
+        return postFiles.length;
       },
     },
-    watch:{
-      percent(){
-        if(this.percent >= 100) {
-          this.srcs.forEach((file)=>{
-            file.percent = 100
-          })
-          setTimeout(()=>{
-            this.percent = 0
-          },1000)
+    watch: {
+      percent() {
+        if (this.percent >= 100) {
+          this.srcs.forEach((file) => {
+            file.percent = 100;
+          });
+          setTimeout(() => {
+            this.percent = 0;
+          }, 1000);
         }
-      }
+      },
     },
-    methods:{
-      viewImage(src,evt){
+    methods: {
+      viewImage(src, evt) {
         var timeout;
 
         var eventx = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch)) ? 'touchstart' : 'click';
-        if(eventx == 'click'){
-          this.viewActive = true
-          this.viewSrc = src
+        if (eventx == 'click') {
+          this.viewActive = true;
+          this.viewSrc = src;
         } else {
-          if(evt.type == 'touchend'){
+          if (evt.type == 'touchend') {
             var currentTime = new Date().getTime();
             var tapLength = currentTime - lastTap;
             clearTimeout(timeout);
             if (tapLength < 500 && tapLength > 0) {
-              this.viewActive = true
-              this.viewSrc = src
+              this.viewActive = true;
+              this.viewSrc = src;
               event.preventDefault();
             }
             lastTap = currentTime;
           }
         }
       },
-      removeFile(index){
-        this.itemRemove.push(index)
-        this.$emit('on-delete', this.filesx[index])
-        setTimeout(()=>{
-          this.filesx[index].remove = true
-        },301)
+      removeFile(index) {
+        this.itemRemove.push(index);
+        this.$emit('on-delete', this.filesx[index]);
+        setTimeout(() => {
+          this.filesx[index].remove = true;
+        }, 301);
       },
       getFiles(e) {
-
-        this.$emit('update:vsFile', e.target.value)
-        let _this = this
+        this.$emit('update:vsFile', e.target.value);
+        const _this = this;
         function uploadImage(e) {
-          let orientation = 'h'
+          let orientation = 'h';
           var image = new Image();
           image.src = e.target.result;
-          image.onload = function() {
-            if(this.width > this.height){
-              orientation = 'w'
+          image.onload = function () {
+            if (this.width > this.height) {
+              orientation = 'w';
             }
-            switchImage(this,orientation);
-
-          }
+            switchImage(this, orientation);
+          };
         }
-        function switchImage(image,orientation) {
+        function switchImage(image, orientation) {
           _this.srcs.push({
-            src:image.src,
-            orientation:orientation,
-            type:_this.typex,
-            percent:null,
-            error:false,
-            remove:null
-          })
+            src: image.src,
+            orientation: orientation,
+            type: _this.typex,
+            percent: null,
+            error: false,
+            remove: null,
+          });
         }
 
         var files = e.target.files;
-        let count = (this.srcs.length - this.itemRemove.length)
+        let count = (this.srcs.length - this.itemRemove.length);
         for (const file in files) {
-
-
           if (files.hasOwnProperty(file)) {
-            if(this.limit) {
-              count ++
-              if( count > Number(this.limit) ) {
-                break
+            if (this.limit) {
+              count++;
+              if (count > Number(this.limit)) {
+                break;
               }
             }
 
-            var reader  = new FileReader();
+            var reader = new FileReader();
             const filex = files[file];
             if (/image.*/.test(filex.type)) {
-              this.typex = 'image'
-              this.filesx.push(filex)
+              this.typex = 'image';
+              this.filesx.push(filex);
               reader.onload = uploadImage;
               reader.readAsDataURL(filex);
             } else if (/video.*/.test(filex.type)) {
-              this.typex = 'video'
-              this.filesx.push(filex)
+              this.typex = 'video';
+              this.filesx.push(filex);
               _this.srcs.push({
-                src:null,
-                name:filex.name,
-                type:'video',
-                percent:null,
-                error:false,
-                remove:null
-              })
+                src: null,
+                name: filex.name,
+                type: 'video',
+                percent: null,
+                error: false,
+                remove: null,
+              });
             } else {
-              this.filesx.push(filex)
+              this.filesx.push(filex);
               _this.srcs.push({
-                src:null,
-                name:filex.name,
-                percent:null,
-                error:false,
-                remove:null
-              })
+                src: null,
+                name: filex.name,
+                percent: null,
+                error: false,
+                remove: null,
+              });
             }
-            this.$emit('change', e.target.value, this.filesx)
+            this.$emit('change', e.target.value, this.filesx);
           }
         }
-        const input = this.$refs.fileInput
-        input.type = 'text'
-        input.type = 'file'
+        const input = this.$refs.fileInput;
+        input.type = 'text';
+        input.type = 'file';
 
         if (this.automatic) {
-          this.upload('all')
+          this.upload('all');
         }
       },
       upload(index) {
         const formData = new FormData();
         let postFiles = Array.prototype.slice.call(this.filesx);
-        if(typeof index == 'number'){
-          postFiles = [postFiles[index]]
-        } else if (index == 'all'){
-          postFiles = postFiles.filter((item)=>{
-            return !item.hasOwnProperty('remove')
-          })
+        if (typeof index === 'number') {
+          postFiles = [postFiles[index]];
+        } else if (index == 'all') {
+          postFiles = postFiles.filter((item) => {
+            return !item.hasOwnProperty('remove');
+          });
         }
 
         const data = this.data || {};
@@ -322,55 +316,53 @@
           formData.append(key, data[key]);
         }
 
-        if(this.singleUpload) {
-          postFiles.forEach((filex)=>{
+        if (this.singleUpload) {
+          postFiles.forEach((filex) => {
             const formData = new FormData();
             for (var key in data) {
               formData.append(key, data[key]);
             }
-            formData.append(this.fileName, filex, filex.name)
+            formData.append(this.fileName, filex, filex.name);
 
-            this.uploadx(index, formData)
-          })
+            this.uploadx(index, formData);
+          });
         } else {
-          postFiles.forEach((filex)=>{
-            formData.append(this.fileName, filex, filex.name)
-          })
-          this.uploadx(index, formData)
+          postFiles.forEach((filex) => {
+            formData.append(this.fileName, filex, filex.name);
+          });
+          this.uploadx(index, formData);
         }
       },
-      uploadx(index, formData){
-        let self = this
+      uploadx(index, formData) {
+        const self = this;
         const xhr = new XMLHttpRequest();
 
         xhr.onerror = function error(e) {
-          self.$emit('on-error',e)
-          if(typeof index == 'number'){
-            self.srcs[index].error = true
+          self.$emit('on-error', e);
+          if (typeof index === 'number') {
+            self.srcs[index].error = true;
           }
         };
 
         xhr.onload = function onload(e) {
-
           if (xhr.status < 200 || xhr.status >= 300) {
-            self.$emit('on-error',e)
-            if(typeof index == 'number'){
-              self.srcs[index].error = true
+            self.$emit('on-error', e);
+            if (typeof index === 'number') {
+              self.srcs[index].error = true;
             }
           } else {
-            self.$emit('on-success',e)
+            self.$emit('on-success', e);
           }
-        }
-
+        };
 
         if (xhr.upload) {
           xhr.upload.onprogress = function progress(e) {
             if (e.total > 0) {
-              let percent = e.loaded / e.total * 100;
-              if(typeof index == 'number'){
-                self.srcs[index].percent = Math.trunc(percent)
+              const percent = e.loaded / e.total * 100;
+              if (typeof index === 'number') {
+                self.srcs[index].percent = Math.trunc(percent);
               } else {
-                self.percent = Math.trunc(percent)
+                self.percent = Math.trunc(percent);
               }
             }
           };
@@ -382,15 +374,15 @@
 
         const headers = this.headers || {};
 
-        for (let head in headers) {
+        for (const head in headers) {
           if (headers.hasOwnProperty(head) && headers[head] !== null) {
             xhr.setRequestHeader(head, headers[head]);
           }
         }
 
-        xhr.send(formData)
+        xhr.send(formData);
       },
 
-    }
-  }
+    },
+  };
 </script>

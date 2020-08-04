@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-export default {
-  name: 'VsNavbarItems'
-}
+  export default {
+    name: 'VsNavbarItems',
+  };
 </script>

@@ -1,5 +1,5 @@
-import vsComponent from './vsIcon'
+import vsComponent from './vsIcon';
 
 export default Vue => {
-  Vue.component(vsComponent.name, vsComponent)
-}
+  Vue.component(vsComponent.name, vsComponent);
+};

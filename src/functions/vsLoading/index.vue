@@ -16,7 +16,9 @@
 
       <h4
         v-if="text"
-        class="title-loading">{{ text }}</h4>
+        class="title-loading">
+        {{text}}
+      </h4>
 
       <div
         :style="{
@@ -24,8 +26,6 @@
         }"
         :class="[type]"
         class="vs-loading">
-
-
         <div
           v-if="type!='material'"
           :style="styleEffect1"
@@ -42,7 +42,7 @@
         <img :src="src">
 
         <svg
-          v-if="type=='material'"
+          v-if="type==='material'"
           class="spinner"
           width="50px"
           height="50px"
@@ -55,167 +55,165 @@
             stroke-linecap="round"
             cx="33"
             cy="33"
-            r="30"></circle>
+            r="30"/>
         </svg>
-
       </div>
-
-
     </div>
   </transition>
 </template>
 <script>
-  import _color from '../../utils/color.js'
+  import _color from '../../utils/color.js';
+
   export default {
-    data:()=>({
-      active:false,
-      type:'default',
-      color:null,
-      background:'rgba(255,255,255,.6)',
-      src:'',
-      leftx:0,
-      topx:0,
-      clickEffect:false,
-      activeEffectClick:false,
-      scale:1,
-      textAfter:false,
-      text:null,
+    data: () => ({
+      active: false,
+      type: 'default',
+      color: null,
+      background: 'rgba(255,255,255,.6)',
+      src: '',
+      leftx: 0,
+      topx: 0,
+      clickEffect: false,
+      activeEffectClick: false,
+      scale: 1,
+      textAfter: false,
+      text: null,
     }),
-    computed:{
-      styleEffectClick(){
+    computed: {
+      styleEffectClick() {
         return {
           left: `${this.leftx}px`,
-          top: `${this.topx}px`
-        }
+          top: `${this.topx}px`,
+        };
       },
-      styleEffect1(){
+      styleEffect1() {
         let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color,1)}`
-        }
+          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
+        };
 
-        if(this.type == 'border'){
+        if (this.type === 'border') {
           style = {
-            borderLeft: `1px solid ${_color.getColor(this.color,1)}`
-          }
+            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'point'){
+        if (this.type === 'point') {
           style = {
-            background: _color.getColor(this.color,.4)
-          }
+            background: _color.getColor(this.color, 0.4),
+          };
         }
 
-        if(this.type == 'radius'){
+        if (this.type === 'radius') {
           style = {
-            border: `3px solid ${_color.getColor(this.color,1)}`
-          }
+            border: `3px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'corners'){
+        if (this.type === 'corners') {
           style = {
-            border: `3px solid ${_color.getColor(this.color,1)}`
-          }
+            border: `3px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'sound'){
+        if (this.type === 'sound') {
           style = {
-            background: _color.getColor(this.color,1)
-          }
+            background: _color.getColor(this.color, 1),
+          };
         }
 
-        return style
+        return style;
       },
-      styleEffect2(){
+      styleEffect2() {
         let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color,1)}`
-        }
+          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
+        };
 
-        if(this.type == 'border'){
+        if (this.type === 'border') {
           style = {
-            borderLeft: `1px solid ${_color.getColor(this.color,1)}`
-          }
+            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'point'){
+        if (this.type === 'point') {
           style = {
-            background: _color.getColor(this.color,.4)
-          }
+            background: _color.getColor(this.color, 0.4),
+          };
         }
 
-        if(this.type == 'radius'){
+        if (this.type === 'radius') {
           style = {
-            border: `3px solid ${_color.getColor(this.color,1)}`
-          }
+            border: `3px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'corners'){
-          style = {}
+        if (this.type === 'corners') {
+          style = {};
         }
 
-        if(this.type == 'sound'){
+        if (this.type === 'sound') {
           style = {
-            background: _color.getColor(this.color,1)
-          }
+            background: _color.getColor(this.color, 1),
+          };
         }
 
-        return style
+        return style;
       },
-      styleEffect3(){
+      styleEffect3() {
         let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color,1)}`
-        }
+          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
+        };
 
-        if(this.type == 'border'){
+        if (this.type === 'border') {
           style = {
-            borderLeft: `1px solid ${_color.getColor(this.color,1)}`
-          }
+            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'point'){
+        if (this.type === 'point') {
           style = {
-            background: _color.getColor(this.color,.4)
-          }
+            background: _color.getColor(this.color, 0.4),
+          };
         }
 
-        if(this.type == 'radius'){
+        if (this.type === 'radius') {
           style = {
-            border: `3px solid ${_color.getColor(this.color,1)}`
-          }
+            border: `3px solid ${_color.getColor(this.color, 1)}`,
+          };
         }
 
-        if(this.type == 'corners'){
-          style = {}
+        if (this.type === 'corners') {
+          style = {};
         }
 
-        if(this.type == 'sound'){
+        if (this.type === 'sound') {
           style = {
-            background: _color.getColor(this.color,1)
-          }
+            background: _color.getColor(this.color, 1),
+          };
         }
 
-        return style
+        return style;
       },
-      style(){
+      style() {
         return {
-          background:_color.getColor(this.background,1)
-        }
-      }
-    },
-    mounted(){
-      this.active = true
-    },
-    methods:{
-      effectClick(evt){
-        this.leftx = evt.offsetX
-        this.topx = evt.offsetY
-        this.activeEffectClick = true
-        setTimeout(()=>{
-          this.activeEffectClick = false
-        },50)
+          background: _color.getColor(this.background, 1),
+        };
       },
-      close(){
-        this.active = false
-      }
-    }
-  }
+    },
+    mounted() {
+      this.active = true;
+    },
+    methods: {
+      effectClick(evt) {
+        this.leftx = evt.offsetX;
+        this.topx = evt.offsetY;
+        this.activeEffectClick = true;
+        setTimeout(() => {
+          this.activeEffectClick = false;
+        }, 50);
+      },
+      close() {
+        this.active = false;
+      },
+    },
+  };
 </script>

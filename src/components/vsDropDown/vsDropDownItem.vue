@@ -15,10 +15,9 @@
       v-bind="$attrs"
       :class="{'disabled':disabled}"
       class="vs-dropdown--item-link"
-      v-on="$listeners"
-    >
-      {{ $attrs.disabled }}
-      <slot/>
+      v-on="$listeners">
+      {{$attrs.disabled}}
+      <slot></slot>
     </router-link>
 
     <a
@@ -26,75 +25,74 @@
       v-bind="$attrs"
       :class="{'disabled':disabled}"
       class="vs-dropdown--item-link"
-      v-on="$listeners"
-    >
-      <slot/>
+      v-on="$listeners">
+      <slot></slot>
     </a>
   </li>
 </template>
 
 <script>
-import _color from '../../utils/color.js'
-export default {
-  name: "VsDropdownItem",
-  inheritAttrs:false,
-  props:{
-    to:{},
-    disabled:{
-      default:false,
-      type:Boolean
+  import _color from '../../utils/color.js';
+  export default {
+    name: 'VsDropdownItem',
+    inheritAttrs: false,
+    props: {
+      to: {},
+      disabled: {
+        default: false,
+        type: Boolean,
+      },
+      divider: {
+        default: false,
+        type: Boolean,
+      },
     },
-    divider:{
-      default:false,
-      type:Boolean
+    data: () => ({
+      hoverx: false,
+      vsDropDownItem: true,
+      color: null,
+    }),
+    mounted() {
+      this.changeColor();
     },
-  },
-  data: () => ({
-    hoverx: false,
-    vsDropDownItem: true,
-    color: null
-  }),
-  mounted () {
-    this.changeColor()
-  },
-  updated() {
-    this.changeColor()
-  },
-  methods:{
-    closeParent() {
-      if(this.disabled) return
-      searchParent(this)
-      function searchParent(_this) {
-        let parent = _this.$parent
-        if(!parent.$el.className) return
-        if(parent.$el.className.indexOf('parent-dropdown') == -1) {
-          searchParent(parent)
-        } else {
-          let [dropdownMenu] = parent.$children.filter(item => {
-            return item.hasOwnProperty('dropdownVisible')
-          })
-          dropdownMenu.dropdownVisible = parent.vsDropdownVisible = false
+    updated() {
+      this.changeColor();
+    },
+    methods: {
+      closeParent() {
+        if (this.disabled) return;
+        searchParent(this);
+        function searchParent(_this) {
+          const parent = _this.$parent;
+          if (!parent.$el.className) return;
+          if (parent.$el.className.indexOf('parent-dropdown') == -1) {
+            searchParent(parent);
+          } else {
+            const [dropdownMenu] = parent.$children.filter(item => {
+              return item.hasOwnProperty('dropdownVisible');
+            });
+            dropdownMenu.dropdownVisible = parent.vsDropdownVisible = false;
+          }
         }
-      }
-    },
-    changeColor() {
-      let _self = this
-      searchParent(this)
-      function searchParent(_this){
-        let parent = _this.$parent
-        if(!parent.$el.className){
-          return
+      },
+      changeColor() {
+        const _self = this;
+        searchParent(this);
+        function searchParent(_this) {
+          const parent = _this.$parent;
+          if (!parent.$el.className) {
+            return;
+          }
+          if (parent.$el.className.indexOf('parent-dropdown') == -1) {
+            searchParent(parent);
+          } else {
+            _self.color = parent.color;
+          }
         }
-        if(parent.$el.className.indexOf('parent-dropdown') == -1) {
-          searchParent(parent)
-        } else {
-          _self.color = parent.color
-        }
-      }
+      },
+      giveColor(opacity = 1) {
+        return _color.rColor(this.color, opacity);
+      },
     },
-    giveColor(opacity = 1) {
-      return _color.rColor(this.color,opacity)
-    }
-  }
-}
+  };
 </script>

@@ -2,62 +2,64 @@
   <div class="vs-list--item">
     <div
       v-if="$slots.avatar"
-      class="vs-list--avatar"
-    >
-      <slot name="avatar"/>
+      class="vs-list--avatar">
+      <slot name="avatar"></slot>
     </div>
     <div
       v-if="icon"
       class="vs-list--icon">
       <vs-icon
         :icon-pack="iconPack"
-        :icon="icon"></vs-icon>
+        :icon="icon"/>
     </div>
     <div class="list-titles">
       <div
         v-if="title"
-        class="vs-list--title">{{ title }}</div>
+        class="vs-list--title">
+        {{title}}
+      </div>
       <slot
         v-else
-        name="title"
-      />
+        name="title"></slot>
       <div
         v-if="subtitle"
-        class="vs-list--subtitle">{{ subtitle }}</div>
+        class="vs-list--subtitle">
+        {{subtitle}}
+      </div>
       <slot
         v-else
-        name="subtitle"/>
+        name="subtitle"></slot>
     </div>
     <div class="vs-list--slot">
-      <slot/>
+      <slot></slot>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name:'VsListItem',
-  props: {
-    vsAvatar:{
-      type:[Boolean,String],
-      default:false,
+  export default {
+    name: 'VsListItem',
+    props: {
+      vsAvatar: {
+        type: [Boolean, String],
+        default: false,
+      },
+      title: {
+        type: String,
+        default: null,
+      },
+      subtitle: {
+        type: String,
+        default: null,
+      },
+      icon: {
+        type: String,
+        default: null,
+      },
+      iconPack: {
+        type: String,
+        default: 'material-icons',
+      },
     },
-    title:{
-      type:String,
-      default:null,
-    },
-    subtitle:{
-      type:String,
-      default:null,
-    },
-    icon:{
-      type:String,
-      default:null,
-    },
-    iconPack:{
-      type:String,
-      default:'material-icons',
-    },
-  }
-}
+  };
 </script>

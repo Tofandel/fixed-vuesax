@@ -3,7 +3,7 @@
     <a class="dropdown-title" @click="toggle">
       <span class="title">{{ item.text }}</span>
       <!-- <span class="arrow" :class="open ? 'down' : 'right'"></span> -->
-      <vs-icon class="" icon="keyboard_arrow_down"></vs-icon>
+      <vs-icon icon="keyboard_arrow_down"></vs-icon>
     </a>
     <DropdownTransition>
       <ul class="nav-dropdown">

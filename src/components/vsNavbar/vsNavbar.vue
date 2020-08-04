@@ -8,9 +8,8 @@
         :class="{'active-menu' : activeMenuResponsive}"
         class="vs-navbar--btn-responsive"
         @click="activeMenuResponsive = !activeMenuResponsive">
-        <span class="btn-responsive-line line--1"/>
-        <span class="btn-responsive-line line--2"/>
-        <span class="btn-responsive-line line--3"/>
+        <span class="btn-responsive-line line--1"></span> <span class="btn-responsive-line line--2"></span>
+        <span class="btn-responsive-line line--3"></span>
       </button>
 
       <slot name="title">
@@ -26,54 +25,55 @@
 </template>
 
 <script>
-import _color from '../../utils/color.js'
-export default {
-  name:'VsNavbar',
+  import _color from '../../utils/color.js';
 
-  props:{
-    value:{},
-    type:{
-      default: null,
-      type: String
-    },
-    collapse:{
-      default:false,
-      type: Boolean
-    },
-    color:{
-      type:String,
-      default:'transparent',
-    },
-    activeTextColor: {
-      type:String,
-      default:'primary',
-    },
-    textColor: {
-      type:String,
-      default:'rgb(40,40,40)',
-    }
-  },
+  export default {
+    name: 'VsNavbar',
 
-  data:() => ({
-    activeMenuResponsive: false
-  }),
+    props: {
+      value: {},
+      type: {
+        default: null,
+        type: String,
+      },
+      collapse: {
+        default: false,
+        type: Boolean,
+      },
+      color: {
+        type: String,
+        default: 'transparent',
+      },
+      activeTextColor: {
+        type: String,
+        default: 'primary',
+      },
+      textColor: {
+        type: String,
+        default: 'rgb(40,40,40)',
+      },
+    },
 
-  computed:{
-    styleNavbar () {
-      if(_color.isColor(this.color)) {
-        return {
-          background: `rgb(${_color.changeColor(this.color)})`
+    data: () => ({
+      activeMenuResponsive: false,
+    }),
+
+    computed: {
+      styleNavbar() {
+        if (_color.isColor(this.color)) {
+          return {
+            background: `rgb(${_color.changeColor(this.color)})`,
+          };
         }
-      }
-      return {
-        background: _color.getColor(this.color)
-      }
-    }
-  },
-  methods: {
-    changeIndex (index) {
-      this.$emit('input', index)
-    }
-  }
-}
+        return {
+          background: _color.getColor(this.color),
+        };
+      },
+    },
+    methods: {
+      changeIndex(index) {
+        this.$emit('input', index);
+      },
+    },
+  };
 </script>

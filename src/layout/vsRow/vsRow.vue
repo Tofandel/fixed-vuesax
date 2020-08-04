@@ -7,7 +7,7 @@
       'overflow': vsType === 'block' ? 'hidden' : null,
       'width':vsW*100/12+'%'}"
     class="vs-row">
-    <slot/>
+    <slot></slot>
   </div>
 </template>
 
@@ -31,8 +31,8 @@
         type: String,
         default: null,
       },
-    }
-  }
+    },
+  };
 </script>
 
 <style lang="css">

@@ -1,5 +1,5 @@
-import vsComponent from './vsTooltip'
+import vsComponent from './vsTooltip';
 
 export default Vue => {
-  Vue.component(vsComponent.name, vsComponent)
-}
+  Vue.component(vsComponent.name, vsComponent);
+};
