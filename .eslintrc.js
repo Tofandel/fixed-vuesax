@@ -85,5 +85,6 @@ module.exports = {
     curly: ['error'],
     'comma-dangle': ['error', 'always-multiline'],
     'new-cap': 'off',
+    eqeqeq: 'warn',
   },
 };
