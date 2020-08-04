@@ -1,7 +1,7 @@
 export { default as vsButton } from './vsButton';
 export { default as vsSelect } from './vsSelect';
 export { default as vsSwitch } from './vsSwitch';
-export { default as vsCheckbox } from './vsCheckBox';
+export { default as vsCheckbox } from './vsCheckbox';
 export { default as vsRadio } from './vsRadio';
 export { default as vsInput } from './vsInput';
 export { default as vsTabs } from './vsTabs';
