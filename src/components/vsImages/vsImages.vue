@@ -21,8 +21,5 @@
       notBorderRadius: Boolean,
       notMargin: Boolean,
     },
-    data: () => ({
-
-    }),
   };
 </script>

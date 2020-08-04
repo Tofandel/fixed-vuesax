@@ -25,6 +25,7 @@
 <script>
   import utils from '../../utils';
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsTooltip',
     props: {
@@ -54,18 +55,19 @@
       },
       value: Boolean,
     },
-    data: () => ({
-      cords: {},
-      activeTooltip: this.value,
-      widthx: 'auto',
-      positionx: null,
-      noneAfter: false,
-    }),
+    data() {
+      return {
+        cords: {},
+        activeTooltip: this.value,
+        widthx: 'auto',
+        positionx: null,
+        noneAfter: false,
+      };
+    },
     computed: {
       style() {
         return {
-          left: this.cords.left,
-          top: this.cords.top,
+          coords: {},
           transitionDelay: this.activeTooltip ? this.delay : '0s',
           background: _color.getColor(this.color, 1),
           width: this.widthx,
@@ -122,7 +124,7 @@
         } else if (this.position === 'left') {
           leftx = elx.getBoundingClientRect().left - tooltip.clientWidth - 4;
           topx = elx.getBoundingClientRect().top + scrollTopx + (elx.clientHeight / 2) - (tooltip.clientHeight / 2);
-          if (Math.sign(leftx) === -1) {
+          if (leftx < 0) {
             leftx = elx.getBoundingClientRect().left;
             topx = elx.getBoundingClientRect().top + scrollTopx + elx.clientHeight + 4;
             this.positionx = 'bottom';
