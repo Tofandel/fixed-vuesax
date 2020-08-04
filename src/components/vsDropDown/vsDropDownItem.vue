@@ -38,14 +38,8 @@
     inheritAttrs: false,
     props: {
       to: {},
-      disabled: {
-        default: false,
-        type: Boolean,
-      },
-      divider: {
-        default: false,
-        type: Boolean,
-      },
+      disabled: Boolean,
+      divider: Boolean,
     },
     data: () => ({
       hoverx: false,

@@ -54,7 +54,7 @@
         });
         this.setDirection();
 
-        !val ? this.$parent.rightx = false : null;
+        if (!val) { this.$parent.rightx = false; }
       },
     },
     mounted() {
@@ -91,7 +91,7 @@
         }, 100);
       },
       toggleMenu(event) {
-        if (event.type == 'mouseover' && !this.vsTriggerClick) {
+        if (event.type === 'mouseover' && !this.vsTriggerClick) {
           this.dropdownVisible = true;
         } else if (!this.vsTriggerClick) {
           this.dropdownVisible = false;

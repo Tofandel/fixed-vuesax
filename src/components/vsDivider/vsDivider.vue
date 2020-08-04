@@ -80,13 +80,13 @@
       },
       getWidthBefore() {
         let widthx = '100%';
-        if (this.position == 'left') {
+        if (this.position === 'left') {
           widthx = '100%';
-        } else if (this.position == 'left-center') {
+        } else if (this.position === 'left-center') {
           widthx = '75%';
-        } else if (this.position == 'right-center') {
+        } else if (this.position === 'right-center') {
           widthx = '25%';
-        } else if (this.position == 'right') {
+        } else if (this.position === 'right') {
           widthx = '0%';
         }
         return widthx;
@@ -95,6 +95,7 @@
         if (!_color.isColor(this.color)) {
           return _color.getColor(this.color);
         }
+        return null;
       },
       afterStyle() {
         const classes = {
@@ -128,11 +129,13 @@
         if (!_color.isColor(this.color)) {
           return _color.getColor(this.color !== 'rgba(0, 0, 0,.1)' ? this.color : null);
         }
+        return null;
       },
       backgroundColor() {
         if (!_color.isColor(this.background)) {
           return _color.getColor(this.background);
         }
+        return null;
       },
       textAndBackgroundClass() {
         const classes = {};

@@ -41,10 +41,7 @@
         default: null,
         type: [Number, String],
       },
-      counterDanger: {
-        default: false,
-        type: Boolean,
-      },
+      counterDanger: Boolean,
       height: {
         default: null,
         type: String,

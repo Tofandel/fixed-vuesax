@@ -81,58 +81,34 @@
         default: 'No data Available',
         type: String,
       },
-      stripe: {
-        default: false,
-        type: Boolean,
-      },
-      hoverFlat: {
-        default: false,
-        type: Boolean,
-      },
+      stripe: Boolean,
+      hoverFlat: Boolean,
       maxHeight: {
         default: 'auto',
         type: String,
       },
-      multiple: {
-        default: false,
-        type: Boolean,
-      },
+      multiple: Boolean,
       data: {
         type: Array,
         default: null,
       },
-      notSpacer: {
-        default: false,
-        type: Boolean,
-      },
-      search: {
-        default: false,
-        type: Boolean,
-      },
+      notSpacer: Boolean,
+      search: Boolean,
       maxItems: {
         default: 5,
         type: [Number, String],
       },
-      pagination: {
-        default: false,
-        type: Boolean,
-      },
-      description: {
-        default: false,
-        type: Boolean,
-      },
+      pagination: Boolean,
+      description: Boolean,
       descriptionItems: {
         default: () => [],
         type: Array,
       },
       currentPage: {
         default: 1,
-        type: [Number | String],
+        type: [Number, String],
       },
-      sst: {
-        default: false,
-        type: Boolean,
-      },
+      sst: Boolean,
       total: {
         type: Number,
         default: 0,

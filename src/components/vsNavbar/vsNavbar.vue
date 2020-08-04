@@ -36,10 +36,7 @@
         default: null,
         type: String,
       },
-      collapse: {
-        default: false,
-        type: Boolean,
-      },
+      collapse: Boolean,
       color: {
         type: String,
         default: 'transparent',

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <div
-      :class="{'no-items':value.length == 0}"
+      :class="{'no-items':value.length === 0}"
       class="con-chips">
       <slot>
       </slot>
@@ -24,12 +24,8 @@
 </template>
 
 <script>
-  import vsChip from './vsChip.vue';
   export default {
     name: 'VsChips',
-    components: {
-      vsChip,
-    },
     props: {
       value: {},
       vsColor: {

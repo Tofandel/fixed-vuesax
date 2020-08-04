@@ -105,10 +105,7 @@
         default: 0,
         type: Number,
       },
-      ticks: {
-        default: false,
-        type: Boolean,
-      },
+      ticks: Boolean,
       step: {
         default: 1,
         type: [Number, String],

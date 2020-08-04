@@ -39,14 +39,8 @@
   export default {
     name: 'VsCard',
     props: {
-      actionable: {
-        default: false,
-        type: Boolean,
-      },
-      fixedHeight: {
-        default: false,
-        type: Boolean,
-      },
+      actionable: Boolean,
+      fixedHeight: Boolean,
     },
     methods: {
       hasSlot(slot) {

@@ -15,10 +15,7 @@
   export default {
     name: 'ViewUpload',
     props: {
-      active: {
-        default: false,
-        type: Boolean,
-      },
+      active: Boolean,
       src: {
         default: null,
         type: String,

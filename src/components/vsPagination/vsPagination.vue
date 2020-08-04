@@ -142,10 +142,7 @@
         type: String,
         default: 'material-icons',
       },
-      description: {
-        default: false,
-        type: Boolean,
-      },
+      description: Boolean,
       descriptionItems: {
         default: () => [],
         type: Array,

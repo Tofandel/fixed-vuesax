@@ -20,22 +20,13 @@
   export default {
     name: 'VsSidebarGroup',
     props: {
-      collapsed: {
-        default: false,
-        type: Boolean,
-      },
+      collapsed: Boolean,
       title: {
         default: null,
         type: String,
       },
-      openHover: {
-        default: false,
-        type: Boolean,
-      },
-      open: {
-        default: false,
-        type: Boolean,
-      },
+      openHover: Boolean,
+      open: Boolean,
     },
     data: () => ({
       maxHeight: '0px',

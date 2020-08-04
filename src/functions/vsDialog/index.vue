@@ -77,10 +77,7 @@
         default: 'primary',
         type: String,
       },
-      active: {
-        default: false,
-        type: Boolean,
-      },
+      active: Boolean,
       buttonAccept: {
         default: 'filled',
         type: String,
@@ -93,10 +90,7 @@
         default: 'none',
         type: [Boolean, String],
       },
-      buttonsHidden: {
-        default: false,
-        type: Boolean,
-      },
+      buttonsHidden: Boolean,
       acceptText: {
         default: 'Accept',
         type: String,

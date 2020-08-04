@@ -61,38 +61,14 @@
         default: null,
         type: [String, Object],
       },
-      spacer: {
-        default: false,
-        type: Boolean,
-      },
-      staticPosition: {
-        default: false,
-        type: Boolean,
-      },
-      positionRight: {
-        default: false,
-        type: Boolean,
-      },
-      clickNotClose: {
-        default: false,
-        type: Boolean,
-      },
-      reduce: {
-        default: false,
-        type: Boolean,
-      },
-      reduceNotRebound: {
-        default: false,
-        type: Boolean,
-      },
-      reduceNotHoverExpand: {
-        default: false,
-        type: Boolean,
-      },
-      hiddenBackground: {
-        default: false,
-        type: Boolean,
-      },
+      spacer: Boolean,
+      staticPosition: Boolean,
+      positionRight: Boolean,
+      clickNotClose: Boolean,
+      reduce: Boolean,
+      reduceNotRebound: Boolean,
+      reduceNotHoverExpand: Boolean,
+      hiddenBackground: Boolean,
     },
     data: () => ({
       currentIndex: 0,

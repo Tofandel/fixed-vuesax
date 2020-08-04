@@ -51,22 +51,13 @@
         default: 'primary',
         type: String,
       },
-      active: {
-        default: false,
-        type: Boolean,
-      },
+      active: Boolean,
       title: {
         default: 'popup',
         type: String,
       },
-      buttonCloseHidden: {
-        default: false,
-        type: Boolean,
-      },
-      fullscreen: {
-        default: false,
-        type: Boolean,
-      },
+      buttonCloseHidden: Boolean,
+      fullscreen: Boolean,
       backgroundColor: {
         default: null,
         type: String,

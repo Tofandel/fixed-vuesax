@@ -30,18 +30,9 @@
   export default {
     name: 'VsCollapseItem',
     props: {
-      open: {
-        default: false,
-        type: Boolean,
-      },
-      disabled: {
-        default: false,
-        type: Boolean,
-      },
-      notArrow: {
-        default: false,
-        type: Boolean,
-      },
+      open: Boolean,
+      disabled: Boolean,
+      notArrow: Boolean,
       iconArrow: {
         default: 'keyboard_arrow_down',
         type: String,
@@ -50,10 +41,7 @@
         default: 'material-icons',
         type: String,
       },
-      sst: {
-        default: false,
-        type: Boolean,
-      },
+      sst: Boolean,
     },
     data: () => ({
       maxHeight: '0px',

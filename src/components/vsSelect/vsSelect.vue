@@ -99,6 +99,7 @@
 
 <script>
   import utils from '../../utils';
+
   export default {
     name: 'VsSelect',
     props: {
@@ -111,34 +112,19 @@
         default: null,
         type: [Number, String],
       },
-      autocomplete: {
-        default: false,
-        type: Boolean,
-      },
+      autocomplete: Boolean,
       color: {
         default: 'primary',
         type: String,
       },
-      multiple: {
-        default: false,
-        type: Boolean,
-      },
+      multiple: Boolean,
       label: {
         default: null,
         type: [String],
       },
-      success: {
-        default: false,
-        type: Boolean,
-      },
-      danger: {
-        default: false,
-        type: Boolean,
-      },
-      warning: {
-        default: false,
-        type: Boolean,
-      },
+      success: Boolean,
+      danger: Boolean,
+      warning: Boolean,
       successText: {
         default: null,
         type: String,
@@ -206,8 +192,8 @@
           },
           focus: event => {
             this.$emit('focus', event);
-            let code = code = (event.keyCode ? event.keyCode : event.which);
-            if (code == 9) {
+            const code = (event.keyCode ? event.keyCode : event.which);
+            if (code) {
               this.focus();
             }
           },
@@ -220,7 +206,7 @@
             }
           },
           keyup: event => {
-            if (event.key == 'ArrowDown' || event.key == 'ArrowUp') {
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
               event.preventDefault();
               const childrens = this.$children.filter(item => {
                 return item.visible;
@@ -341,18 +327,10 @@
           if (this.multiple) {
             const valuesx = value.split(',');
             valuesx.forEach(value_multi => {
-              if (text.toUpperCase().indexOf(value_multi.toUpperCase()) == -1) {
-                item.visible = false;
-              } else {
-                item.visible = true;
-              }
+              item.visible = text.toUpperCase().indexOf(value_multi.toUpperCase()) >= 0;
             });
           } else {
-            if (text.toUpperCase().indexOf(value.toUpperCase()) == -1) {
-              item.visible = false;
-            } else {
-              item.visible = true;
-            }
+            item.visible = text.toUpperCase().indexOf(value.toUpperCase()) >= 0;
           }
         });
 
@@ -360,11 +338,7 @@
           return item.visible;
         });
 
-        if (lengthx.length == 0) {
-          this.clear = true;
-        } else {
-          this.clear = false;
-        }
+        this.clear = lengthx.length === 0;
 
         this.$nextTick(() => {
           this.cords = this.changePosition();
@@ -385,7 +359,7 @@
           const optionsValues = [];
           values.forEach(item => {
             options.forEach(item_option => {
-              if (item_option.value == item) {
+              if (item_option.value === item) {
                 let text = item_option.text;
                 text = text.replace('check_circle', '');
                 optionsValues.push(text.trim());
@@ -417,7 +391,7 @@
 
         if (!this.autocomplete) {
           if (
-            this.multiple ? this.value.length == 0 : !this.value || this.multiple
+            this.multiple ? this.value.length === 0 : !this.value || this.multiple
           ) {
             setTimeout(() => {
               const el = this.$children[0].$el.querySelector('.vs-select--item');
@@ -477,13 +451,11 @@
         leftx = elx.getBoundingClientRect().left;
         widthx = elx.offsetWidth;
 
-        const cords = {
+        return {
           left: `${leftx}px`,
           top: `${topx}px`,
           width: `${widthx}px`,
         };
-
-        return cords;
       },
       beforeEnter(el) {
         el.style.height = 0;

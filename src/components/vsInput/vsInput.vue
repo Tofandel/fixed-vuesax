@@ -139,10 +139,7 @@
         default: false,
         type: [Boolean, String],
       },
-      iconNoBorder: {
-        default: false,
-        type: Boolean,
-      },
+      iconNoBorder: Boolean,
       iconPack: {
         default: 'material-icons',
         type: String,
@@ -151,18 +148,9 @@
         default: 'primary',
         type: String,
       },
-      success: {
-        default: false,
-        type: Boolean,
-      },
-      danger: {
-        default: false,
-        type: Boolean,
-      },
-      warning: {
-        default: false,
-        type: Boolean,
-      },
+      success: Boolean,
+      danger: Boolean,
+      warning: Boolean,
       successText: {
         default: null,
         type: String,

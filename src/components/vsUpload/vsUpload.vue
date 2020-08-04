@@ -145,18 +145,12 @@
         default: null,
         type: Object,
       },
-      automatic: {
-        default: false,
-        type: Boolean,
-      },
+      automatic: Boolean,
       showUploadButton: {
         default: true,
         type: Boolean,
       },
-      singleUpload: {
-        default: false,
-        type: Boolean,
-      },
+      singleUpload: Boolean,
     },
     data: () => ({
       inputValue: null,

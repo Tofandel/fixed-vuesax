@@ -24,7 +24,8 @@
             class="ul-time">
             <li
               v-for="hour in hours24"
-              :class="{'active-time': hour == getHours}"
+              :key="hour"
+              :class="{'active-time': hour === getHours}"
               @click="changeHours(hour)">
               {{hour}}
             </li>
@@ -46,7 +47,8 @@
             class="ul-time">
             <li
               v-for="minute in minutes"
-              :class="{'active-time': minute == getMinutes}"
+              :key="minute"
+              :class="{'active-time': minute === getMinutes}"
               @click="changeMinutes(minute)">
               {{minute}}
             </li>

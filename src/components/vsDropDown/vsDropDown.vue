@@ -15,26 +15,14 @@
     name: 'VsDropdown',
     inheritAttrs: false,
     props: {
-      vsTriggerClick: {
-        default: false,
-        type: Boolean,
-      },
-      vsTriggerContextmenu: {
-        default: false,
-        type: Boolean,
-      },
+      vsTriggerClick: Boolean,
+      vsTriggerContextmenu: Boolean,
       color: {
         default: 'primary',
         type: String,
       },
-      vsCustomContent: {
-        default: false,
-        type: Boolean,
-      },
-      vsDropRight: {
-        default: false,
-        type: Boolean,
-      },
+      vsCustomContent: Boolean,
+      vsDropRight: Boolean,
     },
     data: () => ({
       vsDropdownVisible: false,

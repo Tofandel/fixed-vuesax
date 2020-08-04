@@ -48,10 +48,7 @@
         default: 'Options',
         type: String,
       },
-      vsCollapse: {
-        default: false,
-        type: Boolean,
-      },
+      vsCollapse: Boolean,
       vsIcon: {
         default: 'keyboard_arrow_right',
         type: String,

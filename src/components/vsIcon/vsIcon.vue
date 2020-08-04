@@ -34,10 +34,7 @@
         default: null,
         type: String,
       },
-      round: {
-        default: false,
-        type: Boolean,
-      },
+      round: Boolean,
 
     },
     computed: {

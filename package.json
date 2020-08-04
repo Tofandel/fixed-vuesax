@@ -1,12 +1,12 @@
 {
   "name": "fixed-vuesax",
-  "version": "3.12.6",
+  "version": "3.12.5",
   "private": false,
   "description": "Framework Components for Vue js",
   "author": "ldrovira <luisdanielrovira8@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build -t lib src/index.js --name vuesax",
+    "build": "vue-cli-service build --target lib src/index.js --name fixed-vuesax",
     "lint": "vue-cli-service lint",
     "deploy": "npm run build && git add . && git commit -m 'deploy' && npm run v && npm run p && git push",
     "deploy2": "npm run build && git add . && git commit -m 'deploy' && npm run v2 && npm run p && git push",

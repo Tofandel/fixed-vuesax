@@ -10,7 +10,7 @@
       v-bind="$attrs"
       :style="styles"
       :class="{
-        'activex':$parent.parent.multiple?getValue.indexOf(value) != -1:getValue == value,
+        'activex':$parent.parent.multiple?getValue.indexOf(value) >= 0:getValue === value,
         'con-icon':$parent.parent.multiple,
         'disabledx':disabledx
       }"
@@ -33,6 +33,7 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsSelectItem',
     inheritAttrs: false,
@@ -46,6 +47,7 @@
       },
       text: {
         default: null,
+        type: String,
       },
     },
     data: () => ({
@@ -116,17 +118,16 @@
       valueInputx() {
         if (this.visible) {
           const valueInputx = this.valueInputx.split(',');
-          if (valueInputx[valueInputx.length - 1] == '') {
+          if (valueInputx[valueInputx.length - 1] === '') {
             this.getText = this.text;
             return;
           }
           let valuex = valueInputx[valueInputx.length - 1];
           var re = new RegExp(valuex, 'i');
-          if (this.text.toUpperCase().indexOf(valuex.toUpperCase()) == 0) {
+          if (this.text.toUpperCase().indexOf(valuex.toUpperCase()) === 0) {
             valuex = this.MaysPrimera(valuex);
           }
-          const text = this.text.replace(re, `<span class="searchx">${valuex}</span>`);
-          this.getText = text;
+          this.getText = this.text.replace(re, `<span class="searchx">${valuex}</span>`);
         } else {
           this.getText = this.text;
         }
@@ -135,7 +136,7 @@
     created() {
       this.putValue();
       this.$nextTick(() => {
-        if (this.$parent.parent.multiple ? this.getValue.indexOf(this.value) != -1 : this.getValue == this.value) {
+        if (this.$parent.parent.multiple ? this.getValue.indexOf(this.value) >= 0 : this.getValue === this.value) {
           this.$emit('update:isSelected', true);
           this.getText = this.text;
           this.putValue();
@@ -169,10 +170,10 @@
         let lengthx = 0;
 
         function getNextLi(li, orientationObject) {
-          if (li && li.localName == 'li') {
+          if (li && li.localName === 'li') {
             const lix = li[orientationObject];
             if (li.style) {
-              if (li.style.display == 'none') {
+              if (li.style.display === 'none') {
                 return getNextLi(lix, orientationObject);
               } else {
                 return li;
@@ -194,10 +195,10 @@
         });
 
         children = children.filter((item) => {
-          return item.$children.length == 0 && item.$el.localName != 'span';
+          return item.$children.length === 0 && item.$el.localName !== 'span';
         });
 
-        if (orientation == 'prev') {
+        if (orientation === 'prev') {
           orientationObject = 'previousSibling';
           lengthx = children.length;
         }
@@ -207,11 +208,12 @@
           nextElement.querySelector('.vs-select--item').focus();
         } else {
           if (lengthx === children.length) lengthx--;
-          getNextLi(children[lengthx == 0 ? 1 : lengthx].$el, orientationObject).querySelector('.vs-select--item').focus();
+          getNextLi(children[lengthx === 0 ? 1 : lengthx].$el, orientationObject).querySelector('.vs-select--item').focus();
         }
       },
       focusValue(index) {
-        if (this.$parent.parent.multiple ? this.$parent.parent.value.indexOf(this.value) != -1 : this.value == this.$parent.parent.value) {
+        if (this.$parent.parent.multiple ? this.$parent.parent.value.indexOf(this.value) >= 0 : this.value ===
+          this.$parent.parent.value) {
           if (!this.$parent.parent.autocomplete) {
             setTimeout(() => {
               this.$refs.item.focus();
@@ -226,7 +228,7 @@
         }
       },
       putValue() {
-        if (this.value == this.$parent.parent.value) {
+        if (this.value === this.$parent.parent.value) {
           this.$parent.parent.valuex = this.text;
         }
       },

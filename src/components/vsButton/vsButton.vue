@@ -93,21 +93,15 @@
         type: String,
         default: 'material-icons',
       },
-      iconAfter: {
-        default: false,
-        type: Boolean,
-      },
-      radius: {
-        default: false,
-        type: Boolean,
-      },
+      iconAfter: Boolean,
+      radius: Boolean,
       to: {
-        default: false,
-        type: String | Object,
+        default: undefined,
+        type: [String, Object],
       },
       href: {
         default: '',
-        type: String | Object,
+        type: [String, Object],
       },
       target: {
         default: false,
@@ -121,8 +115,8 @@
     data: () => ({
       isActive: false,
       hoverx: false,
-      leftBackgorund: 20,
-      topBackgorund: 20,
+      leftBackground: 20,
+      topBackground: 20,
       radio: 0,
       time: 0.3,
       timeOpacity: 0.3,
@@ -173,17 +167,15 @@
         return {};
       },
       stylesBackGround() {
-        const styles = {
+        return {
           background: this.is('flat') || this.is('border') ? _color.getColor(this.color, 1, false) : null,
           opacity: this.opacity,
-          left: `${this.leftBackgorund}px`,
-          top: `${this.topBackgorund}px`,
+          left: `${this.leftBackground}px`,
+          top: `${this.topBackground}px`,
           width: `${this.radio}px`,
           height: `${this.radio}px`,
           transition: `width ${this.time}s ease, height ${this.time}s ease, opacity ${this.timeOpacity}s ease`,
         };
-
-        return styles;
       },
       styleLine() {
         let lineOrigin = '50%';
@@ -193,7 +185,7 @@
           lineOrigin = 'auto';
         }
 
-        const styles = {
+        return {
           top: this.linePosition === 'top' ? '-2px' : 'auto',
           bottom: this.linePosition === 'bottom' ? '-2px' : 'auto',
           background: _color.getColor(this.color, 1),
@@ -201,8 +193,6 @@
           right: lineOrigin === 'auto' ? '0px' : null,
           transform: lineOrigin === '50%' ? 'translate(-50%)' : null,
         };
-
-        return styles;
       },
     },
     methods: {
@@ -274,8 +264,8 @@
           xEvent += event.target.offsetLeft;
           yEvent += event.target.offsetTop;
         }
-        this.leftBackgorund = xEvent;
-        this.topBackgorund = yEvent;
+        this.leftBackground = xEvent;
+        this.topBackground = yEvent;
         this.radio = radio;
         if (this.is('filled')) {
           this.opacity = 0;

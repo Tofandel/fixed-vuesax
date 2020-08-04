@@ -9,18 +9,12 @@
   export default {
     name: 'VsCollapse',
     props: {
-      accordion: {
-        default: false,
-        type: Boolean,
-      },
+      accordion: Boolean,
       type: {
         default: 'default',
         type: String,
       },
-      openHover: {
-        default: false,
-        type: Boolean,
-      },
+      openHover: Boolean,
     },
     methods: {
       emitChange() {

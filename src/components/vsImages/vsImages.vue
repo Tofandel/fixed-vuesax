@@ -17,18 +17,9 @@
         default: 'default',
         type: String,
       },
-      alternating: {
-        default: false,
-        type: Boolean,
-      },
-      notBorderRadius: {
-        default: false,
-        type: Boolean,
-      },
-      notMargin: {
-        default: false,
-        type: Boolean,
-      },
+      alternating: Boolean,
+      notBorderRadius: Boolean,
+      notMargin: Boolean,
     },
     data: () => ({
 
