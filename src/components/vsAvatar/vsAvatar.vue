@@ -86,9 +86,11 @@
         return classes;
       },
       avatarStyle() {
+        const pxSize = /[px]/.test(this.size);
         const style = {
-          width: /[px]/.test(this.size) ? this.size : null,
-          height: /[px]/.test(this.size) ? this.size : null,
+          width: pxSize ? this.size : null,
+          height: pxSize ? this.size : null,
+          fontSize: pxSize ? parseInt(this.size) / 3 + 'px' : null,
         };
         if (!_color.isColor(this.color)) {
           style.background = _color.getColor(this.color);
