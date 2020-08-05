@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div>
     <div
       :class="{'no-items':value.length === 0}"
       class="con-chips">
