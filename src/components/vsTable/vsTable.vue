@@ -267,7 +267,6 @@
         });
       },
       sort(key, sortType) {
-        this.$emit('sorting');
         this.currentSortKey = key;
         this.currentSortType = sortType;
         if (this.sst) {
