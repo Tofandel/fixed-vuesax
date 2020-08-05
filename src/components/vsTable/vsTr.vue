@@ -105,12 +105,12 @@
             parent: this,
           });
           instance.$slots.default = this.$slots.expand;
-          instance.$mount();
 
           this.expandedInstance = instance;
           this.$parent.$on('sorting', this.collapseExpandedData);
-          instance.trEl = document.createElement('tr').appendChild(instance.$el);
+          instance.trEl = document.createElement('tr');
           this.insertAfter(tr, instance.trEl);
+          instance.vm = instance.$mount(instance.trEl);
           this.expanded = true;
         }
       },

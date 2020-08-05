@@ -57,10 +57,10 @@
               parent: this,
             });
             instance.$slots.default = this.$slots.edit;
-            instance.$mount();
             instance.$on('close', this.close);
-            const exp = document.createElement('tr').appendChild(instance.$el);
+            const exp = document.createElement('tr');
             this.insertAfter(tr, exp);
+            instance.vm = instance.$mount(exp);
             this.activeEdit = true;
             this.$parent.$on('sorting', this.collapseExpandedData);
             setTimeout(() => {
