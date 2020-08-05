@@ -62,6 +62,7 @@
             const exp = document.createElement('tr').appendChild(instance.$el);
             this.insertAfter(tr, exp);
             this.activeEdit = true;
+            this.$parent.$on('sorting', this.collapseExpandedData);
             setTimeout(() => {
               window.addEventListener('click', this.closeEdit);
             }, 20);
@@ -79,6 +80,7 @@
           this.activeEdit = false;
           tr.parentNode.removeChild(tr.nextSibling);
           window.removeEventListener('click', this.closeEdit);
+          this.$parent.$off('sorting', this.collapseExpandedData);
         }
       },
     },

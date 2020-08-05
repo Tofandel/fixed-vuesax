@@ -118,16 +118,18 @@
         default: false,
       },
     },
-    data: () => ({
-      headerWidth: '100%',
-      datax: [],
-      searchx: null,
-      currentx: 1,
-      maxItemsx: 5,
-      hasExpandableData: false,
-      currentSortKey: null,
-      currentSortType: null,
-    }),
+    data() {
+      return {
+        headerWidth: '100%',
+        datax: [],
+        searchx: null,
+        currentx: 1,
+        maxItemsx: 5,
+        hasExpandableData: false,
+        currentSortKey: null,
+        currentSortType: null,
+      };
+    },
     computed: {
       getTotalPages() {
         const totalLength = this.sst && this.total ? this.total : this.data.length;
@@ -265,6 +267,7 @@
         });
       },
       sort(key, sortType) {
+        this.$emit('sorting');
         this.currentSortKey = key;
         this.currentSortType = sortType;
         if (this.sst) {

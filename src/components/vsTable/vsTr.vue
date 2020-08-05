@@ -63,10 +63,8 @@
         if (this.$slots.expand) {
           this.colspan++;
         }
+        if (this.$slots.expand) this.$parent.hasExpandableData = true;
       });
-    },
-    created() {
-      if (this.$slots.expand) this.$parent.hasExpandableData = true;
     },
     beforeDestroy() {
       this.collapseExpandedData();
@@ -108,16 +106,21 @@
           });
           instance.$slots.default = this.$slots.expand;
           instance.$mount();
-          const newTR = document.createElement('tr').appendChild(instance.$el);
-          this.insertAfter(tr, newTR);
+
+          this.expandedInstance = instance;
+          this.$parent.$on('sorting', this.collapseExpandedData);
+          instance.trEl = document.createElement('tr').appendChild(instance.$el);
+          this.insertAfter(tr, instance.trEl);
           this.expanded = true;
         }
       },
       collapseExpandedData() {
         if (this.expanded) {
-          const tr = this.$refs.tableTr;
-          tr.parentNode.removeChild(tr.nextSibling);
+          const tr = this.expandedInstance.trEl;
+          tr.parentNode.removeChild(tr);
+          this.expandedInstance.vm.$destroy();
           this.expanded = false;
+          this.$parent.$off('sorting', this.collapseExpandedData);
         }
       },
     },
