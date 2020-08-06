@@ -13,10 +13,11 @@
     <label
       v-if="labelPlaceholder?false:label"
       class="vs-input--label"
-      for=""
+      :for="id || 'vs-input-'+_uid"
       @click="focusInput">{{label}}</label>
     <div class="vs-con-input">
       <input
+        :id="id || 'vs-input-'+_uid"
         ref="vsinput"
         :style="style"
         :autofocus="autofocus"
@@ -54,7 +55,7 @@
         :icon-pack="iconPack"
         :icon="icon"
         class="icon-inputx notranslate vs-input--icon"
-        @click="focusInput(); $emit('icon-click');"/>
+        @click="focusInput(), $emit('icon-click')"/>
 
       <transition name="icon-validate">
         <span
@@ -115,6 +116,7 @@
     name: 'VsInput',
     inheritAttrs: false,
     props: {
+      id: String,
       value: {
         default: '',
         type: [String, Number],

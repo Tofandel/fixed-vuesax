@@ -14,8 +14,8 @@
       vs-xs="12">
       <div>
         <span
-          style="margin-right:5px">
-          {{descriptionTitle}}: {{minRows}} - {{maxRows}} {{descriptionConnector}} {{sizeArray}} | {{descriptionBody}}:
+          style="margin-right:5px"> {{descriptionTitle}}: {{minRows}} - {{maxRows}} {{descriptionConnector}}
+          {{sizeArray}} | {{descriptionBody}}:
 
         </span>
         <ul class="vs-pagination--array">
@@ -24,14 +24,9 @@
             :key="index">
             <span
               :style="styleDescription"
-              :class="[`vs-description-${color}`,{ 'vs-pagination--bold': (index==indexRows)}]"
-              @click="changeRowMaxItems(index)">
-              {{row}}
-            </span>
-            <span
-              v-if="index != (descriptionItems.length - 1)">
-              ,
-            </span>
+              :class="[`vs-description-${color}`,{ 'vs-pagination--bold': (index===indexRows)}]"
+              @click="changeRowMaxItems(index)">{{row}}</span><span v-if="index !== (descriptionItems.length - 1)">
+                , </span>
           </li>
         </ul>
       </div>
@@ -62,12 +57,10 @@
             <li
               v-for="(page, index) in pages"
               :key="index"
-              :class="{'is-current': page == current}"
+              :class="{'is-current': page === current}"
               class="item-pagination vs-pagination--li"
               @click="goTo(page)">
-              <span>
-                {{page}}
-              </span>
+              <span> {{page}} </span>
 
               <div class="effect"></div>
             </li>
@@ -160,18 +153,21 @@
         default: 'Pages',
       },
     },
-    data: () => ({
-      pages: [],
-      current: 0,
-      go: 0,
-      prevRange: '',
-      nextRange: '',
-      hoverBtn1: false,
-      minRows: 0,
-      maxRows: 0,
-      indexRows: 0,
-    }),
+    data() {
+      return {
+        current: this.value,
+        go: this.value,
+        indexRows: this.descriptionItems.indexOf(this.maxItems),
+      };
+    },
     computed: {
+      maxRows() {
+        return ((this.current * this.maxItems) <= this.sizeArray) ? this.current * this.maxItems : this.sizeArray;
+      },
+      minRows() {
+        return ((this.current * this.maxItems) <= this.sizeArray) ? (this.maxRows - this.maxItems) + 1
+          : ((this.current - 1) * this.maxItems) + 1;
+      },
       defaultNextIcon() {
         if (this.$vs.rtl) return 'chevron_left';
         return 'chevron_right';
@@ -195,95 +191,67 @@
           cursor: 'pointer',
         };
       },
+      pages() {
+        if (this.total <= Math.max(5, this.max)) {
+          return this.setPages(1, this.total);
+        }
+
+        if (this.current >= 3 && this.current <= this.total - 3) {
+          const incr = Math.floor((this.max - 4) / 2);
+
+          return [1, '...', ...this.setPages(this.current - incr, this.current + incr), '...', this.total];
+        } else if (this.current < 3) {
+          return [
+            ...this.setPages(1, this.max - 2),
+            '...',
+            this.total,
+          ];
+        } else {
+          return [
+            1,
+            '...',
+            ...this.setPages(this.total - this.max - 2, this.total),
+          ];
+        }
+      },
     },
     watch: {
       current(val) {
-        this.getPages();
-        this.calculateMinMax(val);
-        this.$emit('input', this.current);
-        this.$emit('change', this.current);
-      },
-      total() {
-        this.getPages();
-      },
-      max() {
-        this.getPages();
+        if (val !== this.value) {
+          this.$emit('input', val);
+          this.$emit('change', val);
+        }
       },
       value(val) {
         const pageNum = val < 1 ? 1 : (val <= this.total ? val : this.total);
         this.goTo(pageNum);
       },
     },
-
-    async mounted() {
-      this.current = this.go = this.value;
-      await this.calculateMinMax(this.current);
-      this.indexRows = this.descriptionItems.indexOf(this.maxItems);
-      this.getPages();
-    },
-
     methods: {
-      async changeRowMaxItems(index) {
+      changeRowMaxItems(index) {
         this.indexRows = index;
-        await this.$emit('changeMaxItems', index);
-        await this.calculateMinMax(this.current);
+        this.$emit('changeMaxItems', index);
         this.current = 1;
-      },
-      async calculateMinMax(val) {
-        this.maxRows = ((val * this.maxItems) <= this.sizeArray) ? val * this.maxItems : this.sizeArray;
-        this.minRows = ((val * this.maxItems) <= this.sizeArray) ? (this.maxRows - this.maxItems) + 1 : ((this.current - 1) * this.maxItems) + 1;
       },
       isEllipsis(page) {
         return page === '...';
       },
       goTo(page) {
-        if (page === '...') {
+        if (this.isEllipsis(page)) {
           return;
         }
         if (typeof page.target === 'undefined') {
           this.current = page;
         } else {
           const value = parseInt(page.target.value, 10);
-          this.go = (
-            value < 1 ? 1 : (value <= this.total ? value : this.total)
-          );
+          this.go = Math.min(this.total, Math.max(1, value));
           this.current = this.go;
-        }
-      },
-      getPages() {
-        if (this.total <= this.max) {
-          const pages = this.setPages(1, this.total);
-          this.pages = pages;
-        }
-        const even = this.max % 2 === 0 ? 1 : 0;
-        if (this.total < 6) {
-          this.prevRange = Math.floor(this.max / (this.max / 2));
-        } else {
-          this.prevRange = Math.floor(this.max / 2);
-        }
-        this.nextRange = this.total - this.prevRange + 1 + even;
-
-        if (this.current >= this.prevRange && this.current <= this.nextRange) {
-          const start = this.current - this.prevRange + 2;
-          const end = this.current + this.prevRange - 2 - even;
-
-          this.pages = [1, '...', ...this.setPages(start, end), '...', this.total];
-        } else if (this.total < 6) {
-          this.pages = [
-            ...this.setPages(1, this.total),
-          ];
-        } else {
-          this.pages = [
-            ...this.setPages(1, this.prevRange),
-            '...',
-            ...this.setPages(this.nextRange, this.total),
-          ];
         }
       },
       setPages(start, end) {
         const setPages = [];
 
-        for (start > 0 ? start : 1; start <= end; start++) {
+        for (; start <= end; start++) {
           setPages.push(start);
         }
 
