@@ -245,14 +245,22 @@
         });
         return items;
       },
+      retrieve(name, obj) {
+        return name.indexOf('.') > 0 ? name.split('.').reduce(this.get, obj) : obj[name];
+      },
+      get(obj, i) {
+        return typeof obj === 'object' && obj !== null ? obj[i] : null;
+      },
       sortItems(data) {
         const { currentSortKey, currentSortType } = this;
 
         function compare(a, b) {
-          if (a[currentSortKey] < b[currentSortKey]) {
+          const v1 = this.retrieve(a, currentSortKey);
+          const v2 = this.retrieve(b, currentSortKey);
+          if (v1 < v2) {
             return currentSortType === 'desc' ? 1 : -1;
           }
-          if (a[currentSortKey] > b[currentSortKey]) {
+          if (v1 > v2) {
             return currentSortType === 'desc' ? -1 : 1;
           }
           return 0;
