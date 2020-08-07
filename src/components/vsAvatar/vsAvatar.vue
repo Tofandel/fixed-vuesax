@@ -10,7 +10,7 @@
       :style="badgeStyle"
       :class="badgeClass"
       class="dot-count vs-avatar--count">
-      {{typeof badge != 'boolean' ? badge : null}}
+      {{typeof badge !== 'boolean' ? badge : null}}
     </div>
     <div
       v-if="src"
@@ -26,7 +26,7 @@
       :class="[text ? '' : iconPack, text ? '' : icon, textClass]"
       translate="no"
       class="vs-avatar--text notranslate">
-      {{text ? returnText : iconPack == 'material-icons' ? icon : ''}}
+      {{text ? returnText : (iconPack === 'material-icons' ? icon : '')}}
     </span>
   </div>
 </template>
@@ -114,9 +114,7 @@
         return style;
       },
       textClass() {
-        const classes = {
-          'material-icons': !this.text,
-        };
+        const classes = {};
         if (_color.isColor(this.textColor)) {
           classes[`vs-avatar-text-${this.textColor}`] = true;
         }

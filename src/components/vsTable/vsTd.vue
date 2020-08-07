@@ -24,12 +24,15 @@
     mixins: [InjectedChildMixin('vsTable', 0, 'table'), InjectedChildMixin('vsTr')],
     props: {
       data: {
-        default: null,
+        type: null,
       },
     },
-    data: () => ({
-      activeEdit: false,
-    }),
+    data() {
+      return {
+        expandedInstance: null,
+        activeEdit: false,
+      };
+    },
     watch: {
       activeEdit() {
         this.parent.activeEdit = this.activeEdit;
@@ -60,9 +63,10 @@
             });
             instance.$slots.default = this.$slots.edit;
             instance.$on('close', this.close);
-            const exp = document.createElement('tr');
-            this.insertAfter(tr, exp);
-            instance.vm = instance.$mount(exp);
+            instance.trEl = document.createElement('tr');
+            this.insertAfter(tr, instance.trEl);
+            instance.vm = instance.$mount(instance.trEl);
+            this.expandedInstance = instance;
             this.activeEdit = true;
             this.table.$on('sorting', this.close);
             setTimeout(() => {
@@ -78,9 +82,11 @@
       },
       close() {
         if (this.activeEdit) {
-          const tr = this.$refs.td.closest('tr');
+          const tr = this.expandedInstance.trEl;
+          const trParent = tr.parentNode;
           this.activeEdit = false;
-          tr.parentNode.removeChild(tr.nextSibling);
+          this.expandedInstance.vm.$destroy();
+          trParent.removeChild(tr);
           window.removeEventListener('click', this.closeEdit);
           this.table.$off('sorting', this.close);
         }

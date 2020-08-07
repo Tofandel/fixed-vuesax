@@ -38,13 +38,14 @@
         default: null,
       },
       data: {
-        default: null,
+        type: null,
       },
     },
     data: () => ({
       colspan: 0,
       expanded: false,
       activeEdit: false,
+      expandedInstance: null,
     }),
     computed: {
       isSelected() {
@@ -92,8 +93,7 @@
         if (this.parent.multiple || !this.$slots.expand) return;
         const tr = evt.target.closest('tr');
         if (this.expanded) {
-          tr.parentNode.removeChild(tr.nextSibling);
-          this.expanded = false;
+          this.collapseExpandedData();
         } else {
           const trx = Vue.extend(trExpand);
           const instance = new trx({
@@ -107,16 +107,17 @@
           this.expandedInstance = instance;
           instance.trEl = document.createElement('tr');
           this.parent.$on('sorting', this.collapseExpandedData);
-          this.insertAfter(tr, instance.trEl);
-          instance.vm = instance.$mount(instance.trEl);
+          this.insertAfter(tr, this.trEl);
+          instance.vm = instance.$mount(this.trEl);
           this.expanded = true;
         }
       },
       collapseExpandedData() {
         if (this.expanded) {
           const tr = this.expandedInstance.trEl;
+          const trParent = tr.parentNode;
           this.expandedInstance.vm.$destroy();
-          tr.parentNode.removeChild(tr);
+          trParent.removeChild(tr);
           this.parent.$off('sorting', this.collapseExpandedData);
           delete this.expandedInstance;
           this.expanded = false;
