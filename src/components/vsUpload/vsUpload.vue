@@ -46,8 +46,8 @@
           v-if="img.src"
           :key="index"
           :style="{
-            maxWidth:img.orientation == 'h'?'100%':'none',
-            maxHeight:img.orientation == 'w'?'100%':'none'
+            maxWidth:img.orientation === 'h'?'100%':'none',
+            maxHeight:img.orientation === 'w'?'100%':'none'
           }"
           :src="img.src"
           @touchend="viewImage(img.src,$event)"
@@ -92,7 +92,7 @@
         </span>
         <button
           v-if="showUploadButton"
-          :disabled="filesx.length == 0"
+          :disabled="filesx.length === 0"
           type="button"
           title="Upload"
           class="btn-upload-all vs-upload--button-upload"
@@ -195,11 +195,11 @@
         var timeout;
 
         var eventx = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch)) ? 'touchstart' : 'click';
-        if (eventx == 'click') {
+        if (eventx === 'click') {
           this.viewActive = true;
           this.viewSrc = src;
         } else {
-          if (evt.type == 'touchend') {
+          if (evt.type === 'touchend') {
             var currentTime = new Date().getTime();
             var tapLength = currentTime - lastTap;
             clearTimeout(timeout);
@@ -299,7 +299,7 @@
         let postFiles = Array.prototype.slice.call(this.filesx);
         if (typeof index === 'number') {
           postFiles = [postFiles[index]];
-        } else if (index == 'all') {
+        } else if (index === 'all') {
           postFiles = postFiles.filter((item) => {
             return !item.hasOwnProperty('remove');
           });
