@@ -232,8 +232,8 @@
         });
         return items;
       },
-      retrieve(name, obj) {
-        return name.indexOf('.') > 0 ? name.split('.').reduce(this.get, obj) : obj[name];
+      retrieve(obj, name) {
+        return name ? (name.indexOf('.') > 0 ? name.split('.').reduce(this.get, obj) : obj[name]) : null;
       },
       get(obj, i) {
         return typeof obj === 'object' && obj !== null ? obj[i] : null;
