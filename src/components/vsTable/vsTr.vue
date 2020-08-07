@@ -117,7 +117,6 @@
         if (this.expanded) {
           const tr = this.expandedInstance.trEl;
           this.expandedInstance.vm.$destroy();
-          console.log(tr);
           tr.parentNode.removeChild(tr);
           delete this.expandedInstance;
           this.expanded = false;
