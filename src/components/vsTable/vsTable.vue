@@ -43,7 +43,7 @@
               <slot name="thead"></slot>
             </tr>
           </thead>
-          <slot :data="queriedResults"></slot>
+          <slot :data="paginatedResults"></slot>
         </table>
       </div>
       <div
@@ -146,11 +146,18 @@
           return this.data;
         }
         if (this.searchx) {
-          return this.sortedItems.filter((tr) => {
+          return this.items.filter((tr) => {
             return this.normalize(this.getValues(tr).toString()).indexOf(this.searchString) >= 0;
-          }).slice(this.min, this.max);
+          });
         } else {
           return this.items;
+        }
+      },
+      paginatedResults() {
+        if (this.pagination) {
+          return this.queriedResults.slice(this.min, this.max);
+        } else {
+          return this.queriedResults;
         }
       },
       isNoData() {
@@ -170,15 +177,12 @@
           overflow: this.maxHeight !== 'auto' ? 'auto' : null,
         };
       },
-      sortedItems() {
+      items() {
         if (this.currentSortType === null) {
           return this.data;
         } else {
           return this.data.slice().sort(this.compare);
         }
-      },
-      items() {
-        return this.sortedItems.slice(this.min, this.max);
       },
       max() {
         return Math.ceil(this.currentx * this.maxItemsx);
