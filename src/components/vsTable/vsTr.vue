@@ -2,16 +2,16 @@
   <tr
     ref="tableTr"
     :class="[`tr-table-state-${state}`, {'is-selected':isSelected, 'selected': data, 'is-expand': expanded, 'activeEdit':
-      activeEdit, 'hoverFlat': $parent.hoverFlat}]"
+      activeEdit, 'hoverFlat': parent.hoverFlat}]"
     class="tr-values vs-table--tr"
     @dblclick="dblclicktr"
     @click="clicktr">
     <td
-      v-if="$parent.multiple || $slots.expand"
+      v-if="parent.multiple || $slots.expand"
       :class="{'active-expanded': expanded}"
       class="td-check">
       <vs-checkbox
-        v-if="$parent.multiple"
+        v-if="parent.multiple"
         :checked="isSelected"
         size="small"
         @change="handleCheckbox"/>

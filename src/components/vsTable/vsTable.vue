@@ -60,7 +60,7 @@
           :total="totalPages"
           :description-items="descriptionItems"
           :max-items="maxItemsx"
-          :size-array="queriedResults.length"
+          :size-array="items.length"
           :description="description"
           @changeMaxItems="changeMaxItems"/>
       </div>
@@ -154,7 +154,7 @@
         }
       },
       isNoData() {
-        return this.queriedResults.length === 0;
+        return this.items.length === 0;
       },
       isCheckedLine() {
         const lengthx = this.data.length;
@@ -200,12 +200,12 @@
       maxItems(val) {
         this.maxItemsx = val;
       },
-      data() {
-        this.$nextTick(() => {
-          if (this.queriedResults.length > 0) {
+      data(data) {
+        if (data.length > 0) {
+          this.$nextTick(() => {
             this.changeTdsWidth();
-          }
-        });
+          });
+        }
       },
       searchx() {
         this.$emit('search', this.searchx);
