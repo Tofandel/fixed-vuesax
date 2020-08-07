@@ -27,10 +27,11 @@
   import Vue from 'vue';
   import trExpand from './vsTrExpand.vue';
   import InjectedChildMixin from '../../utils/InjectedChildMixin';
+  import ProviderParentMixin from '../../utils/ProviderParentMixin';
 
   export default {
     name: 'VsTr',
-    mixins: [InjectedChildMixin('vsTable')],
+    mixins: [InjectedChildMixin('vsTable'), ProviderParentMixin('vsTr')],
     props: {
       state: {
         type: String,
