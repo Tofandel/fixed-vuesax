@@ -107,8 +107,8 @@
           this.expandedInstance = instance;
           instance.trEl = document.createElement('tr');
           this.parent.$on('sorting', this.collapseExpandedData);
-          this.insertAfter(tr, this.trEl);
-          instance.vm = instance.$mount(this.trEl);
+          this.insertAfter(tr, instance.trEl);
+          instance.vm = instance.$mount(instance.trEl);
           this.expanded = true;
         }
       },
