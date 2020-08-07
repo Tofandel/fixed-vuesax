@@ -43,7 +43,7 @@
               <slot name="thead"></slot>
             </tr>
           </thead>
-          <slot :data="datax"></slot>
+          <slot :data="queriedResults"></slot>
         </table>
       </div>
       <div
@@ -57,7 +57,7 @@
         class="con-pagination-table vs-table--pagination">
         <vs-pagination
           v-model="currentx"
-          :total="searchx && !sst ? getTotalPagesSearch : getTotalPages"
+          :total="totalPages"
           :description-items="descriptionItems"
           :max-items="maxItemsx"
           :size-array="queriedResults.length"
@@ -124,40 +124,37 @@
     data() {
       return {
         headerWidth: '100%',
-        datax: [],
         searchx: null,
         currentx: 1,
-        maxItemsx: 5,
+        maxItemsx: this.maxItems,
         hasExpandableData: false,
         currentSortKey: null,
         currentSortType: null,
       };
     },
     computed: {
-      getTotalPages() {
-        const totalLength = this.sst && this.total ? this.total : this.data.length;
-        return Math.ceil(totalLength / this.maxItemsx);
-      },
-      getTotalPagesSearch() {
-        return Math.ceil(this.queriedResults.length / this.maxItems);
+      totalPages() {
+        if (this.searchx && !this.sst) {
+          const totalLength = this.sst && this.total ? this.total : this.data.length;
+          return Math.ceil(totalLength / this.maxItemsx);
+        } else {
+          return Math.ceil(this.queriedResults.length / this.maxItems);
+        }
       },
       queriedResults() {
-        let queriedResults = this.data;
-        if (this.searchx && this.search) {
-          const dataBase = this.data;
-          queriedResults = dataBase.filter((tr) => {
-            const values = this.getValues(tr).toString().toLowerCase();
-            return values.indexOf(this.searchx.toLowerCase()) >= 0;
-          });
+        if (this.sst) {
+          return this.data;
         }
-        return queriedResults;
+        if (this.searchx) {
+          return this.sortedItems.filter((tr) => {
+            return this.normalize(this.getValues(tr).toString()).indexOf(this.searchString) >= 0;
+          }).slice(this.min, this.max);
+        } else {
+          return this.items;
+        }
       },
       isNoData() {
-        if (typeof (this.datax) === 'object') {
-          return (this.datax ? !Object.keys(this.datax).length : false) && this.search;
-        } else {
-          return (this.datax ? !this.datax.length : false) && this.search;
-        }
+        return this.queriedResults.length === 0;
       },
       isCheckedLine() {
         const lengthx = this.data.length;
@@ -173,67 +170,57 @@
           overflow: this.maxHeight !== 'auto' ? 'auto' : null,
         };
       },
+      sortedItems() {
+        if (this.currentSortType === null) {
+          return this.data;
+        } else {
+          return this.data.slice().sort(this.compare);
+        }
+      },
+      items() {
+        return this.sortedItems.slice(this.min, this.max);
+      },
+      max() {
+        return Math.ceil(this.currentx * this.maxItemsx);
+      },
+      min() {
+        return this.max - this.maxItemsx;
+      },
+      searchString() {
+        return this.normalize(this.searchx);
+      },
     },
     watch: {
       currentPage() {
         this.currentx = this.currentPage;
       },
       currentx() {
-        if (this.sst) {
-          this.$emit('change-page', this.currentx);
-        } else {
-          this.loadData();
-        }
+        this.$emit('change-page', this.currentx);
       },
       maxItems(val) {
         this.maxItemsx = val;
-        this.loadData();
-      },
-      maxItemsx() {
-        this.loadData();
       },
       data() {
-        this.loadData();
         this.$nextTick(() => {
-          if (this.datax.length > 0) {
+          if (this.queriedResults.length > 0) {
             this.changeTdsWidth();
           }
         });
       },
       searchx() {
-        if (this.sst) {
-          this.$emit('search', this.searchx);
-        } else {
-          this.loadData();
+        this.$emit('search', this.searchx);
+        if (!this.sst) {
           this.currentx = 1;
         }
       },
     },
     mounted() {
       window.addEventListener('resize', this.listenerChangeWidth);
-      this.maxItemsx = this.maxItems;
-      this.loadData();
-
-      // this.$nextTick(() => {
-      //   if(this.datax.length > 0) {
-      //     this.changeTdsWidth()
-      //   }
-      // })
     },
     destroyed() {
       window.removeEventListener('resize', this.listenerChangeWidth);
     },
     methods: {
-      loadData() {
-        const max = Math.ceil(this.currentx * this.maxItemsx);
-        const min = max - this.maxItemsx;
-
-        if (!this.searchx || this.sst) {
-          this.datax = this.pagination ? this.getItems(min, max) : this.sortItems(this.data) || [];
-        } else {
-          this.datax = this.pagination ? this.getItemsSearch(min, max) : this.getItemsSearch(min, max) || [];
-        }
-      },
       getItems(min, max) {
         const dataBase = this.sortItems(this.data);
 
@@ -251,46 +238,26 @@
       get(obj, i) {
         return typeof obj === 'object' && obj !== null ? obj[i] : null;
       },
-      sortItems(data) {
-        const { currentSortKey, currentSortType } = this;
-
-        function compare(a, b) {
-          const v1 = this.retrieve(a, currentSortKey);
-          const v2 = this.retrieve(b, currentSortKey);
-          if (v1 < v2) {
-            return currentSortType === 'desc' ? 1 : -1;
-          }
-          if (v1 > v2) {
-            return currentSortType === 'desc' ? -1 : 1;
-          }
-          return 0;
+      compare(a, b) {
+        const v1 = this.retrieve(a, this.currentSortKey);
+        const v2 = this.retrieve(b, this.currentSortKey);
+        if (v1 < v2) {
+          return this.currentSortType === 'desc' ? 1 : -1;
         }
-
-        return currentSortType !== null ? [...data].sort(compare) : [...data];
-      },
-      getItemsSearch(min, max) {
-        const search = this.normalize(this.searchx);
-
-        return this.sortItems(this.data).filter((tr) => {
-          return this.normalize(this.getValues(tr).toString()).indexOf(search) >= 0;
-        }).filter((_, index) => {
-          return (index >= min && index < max);
-        });
+        if (v1 > v2) {
+          return this.currentSortType === 'desc' ? -1 : 1;
+        }
+        return 0;
       },
       sort(key, sortType) {
-        this.$emit('sorting', key, sortType);
         this.currentSortKey = key;
         this.currentSortType = sortType;
-        if (this.sst) {
-          this.$emit('sort', key, sortType);
-          return;
-        }
-        this.loadData();
+        this.$emit('sort', key, sortType);
       },
       normalize(string) {
         return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
       },
-      getValues: function getValues(obj) {
+      getValues(obj) {
         function flattenDeep(val) {
           return Object.values(val || []).reduce((acc, val) => (typeof val === 'object') ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
         }
@@ -349,7 +316,7 @@
 
         const tbody = this.$refs.table.querySelector('tbody');
 
-        // Adding condition removes querySelector none error - if tbody isnot present
+        // Adding condition removes querySelector none error - if tbody is not present
         if (tbody) {
           const trvs = tbody.querySelector('.tr-values');
           if (trvs === undefined || trvs === null) return;
