@@ -69,8 +69,11 @@
 </template>
 
 <script>
+  import ProviderParentMixin from '../../utils/ProviderParentMixin';
+
   export default {
     name: 'VsTable',
+    mixins: [ProviderParentMixin('vsTable')],
     props: {
       value: {},
       color: {
@@ -267,6 +270,7 @@
         });
       },
       sort(key, sortType) {
+        this.$emit('sorting', key, sortType);
         this.currentSortKey = key;
         this.currentSortType = sortType;
         if (this.sst) {

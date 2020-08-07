@@ -26,9 +26,11 @@
 <script>
   import Vue from 'vue';
   import trExpand from './vsTrExpand.vue';
+  import InjectedChildMixin from '../../utils/InjectedChildMixin';
 
   export default {
     name: 'VsTr',
+    mixins: [InjectedChildMixin('vsTable')],
     props: {
       state: {
         type: String,
@@ -45,25 +47,20 @@
     }),
     computed: {
       isSelected() {
-        if (this.$parent.multiple && this.$parent.value) {
-          return this.data ? this.$parent.value.includes(this.data) : false;
+        if (this.parent.multiple && this.parent.value) {
+          return this.data ? this.parent.value.includes(this.data) : false;
         } else {
-          return this.data ? this.$parent.value === this.data : false;
+          return this.data ? this.parent.value === this.data : false;
         }
-      },
-    },
-    watch: {
-      '$parent.datax'() {
-        this.collapseExpandedData();
       },
     },
     mounted() {
       this.$nextTick(() => {
-        this.colspan = this.$parent.$refs.thead.querySelectorAll('th').length;
+        this.colspan = this.parent.$refs.thead.querySelectorAll('th').length;
         if (this.$slots.expand) {
           this.colspan++;
         }
-        if (this.$slots.expand) this.$parent.hasExpandableData = true;
+        if (this.$slots.expand) this.parent.hasExpandableData = true;
       });
     },
     beforeDestroy() {
@@ -71,7 +68,7 @@
     },
     methods: {
       handleCheckbox() {
-        this.$parent.handleCheckbox(this.data);
+        this.parent.handleCheckbox(this.data);
       },
       insertAfter(e, i) {
         if (e.nextSibling) {
@@ -81,17 +78,17 @@
         }
       },
       clicktr(evt) {
-        this.$parent.clicktr(this.data, true);
+        this.parent.clicktr(this.data, true);
 
         if (this.$slots.expand) {
           this.clicktd(evt);
         }
       },
       dblclicktr() {
-        this.$parent.dblclicktr(this.data, true);
+        this.parent.dblclicktr(this.data, true);
       },
       clicktd(evt) {
-        if (this.$parent.multiple || !this.$slots.expand) return;
+        if (this.parent.multiple || !this.$slots.expand) return;
         const tr = evt.target.closest('tr');
         if (this.expanded) {
           tr.parentNode.removeChild(tr.nextSibling);
@@ -108,6 +105,7 @@
 
           this.expandedInstance = instance;
           instance.trEl = document.createElement('tr');
+          this.parent.$on('sorting', this.collapseExpandedData);
           this.insertAfter(tr, instance.trEl);
           instance.vm = instance.$mount(instance.trEl);
           this.expanded = true;
@@ -118,6 +116,7 @@
           const tr = this.expandedInstance.trEl;
           this.expandedInstance.vm.$destroy();
           tr.parentNode.removeChild(tr);
+          this.parent.$off('sorting', this.collapseExpandedData);
           delete this.expandedInstance;
           this.expanded = false;
         }

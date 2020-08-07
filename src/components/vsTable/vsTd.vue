@@ -17,9 +17,11 @@
 <script>
   import Vue from 'vue';
   import trExpand from './vsTrExpand.vue';
+  import InjectedChildMixin from '../../utils/InjectedChildMixin';
 
   export default {
     name: 'VsTd',
+    mixins: [InjectedChildMixin('vsTable', 0, 'table'), InjectedChildMixin('vsTr')],
     props: {
       data: {
         default: null,
@@ -30,7 +32,7 @@
     }),
     watch: {
       activeEdit() {
-        this.$parent.activeEdit = this.activeEdit;
+        this.parent.activeEdit = this.activeEdit;
       },
     },
     beforeDestroy() {
@@ -51,7 +53,7 @@
             const trx = Vue.extend(trExpand);
             const instance = new trx({
               propsData: {
-                colspan: this.$parent.colspan,
+                colspan: this.parent.colspan,
                 close: true,
               },
               parent: this,
@@ -62,7 +64,7 @@
             this.insertAfter(tr, exp);
             instance.vm = instance.$mount(exp);
             this.activeEdit = true;
-            this.$parent.$on('sorting', this.collapseExpandedData);
+            this.table.$on('sorting', this.close);
             setTimeout(() => {
               window.addEventListener('click', this.closeEdit);
             }, 20);
@@ -80,7 +82,7 @@
           this.activeEdit = false;
           tr.parentNode.removeChild(tr.nextSibling);
           window.removeEventListener('click', this.closeEdit);
-          this.$parent.$off('sorting', this.collapseExpandedData);
+          this.table.$off('sorting', this.close);
         }
       },
     },
