@@ -71,7 +71,7 @@
     computed: {
       styleChip() {
         const background = this.transparent ? _color.getColor(this.color, 0.15) : _color.getColor(this.color, 1);
-        const color = this.transparent ? _color.getColor(this.color, 1) : this.contrastColor(background);
+        const color = this.transparent ? _color.getColor(this.color, 1) : _color.contrastColor(background);
 
         return {
           background,
