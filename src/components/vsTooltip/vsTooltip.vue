@@ -93,12 +93,12 @@
       if (!this.$slots.default) {
         this.activeTooltip = false;
       }
-      if (this.activeTooltip) {
-        utils.insertBody(this.$refs.vstooltip);
-      }
+      // if (this.activeTooltip) {
+      //   utils.insertBody(this.$refs.vstooltip);
+      // }
     },
     beforeUpdate() {
-      utils.removeBody(this.$refs.vstooltip);
+      // utils.removeBody(this.$refs.vstooltip);
     },
     beforeDestroy() {
       if (this.$refs.vstooltip && this.activeTooltip) {
