@@ -196,22 +196,44 @@
           return this.setPages(1, this.total);
         }
 
-        if (this.current >= 3 && this.current <= this.total - 3) {
+        if (this.current >= 4 && this.current <= this.total - 3) {
           const incr = Math.floor((this.max - 4) / 2);
+          const pages = [1];
 
-          return [1, '...', ...this.setPages(this.current - incr, this.current + incr), '...', this.total];
-        } else if (this.current < 3) {
-          return [
+          const min = this.current - incr;
+          const max = this.current + incr;
+
+          if (min > 2) {
+            pages.push('...');
+          } else if (min === 2) {
+            pages.push(2);
+          }
+
+          pages.push.apply(pages, this.setPages(
+            Math.max(3, min),
+            Math.min(this.total - 2, max)),
+          );
+
+          if (max < this.total - 1) {
+            pages.push('...');
+          } else if (max === this.total - 1) {
+            pages.push(this.total - 1);
+          }
+          pages.push(this.total);
+
+          return pages;
+        } else if (this.current < 4) {
+          return this.max - 2 < this.total - 1 ? [
             ...this.setPages(1, this.max - 2),
             '...',
             this.total,
-          ];
+          ] : [...this.setPages(1, this.max)];
         } else {
-          return [
+          return this.total - this.max > 2 ? [
             1,
             '...',
             ...this.setPages(this.total - this.max - 2, this.total),
-          ];
+          ] : [...this.setPages(1, this.max)];
         }
       },
     },
