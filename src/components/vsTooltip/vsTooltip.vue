@@ -25,11 +25,9 @@
 <script>
   import utils from '../../utils';
   import _color from '../../utils/color.js';
-  import VsTooltipContent from './vsTooltipContent';
 
   export default {
     name: 'VsTooltip',
-    components: { VsTooltipContent },
     props: {
       title: {
         default: null,
