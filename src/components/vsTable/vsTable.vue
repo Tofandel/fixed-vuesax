@@ -280,9 +280,10 @@
       },
       handleCheckbox(tr) {
         if (this.multiple && this.onlyClickCheckbox) {
-          const val = this.value.slice(0);
-          if (val.includes(tr)) {
-            val.splice(val.indexOf(tr), 1);
+          const val = this.value.slice();
+          const found = val.indexOf(tr);
+          if (found >= 0) {
+            val.splice(found, 1);
           } else {
             val.push(tr);
           }

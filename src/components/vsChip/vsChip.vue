@@ -35,7 +35,6 @@
       item: {
         type: Boolean,
       },
-      value: {},
       active: {
         type: Boolean,
         default: true,
@@ -72,23 +71,12 @@
     computed: {
       styleChip() {
         const background = this.transparent ? _color.getColor(this.color, 0.15) : _color.getColor(this.color, 1);
-        const color = this.transparent ? _color.getColor(this.color, 1) : this.color ? 'rgba(255,255,255,.9)' : 'rgba(0,0,0,.7)';
+        const color = this.transparent ? _color.getColor(this.color, 1) : this.contrastColor(background);
 
         return {
-          background: background,
-          color: color,
+          background,
+          color,
         };
-      },
-      eliminado() {
-        if (this.item) {
-          return true;
-        } else {
-          if (this.vsClosable) {
-            return this.value;
-          } else {
-            return true;
-          }
-        }
       },
     },
     methods: {

@@ -5,7 +5,7 @@
     @mouseleave="mouseleavex"
     @mouseenter="mouseenterx">
     <transition name="tooltip-fade">
-      <div
+      <vs-tooltip-content
         v-show="activeTooltip"
         ref="vstooltip"
         :class="[`vs-tooltip-${positionx || position}`,`vs-tooltip-${color}`, {'after-none': noneAfter}]"
@@ -17,7 +17,7 @@
           </h4>
           {{text}}
         </slot>
-      </div>
+      </vs-tooltip-content>
     </transition>
     <slot></slot>
   </div>
@@ -25,9 +25,11 @@
 <script>
   import utils from '../../utils';
   import _color from '../../utils/color.js';
+  import VsTooltipContent from './vsTooltipContent';
 
   export default {
     name: 'VsTooltip',
+    components: { VsTooltipContent },
     props: {
       title: {
         default: null,
@@ -66,11 +68,13 @@
     },
     computed: {
       style() {
+        const background = _color.getColor(this.color, 1);
         return {
           left: this.cords.left,
           top: this.cords.top,
           transitionDelay: this.activeTooltip ? this.delay : '0s',
-          background: _color.getColor(this.color, 1),
+          background,
+          color: _color.contrastColor(background),
           width: this.widthx,
         };
       },
@@ -89,6 +93,12 @@
       if (!this.$slots.default) {
         this.activeTooltip = false;
       }
+      if (this.activeTooltip) {
+        utils.insertBody(this.$refs.vstooltip);
+      }
+    },
+    beforeUpdate() {
+      utils.removeBody(this.$refs.vstooltip);
     },
     beforeDestroy() {
       if (this.$refs.vstooltip && this.activeTooltip) {
