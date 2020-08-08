@@ -82,11 +82,8 @@
       },
       close() {
         if (this.activeEdit) {
-          const tr = this.expandedInstance.trEl;
-          const trParent = tr.parentNode;
           this.activeEdit = false;
           this.expandedInstance.vm.$destroy();
-          trParent.removeChild(tr);
           window.removeEventListener('click', this.closeEdit);
           this.table.$off('sorting', this.close);
         }

@@ -114,10 +114,8 @@
       },
       collapseExpandedData() {
         if (this.expanded) {
-          const tr = this.expandedInstance.trEl;
-          const trParent = tr.parentNode;
+          console.log(this.expandedInstance.trEl);
           this.expandedInstance.vm.$destroy();
-          trParent.removeChild(tr);
           this.parent.$off('sorting', this.collapseExpandedData);
           delete this.expandedInstance;
           this.expanded = false;
