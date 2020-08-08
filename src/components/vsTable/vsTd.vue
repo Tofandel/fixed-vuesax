@@ -63,9 +63,9 @@
             });
             instance.$slots.default = this.$slots.edit;
             instance.$on('close', this.close);
-            instance.trEl = document.createElement('tr');
-            this.insertAfter(tr, instance.trEl);
-            instance.vm = instance.$mount(instance.trEl);
+            const el = document.createElement('tr');
+            this.insertAfter(tr, el);
+            instance.vm = instance.$mount(el);
             this.expandedInstance = instance;
             this.activeEdit = true;
             this.table.$on('sorting', this.close);
@@ -83,6 +83,8 @@
       close() {
         if (this.activeEdit) {
           this.activeEdit = false;
+          this.expandedInstance.$el.parentNode.removeChild(this.expandedInstance.$el);
+          this.expandedInstance.vm.$destroy();
           this.expandedInstance.vm.$destroy();
           window.removeEventListener('click', this.closeEdit);
           this.table.$off('sorting', this.close);

@@ -105,16 +105,16 @@
           instance.$slots.default = this.$slots.expand;
 
           this.expandedInstance = instance;
-          instance.trEl = document.createElement('tr');
+          const el = document.createElement('tr');
           this.parent.$on('sorting', this.collapseExpandedData);
-          this.insertAfter(tr, instance.trEl);
-          instance.vm = instance.$mount(instance.trEl);
+          this.insertAfter(tr, el);
+          instance.vm = instance.$mount(el);
           this.expanded = true;
         }
       },
       collapseExpandedData() {
         if (this.expanded) {
-          console.log(this.expandedInstance.trEl);
+          this.expandedInstance.$el.parentNode.removeChild(this.expandedInstance.$el);
           this.expandedInstance.vm.$destroy();
           this.parent.$off('sorting', this.collapseExpandedData);
           delete this.expandedInstance;
