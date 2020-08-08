@@ -23,6 +23,8 @@ export default {
         colorx = colorx.replace(/^(rgb)/, 'rgba');
         colorx = colorx.replace(/\)$/, `,${alphax})`);
       }
+    } else if (this.isColor(colorx)) {
+      return this.rColor(colorx, alphax);
     }
     return colorx;
   },

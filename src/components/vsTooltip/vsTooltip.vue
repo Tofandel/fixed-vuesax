@@ -5,7 +5,7 @@
     @mouseleave="mouseleavex"
     @mouseenter="mouseenterx">
     <transition name="tooltip-fade">
-      <vs-tooltip-content
+      <div
         v-show="activeTooltip"
         ref="vstooltip"
         :class="[`vs-tooltip-${positionx || position}`,`vs-tooltip-${color}`, {'after-none': noneAfter}]"
@@ -17,7 +17,7 @@
           </h4>
           {{text}}
         </slot>
-      </vs-tooltip-content>
+      </div>
     </transition>
     <slot></slot>
   </div>
