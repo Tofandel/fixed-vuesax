@@ -125,15 +125,19 @@
       },
       close() {
         if (this.value) {
-          _utils.removeBody(this.$refs.con);
+          // _utils.removeBody(this.$refs.con);
           this.$emit('input', false);
           this.$emit('close');
         }
       },
       open() {
-        _utils.insertBody(this.$refs.con);
         this.$emit('input', true);
         this.$emit('open');
+        this.$nextTick(() => {
+          if (this.$refs.con) {
+            _utils.insertBody(this.$refs.con);
+          }
+        });
       },
     },
   };
