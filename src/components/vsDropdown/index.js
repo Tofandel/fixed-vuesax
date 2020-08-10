@@ -1,7 +1,7 @@
-import vsComponent from './vsDropDown';
-import vsComponent2 from './vsDropDownMenu';
-import vsComponent3 from './vsDropDownItem';
-import vsComponent4 from './vsDropDownGroup';
+import vsComponent from './vsDropdown';
+import vsComponent2 from './vsDropdownMenu';
+import vsComponent3 from './vsDropdownItem';
+import vsComponent4 from './vsDropdownGroup';
 
 export default Vue => {
   Vue.component(vsComponent.name, vsComponent);
