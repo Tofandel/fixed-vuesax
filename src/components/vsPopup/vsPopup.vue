@@ -2,7 +2,6 @@
   <transition name="popup-t">
     <div
       v-if="active"
-      ref="con"
       :class="[`vs-popup-${color}`,{'fullscreen':fullscreen}]"
       class="vs-component con-vs-popup">
       <div
@@ -119,13 +118,18 @@
         }
       },
     },
+    beforeDestroy() {
+      if (this.value) {
+        _utils.removeBody(this.$el);
+      }
+    },
     methods: {
       giveColor(color) {
         return _color.rColor(color);
       },
       close() {
         if (this.value) {
-          // _utils.removeBody(this.$refs.con);
+          _utils.removeBody(this.$el);
           this.$emit('input', false);
           this.$emit('close');
         }
@@ -134,9 +138,7 @@
         this.$emit('input', true);
         this.$emit('open');
         this.$nextTick(() => {
-          if (this.$refs.con) {
-            _utils.insertBody(this.$refs.con);
-          }
+          _utils.insertBody(this.$el);
         });
       },
     },
