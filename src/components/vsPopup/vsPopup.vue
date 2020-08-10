@@ -1,44 +1,46 @@
 <template lang="html">
-  <transition name="popup-t">
-    <div
-      v-if="active"
-      :class="[`vs-popup-${color}`,{'fullscreen':fullscreen}]"
-      class="vs-component con-vs-popup">
+  <div>
+    <transition name="popup-t">
       <div
-        :style="styleCon"
-        class="vs-popup--background"
-        @click="close"></div>
-      <div
-        ref="popupx"
-        :style="stylePopup"
-        class="vs-popup">
-        <!-- //header -->
-        <header
-          :style="styleHeader"
-          class="vs-popup--header">
-          <div class="vs-popup--title">
-            <h3>{{title}}</h3>
-          </div>
-          <vs-icon
-            v-if="!buttonCloseHidden"
-            ref="btnclose"
-            :icon-pack="iconPack"
-            :icon="iconClose"
-            :style="stylePopup"
-            class="vs-popup--close vs-popup--close--icon"
-            @click="close"/>
-        </header>
-
-        <!-- // slots  -->
+        v-if="active"
+        :class="[`vs-popup-${color}`,{'fullscreen':fullscreen}]"
+        class="vs-component con-vs-popup">
         <div
-          :style="styleContent"
-          :class="classContent"
-          class="vs-popup--content">
-          <slot></slot>
+          :style="styleCon"
+          class="vs-popup--background"
+          @click="close"></div>
+        <div
+          ref="popupx"
+          :style="stylePopup"
+          class="vs-popup">
+          <!-- //header -->
+          <header
+            :style="styleHeader"
+            class="vs-popup--header">
+            <div class="vs-popup--title">
+              <h3>{{title}}</h3>
+            </div>
+            <vs-icon
+              v-if="!buttonCloseHidden"
+              ref="btnclose"
+              :icon-pack="iconPack"
+              :icon="iconClose"
+              :style="stylePopup"
+              class="vs-popup--close vs-popup--close--icon"
+              @click="close"/>
+          </header>
+
+          <!-- // slots  -->
+          <div
+            :style="styleContent"
+            :class="classContent"
+            class="vs-popup--content">
+            <slot></slot>
+          </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script>
