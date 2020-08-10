@@ -260,7 +260,7 @@
           this.timeOpacity = this.time;
         }
 
-        if (event.srcElement ? event.srcElement != btn : false) {
+        if (event.target ? event.target !== btn : false) {
           xEvent += event.target.offsetLeft;
           yEvent += event.target.offsetTop;
         }

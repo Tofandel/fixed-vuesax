@@ -1,14 +1,14 @@
 <template lang="html">
   <transition name="popup-t">
     <div
-      v-show="active"
+      v-if="active"
       ref="con"
       :class="[`vs-popup-${color}`,{'fullscreen':fullscreen}]"
-      class="vs-component con-vs-popup"
-      @click="close($event,true)">
+      class="vs-component con-vs-popup">
       <div
         :style="styleCon"
-        class="vs-popup--background"></div>
+        class="vs-popup--background"
+        @click="close"></div>
       <div
         ref="popupx"
         :style="stylePopup"
@@ -44,6 +44,8 @@
 
 <script>
   import _color from '../../utils/color.js';
+  import _utils from '../../utils/index';
+
   export default {
     name: 'VsPopup',
     props: {
@@ -51,7 +53,12 @@
         default: 'primary',
         type: String,
       },
-      active: Boolean,
+      value: {
+        type: Boolean,
+        default() {
+          return this.active;
+        },
+      },
       title: {
         default: 'popup',
         type: String,
@@ -105,36 +112,28 @@
         };
       },
     },
-    mounted() {
-      this.insertBody();
-    },
-    beforeDestroy() {
-      // close the left open prompt
-      const elx = this.$refs.con;
-      if (document.body) {
-        document.body.removeChild(elx);
-      }
+    watch: {
+      value(val) {
+        if (val) {
+          this.open();
+        }
+      },
     },
     methods: {
       giveColor(color) {
         return _color.rColor(color);
       },
-      close(event, con) {
-        if (con) {
-          if (event.target.className &&
-            event.target.className.indexOf &&
-            event.target.className.indexOf('vs-popup--background') != -1) {
-            this.$emit('update:active', false);
-            this.$emit('close', false);
-          } else if (!this.buttonCloseHidden && event.srcElement == this.$refs.btnclose.$el) {
-            this.$emit('update:active', false);
-            this.$emit('close', false);
-          }
+      close() {
+        if (this.value) {
+          _utils.removeBody(this.$refs.con);
+          this.$emit('input', false);
+          this.$emit('close');
         }
       },
-      insertBody() {
-        const elx = this.$refs.con;
-        document.body.insertBefore(elx, document.body.firstChild);
+      open() {
+        _utils.insertBody(this.$refs.con);
+        this.$emit('input', true);
+        this.$emit('open');
       },
     },
   };
