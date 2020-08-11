@@ -13,7 +13,7 @@
       :style="style"
       class="checkbox_x vs-checkbox">
       <span
-        :style="style_check"
+        :style="styleCheck"
         class="vs-checkbox--check">
         <vs-icon
           :icon="icon"
@@ -56,7 +56,7 @@
       },
     },
     computed: {
-      style_check() {
+      styleCheck() {
         return {
           background: this.isChecked ? _color.getColor(this.color, 1) : null,
         };

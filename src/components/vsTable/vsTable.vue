@@ -33,9 +33,8 @@
                   v-if="multiple"
                   class="con-td-check">
                   <vs-checkbox
-                    :key="isCheckedLine ? 'remove' : 'check'"
                     :icon="isCheckedLine ? 'remove' : 'check'"
-                    :checked="isCheckedMultiple"
+                    :value="isCheckedMultiple"
                     size="small"
                     @click="changeCheckedMultiple"/>
                 </span>
@@ -271,15 +270,14 @@
         });
       },
       changeCheckedMultiple() {
-        const selectedx = (this.data.length - this.value.length);
-        if (selectedx === 0) {
+        if (this.isCheckedMultiple) {
           this.$emit('input', []);
         } else {
           this.$emit('input', this.data);
         }
       },
       handleCheckbox(tr) {
-        if (this.multiple && this.onlyClickCheckbox) {
+        if (!this.multiple && this.onlyClickCheckbox) {
           const val = this.value.slice();
           const found = val.indexOf(tr);
           if (found >= 0) {
