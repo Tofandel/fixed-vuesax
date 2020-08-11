@@ -4,7 +4,9 @@ export default {
       parent = document.querySelector(parent);
     }
     elx = elx instanceof Node ? elx : elx.$el;
-    if (!elx) { return; }
+    if (!elx) {
+      return;
+    }
     const bodyx = parent || document.body;
     if (prepend) {
       bodyx.prepend(elx);
@@ -18,7 +20,13 @@ export default {
     }
     elx = elx instanceof Node ? elx : elx.$el;
     const bodyx = parent || document.body;
-    if (!elx) { return; }
-    bodyx.removeChild(elx);
+    if (!elx) {
+      return;
+    }
+    try {
+      bodyx.removeChild(elx);
+    } catch (e) {
+      // Already removed so ignore
+    }
   },
 };
