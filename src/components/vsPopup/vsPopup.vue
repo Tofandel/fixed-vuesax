@@ -42,7 +42,7 @@
         <footer v-if="prompt" class="vs-popup--footer">
           <slot name="footer">
             <vs-button
-              :disabled="valid"
+              :disabled="!valid"
               :color="color"
               :type="buttonAccept"
               class="vs-popup--accept-button"
@@ -201,7 +201,7 @@
         }
       },
       acceptDialog() {
-        if (this.isValid) {
+        if (this.valid) {
           this.$emit('accept');
           this.close();
         }
