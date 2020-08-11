@@ -3,14 +3,14 @@ import vsPopup from '../../components/vsPopup/vsPopup';
 
 const dialogConstructor = Vue.extend(vsPopup);
 
-let instance;
-
 export default {
   name: 'dialog',
-  vsfunction(props, parent) {
+  vsfunction(props = {}, parent = null) {
     return new Promise((resolve) => {
-      instance = new dialogConstructor({
-        propsData: { ...props, prompt: true },
+      props.prompt = true;
+      props.value = true;
+      const instance = new dialogConstructor({
+        propsData: props,
         parent,
       });
 
@@ -27,6 +27,9 @@ export default {
         if (props.cancel) {
           props.cancel();
         }
+      });
+      instance.vm.$on('close', () => {
+        instance.$destroy();
       });
     });
   },
