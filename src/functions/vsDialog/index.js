@@ -29,7 +29,10 @@ export default {
         }
       });
       instance.vm.$on('close', () => {
-        instance.$destroy();
+        props.value = false;
+        instance.$nextTick(() => {
+          instance.$destroy();
+        });
       });
     });
   },

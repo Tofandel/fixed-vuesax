@@ -1,6 +1,5 @@
 <template lang="html">
   <button
-    ref="btn"
     v-bind="$attrs"
     :class="[`vs-button-${isColor() ? color : null}`,`vs-button-${type}`,{
       'isActive':isActive,
@@ -236,7 +235,6 @@
         }
       },
       clickButton(event) {
-        this.$emit('click', event);
         if (this.isActive) {
           return;
         }
@@ -251,7 +249,7 @@
           }
         }
         this.isActive = true;
-        const btn = this.$refs.btn;
+        const btn = this.$el;
         let xEvent = event.offsetX;
         let yEvent = event.offsetY;
         const radio = btn.clientWidth * 3;
@@ -284,6 +282,7 @@
             this.timeOpacity = 0.15;
           }, this.time * 1100);
         }
+        this.$emit('click', event);
       },
       isColor() {
         return _color.isColor(this.color);
