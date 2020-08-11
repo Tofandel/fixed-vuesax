@@ -26,8 +26,9 @@
         }"
         :class="[type]"
         class="vs-loading">
+        <img v-if="src" :src="src">
         <template
-          v-if="type!=='material'">
+          v-else-if="type!=='material'">
           <div
             :style="styleEffect1"
             class="effect-1 effects"></div>
@@ -38,9 +39,8 @@
             :style="styleEffect3"
             class="effect-3 effects"></div>
         </template>
-        <img :src="src">
         <svg
-          v-if="type==='material'"
+          v-else
           class="spinner"
           width="50px"
           height="50px"
@@ -66,11 +66,14 @@
   export default {
     components: {},
     props: {
-      type: String,
+      type: {
+        type: String,
+        default: 'default',
+      },
       color: String,
       background: {
         type: String,
-        default: 'rgba(255,255,255,.6)',
+        default: null,
       },
       src: String,
       clickEffect: Boolean,
@@ -102,122 +105,57 @@
         };
       },
       styleEffect1() {
-        let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
-        };
-
-        if (this.type === 'border') {
-          style = {
-            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
-          };
+        switch (this.type) {
+          case 'border':
+            return {
+              borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
+            };
+          case 'point':
+            return {
+              background: _color.getColor(this.color, 0.4),
+            };
+          case 'radius':
+            return {
+              border: `3px solid ${_color.getColor(this.color, 1)}`,
+            };
+          case 'corners':
+            return {
+              border: `3px solid ${_color.getColor(this.color, 1)}`,
+            };
+          case 'sound':
+            return {
+              background: _color.getColor(this.color, 1),
+            };
+          default:
+            return {
+              borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
+            };
         }
-
-        if (this.type === 'point') {
-          style = {
-            background: _color.getColor(this.color, 0.4),
-          };
-        }
-
-        if (this.type === 'radius') {
-          style = {
-            border: `3px solid ${_color.getColor(this.color, 1)}`,
-          };
-        }
-
-        if (this.type === 'corners') {
-          style = {
-            border: `3px solid ${_color.getColor(this.color, 1)}`,
-          };
-        }
-
-        if (this.type === 'sound') {
-          style = {
-            background: _color.getColor(this.color, 1),
-          };
-        }
-
-        return style;
       },
       styleEffect2() {
-        let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
-        };
-
-        if (this.type === 'border') {
-          style = {
-            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
-          };
+        switch (this.type) {
+          case 'corners':
+            return {};
+          default:
+            return this.styleEffect1;
         }
-
-        if (this.type === 'point') {
-          style = {
-            background: _color.getColor(this.color, 0.4),
-          };
-        }
-
-        if (this.type === 'radius') {
-          style = {
-            border: `3px solid ${_color.getColor(this.color, 1)}`,
-          };
-        }
-
-        if (this.type === 'corners') {
-          style = {};
-        }
-
-        if (this.type === 'sound') {
-          style = {
-            background: _color.getColor(this.color, 1),
-          };
-        }
-
-        return style;
       },
       styleEffect3() {
-        let style = {
-          borderLeft: `3px solid ${_color.getColor(this.color, 1)}`,
-        };
-
-        if (this.type === 'border') {
-          style = {
-            borderLeft: `1px solid ${_color.getColor(this.color, 1)}`,
-          };
-        }
-
-        if (this.type === 'point') {
-          style = {
-            background: _color.getColor(this.color, 0.4),
-          };
-        }
-
-        if (this.type === 'radius') {
-          style = {
-            border: `3px solid ${_color.getColor(this.color, 1)}`,
-          };
-        }
-
-        if (this.type === 'corners') {
-          style = {};
-        }
-
-        if (this.type === 'sound') {
-          style = {
-            background: _color.getColor(this.color, 1),
-          };
-        }
-
-        return style;
+        return this.styleEffect2;
       },
       style() {
-        return {
-          background: _color.getColor(this.background, 1),
-        };
+        if (this.background) {
+          return {
+            background: _color.getColor(this.background, 1),
+          };
+        }
+        return null;
       },
     },
     watch: {
       value(val) {
         if (val) {
-          _utils.insertBody(this, this.container, true);
+          _utils.insertBody(this, this.container);
         } else {
           _utils.removeBody(this, this.container);
         }
@@ -225,7 +163,7 @@
     },
     mounted() {
       if (this.value) {
-        _utils.insertBody(this, this.container, true);
+        _utils.insertBody(this, this.container);
       }
     },
     beforeDestroy() {
