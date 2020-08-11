@@ -88,7 +88,9 @@
     },
     inheritAttrs: false,
     props: {
-      value: {},
+      value: {
+        type: [Number, String],
+      },
       color: {
         default: 'primary',
         type: String,
@@ -153,9 +155,9 @@
         return {
           ...this.$listeners,
           blur: (evt) => {
-            if (parseFloat(this.value) > parseFloat(this.max)) {
+            if (this.cValue > this.cMax) {
               this.$emit('input', this.max);
-            } else if (parseFloat(this.value) < parseFloat(this.min)) {
+            } else if (this.cValue < this.cMin) {
               this.$emit('input', this.min);
               this.$emit('blur', evt);
             }
@@ -164,6 +166,18 @@
             this.$emit('input', evt.target.value);
           },
         };
+      },
+      cMin() {
+        return parseFloat(this.min);
+      },
+      cMax() {
+        return parseFloat(this.max);
+      },
+      cValue() {
+        return parseFloat(this.value);
+      },
+      cStep() {
+        return parseFloat(this.step);
       },
     },
     watch: {
@@ -177,24 +191,24 @@
     methods: {
       plus() {
         let newValue;
-        if (this.value === '') {
+        if (isNaN(this.value)) {
           newValue = 0;
           this.$emit('input', this.fixPrecision(newValue));
         } else {
-          if (this.max ? parseFloat(this.value) < parseFloat(this.max) : true) {
-            newValue = parseFloat(this.value) + parseFloat(this.step);
+          if (this.max ? this.cValue < this.cMax : true) {
+            newValue = this.cValue + this.cStep;
             this.$emit('input', this.fixPrecision(newValue));
           }
         }
       },
       less() {
         let newValue;
-        if (this.value === '') {
+        if (isNaN(this.value)) {
           newValue = 0;
           this.$emit('input', this.fixPrecision(newValue));
         } else {
-          if (this.min ? parseFloat(this.value) > parseFloat(this.min) : true) {
-            newValue = parseFloat(this.value) - parseFloat(this.step);
+          if (this.min ? this.cValue > this.cMin : true) {
+            newValue = this.cValue - this.cStep;
             this.$emit('input', this.fixPrecision(newValue));
           }
         }
