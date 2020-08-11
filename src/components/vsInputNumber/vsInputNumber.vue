@@ -189,15 +189,20 @@
       },
     },
     methods: {
+      input(newValue) {
+        const inv = 1 / this.cStep;
+        newValue = Math.floor(newValue * inv) / inv;
+        this.$emit('input', newValue);
+      },
       plus() {
         let newValue;
         if (isNaN(this.value)) {
           newValue = 0;
-          this.$emit('input', this.fixPrecision(newValue));
+          this.input(newValue);
         } else {
           if (this.max ? this.cValue < this.cMax : true) {
             newValue = this.cValue + this.cStep;
-            this.$emit('input', this.fixPrecision(newValue));
+            this.input(newValue);
           }
         }
       },
@@ -205,17 +210,13 @@
         let newValue;
         if (isNaN(this.value)) {
           newValue = 0;
-          this.$emit('input', this.fixPrecision(newValue));
+          this.input(newValue);
         } else {
           if (this.min ? this.cValue > this.cMin : true) {
             newValue = this.cValue - this.cStep;
-            this.$emit('input', this.fixPrecision(newValue));
+            this.input(newValue);
           }
         }
-      },
-      fixPrecision(n) {
-        const precision = (this.step + '').split('.')[1];
-        return n.toFixed(precision ? precision.length : 0);
       },
     },
   };
