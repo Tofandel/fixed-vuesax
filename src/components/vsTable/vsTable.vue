@@ -36,7 +36,7 @@
                     :icon="isCheckedLine ? 'remove' : 'check'"
                     :value="isCheckedMultiple"
                     size="small"
-                    @click="changeCheckedMultiple"/>
+                    @change="changeCheckedMultiple"/>
                 </span>
               </th>
               <slot name="thead"></slot>
