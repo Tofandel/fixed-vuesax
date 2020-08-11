@@ -215,16 +215,18 @@
       },
     },
     watch: {
-      value: {
-        immediate: true,
-        handler(val) {
-          if (val) {
-            _utils.insertBody(this, this.container);
-          } else {
-            _utils.removeBody(this, this.container);
-          }
-        },
+      value(val) {
+        if (val) {
+          _utils.insertBody(this, this.container);
+        } else {
+          _utils.removeBody(this, this.container);
+        }
       },
+    },
+    mounted() {
+      if (this.value) {
+        _utils.insertBody(this, this.container);
+      }
     },
     beforeDestroy() {
       if (this.value) {
