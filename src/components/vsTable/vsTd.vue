@@ -44,6 +44,7 @@
     updated() {
       if (this.expandedInstance) {
         this.expandedInstance.vm.$slots.default = this.$slots.expand;
+        this.expandedInstance.vm.$forceUpdate();
       }
     },
     methods: {
