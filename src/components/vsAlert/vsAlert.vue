@@ -96,14 +96,6 @@
         };
       },
     },
-    mounted() {
-      if (this.$refs.alert) {
-        this.$nextTick(() => {
-          const h = this.$refs.alert.scrollHeight;
-          this.$refs.alert.style.height = h + 'px';
-        });
-      }
-    },
     methods: {
       beforeEnter(el) {
         el.style.height = 0;
