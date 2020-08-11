@@ -43,6 +43,8 @@
   </transition>
 </template>
 <script>
+  import utils from '../../utils';
+
   export default {
     name: 'VsSidebar',
     props: {
@@ -82,7 +84,10 @@
       this.currentIndex = this.defaultIndex;
     },
     mounted() {
-      this.insertBody();
+      utils.insertBody(this.$refs.sidebarbackground, this.parent);
+    },
+    beforeDestroy() {
+      utils.removeBody(this.$refs.sidebarbackground, this.parent);
     },
     methods: {
       getActive() {
@@ -109,13 +114,6 @@
           const parentx = typeof this.parent === 'string' ? document.querySelector(this.parent) : this.parent;
           const element = parentx || window;
           element.removeEventListener('click', this.closeSidebar);
-        }
-      },
-      insertBody() {
-        if (this.parent) {
-          const elx = this.$refs.sidebarbackground;
-          const parentx = typeof this.parent === 'string' ? document.querySelector(this.parent) : this.parent;
-          parentx.insertBefore(elx, parentx.firstChild);
         }
       },
     },

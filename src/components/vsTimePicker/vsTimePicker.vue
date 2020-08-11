@@ -60,6 +60,8 @@
 </template>
 
 <script>
+  import utils from '../../utils';
+
   export default {
     name: 'VsTimePicker',
     inheritAttrs: false,
@@ -110,9 +112,13 @@
       },
     },
     mounted() {
-      this.insertBody(this.$refs.ulhours);
-      this.insertBody(this.$refs.ulminutes);
+      utils.insertBody(this.$refs.ulhours);
+      utils.insertBody(this.$refs.ulminutes);
       this.changePositions();
+    },
+    beforeDestroy() {
+      utils.removeBody(this.$refs.ulhours);
+      utils.removeBody(this.$refs.ulminutes);
     },
     methods: {
       changeHours(hour) {
@@ -123,15 +129,10 @@
       },
       changePositions() {
         // add hours ul position
-        const cordsHours = this.$refs.hours.getBoundingClientRect();
-        this.cords.hours = cordsHours;
+        this.cords.hours = this.$refs.hours.getBoundingClientRect();
 
         // add minutes ul position
-        const cordsMinutes = this.$refs.minutes.getBoundingClientRect();
-        this.cords.minutes = cordsMinutes;
-      },
-      insertBody(elx) {
-        document.body.insertBefore(elx, document.body.firstChild);
+        this.cords.minutes = this.$refs.minutes.getBoundingClientRect();
       },
     },
   };

@@ -219,16 +219,16 @@
         immediate: true,
         handler(val) {
           if (val) {
-            _utils.insertBody(this.$el, this.container);
+            _utils.insertBody(this, this.container);
           } else {
-            _utils.removeBody(this.$el, this.container);
+            _utils.removeBody(this, this.container);
           }
         },
       },
     },
     beforeDestroy() {
       if (this.value) {
-        _utils.removeBody(this.$el, this.container);
+        _utils.removeBody(this, this.container);
       }
     },
     methods: {

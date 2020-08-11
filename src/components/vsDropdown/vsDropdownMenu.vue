@@ -31,6 +31,8 @@
 </template>
 
 <script>
+  import utils from '../../utils';
+
   export default {
     name: 'VsDropdownMenu',
     data: () => ({
@@ -58,10 +60,10 @@
       },
     },
     mounted() {
-      this.insertBody();
+      utils.insertBody(this);
     },
     beforeDestroy() {
-      this.$el.parentNode.removeChild(this.$el);
+      utils.removeBody(this);
     },
     methods: {
       mouseenterx() {
@@ -97,11 +99,6 @@
           this.dropdownVisible = false;
         }
         this.widthx = this.$el.clientWidth;
-      },
-      insertBody() {
-        const elp = this.$el;
-        this.parentNode = this.$el.parentNode;
-        document.body.insertBefore(elp, document.body.firstChild);
       },
     },
   };
