@@ -7,7 +7,7 @@
       <div
         :style="styleCon"
         class="vs-popup--background"
-        @click="close"></div>
+        @click="backgroundClose"></div>
       <div
         ref="popupx"
         :style="stylePopup"
@@ -16,16 +16,18 @@
         <header
           :style="styleHeader"
           class="vs-popup--header">
+          <span
+            :style="styleBefore"
+            class="before"></span>
           <div class="vs-popup--title">
             <h3>{{title}}</h3>
           </div>
           <vs-icon
-            v-if="!buttonCloseHidden"
-            ref="btnclose"
+            v-if="!noCloseButton"
             :icon-pack="iconPack"
             :icon="iconClose"
             :style="stylePopup"
-            class="vs-popup--close vs-popup--close--icon"
+            class="vs-popup--close vs-popup--close--icon notranslate"
             @click="close"/>
         </header>
 
@@ -34,8 +36,28 @@
           :style="styleContent"
           :class="classContent"
           class="vs-popup--content">
-          <slot></slot>
+          <slot>{{text}}</slot>
         </div>
+        <!-- footer buttons -->
+        <footer v-if="prompt" class="vs-popup--footer">
+          <slot name="footer">
+            <vs-button
+              :disabled="valid"
+              :color="color"
+              :type="buttonAccept"
+              class="vs-popup--accept-button"
+              @click="acceptDialog">
+              {{acceptText}}
+            </vs-button>
+            <vs-button
+              :text-color="'rgba(0,0,0,.5)'"
+              :type="buttonCancel"
+              class="vs-popup--cancel-button"
+              @click="cancelClose">
+              {{cancelText}}
+            </vs-button>
+          </slot>
+        </footer>
       </div>
     </div>
   </transition>
@@ -57,7 +79,7 @@
         default: 'popup',
         type: String,
       },
-      buttonCloseHidden: Boolean,
+      noCloseButton: Boolean,
       fullscreen: Boolean,
       backgroundColor: {
         default: null,
@@ -65,6 +87,27 @@
       },
       backgroundColorPopup: {
         default: 'rgb(255,255,255)',
+        type: String,
+      },
+      prompt: Boolean,
+      valid: {
+        default: true,
+        type: Boolean,
+      },
+      buttonAccept: {
+        default: 'filled',
+        type: String,
+      },
+      buttonCancel: {
+        default: 'flat',
+        type: String,
+      },
+      acceptText: {
+        default: 'Accept',
+        type: String,
+      },
+      cancelText: {
+        default: 'Cancel',
         type: String,
       },
       styleContent: {
@@ -83,6 +126,20 @@
         default: 'close',
         type: String,
       },
+      noBackgroundClose: Boolean,
+      persistent: Boolean,
+      text: {
+        default: null,
+        type: String,
+      },
+      type: {
+        default: 'alert',
+        type: String,
+      },
+      parent: {
+        type: null,
+        default: null,
+      },
     },
     computed: {
       styleHeader() {
@@ -90,7 +147,7 @@
           color: _color.getColor(this.color, 1),
         };
       },
-      styleAfter() {
+      styleBefore() {
         return {
           background: _color.getColor(this.color, 1),
         };
@@ -115,12 +172,34 @@
     },
     beforeDestroy() {
       if (this.value) {
-        _utils.removeBody(this.$el);
+        _utils.removeBody(this.$el, this.parent);
       }
     },
     methods: {
-      giveColor(color) {
-        return _color.rColor(color);
+      rebound() {
+        this.$refs.dialogx.classList.add('locked');
+        setTimeout(() => {
+          this.$refs.dialogx.classList.remove('locked');
+        }, 200);
+      },
+      backgroundClose() {
+        if (this.noBackgroundClose) {
+          this.rebound();
+        } else {
+          this.cancelClose();
+        }
+      },
+      acceptDialog() {
+        if (this.isValid) {
+          this.$emit('accept');
+          this.close();
+        }
+      },
+      cancelClose() {
+        this.$emit('cancel');
+        if (!this.persistent) {
+          this.close();
+        }
       },
       close() {
         if (this.value) {
@@ -129,7 +208,7 @@
           this.$emit('close');
 
           this.$nextTick(() => {
-            _utils.removeBody(this.$el);
+            _utils.removeBody(this.$el, this.parent);
           });
         }
       },
@@ -137,7 +216,7 @@
         this.$emit('input', true);
         this.$emit('open');
         this.$nextTick(() => {
-          _utils.insertBody(this.$el);
+          _utils.insertBody(this.$el, this.parent);
         });
       },
     },

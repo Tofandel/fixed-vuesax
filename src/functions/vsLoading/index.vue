@@ -26,21 +26,19 @@
         }"
         :class="[type]"
         class="vs-loading">
-        <div
-          v-if="type!='material'"
-          :style="styleEffect1"
-          class="effect-1 effects"></div>
-        <div
-          v-if="type!='material'"
-          :style="styleEffect2"
-          class="effect-2 effects"></div>
-        <div
-          v-if="type!='material'"
-          :style="styleEffect3"
-          class="effect-3 effects"></div>
-
+        <template
+          v-if="type!=='material'">
+          <div
+            :style="styleEffect1"
+            class="effect-1 effects"></div>
+          <div
+            :style="styleEffect2"
+            class="effect-2 effects"></div>
+          <div
+            :style="styleEffect3"
+            class="effect-3 effects"></div>
+        </template>
         <img :src="src">
-
         <svg
           v-if="type==='material'"
           class="spinner"
@@ -65,25 +63,34 @@
   import _color from '../../utils/color.js';
 
   export default {
+    components: {},
+    props: {
+      type: String,
+      color: String,
+      background: {
+        type: String,
+        default: 'rgba(255,255,255,.6)',
+      },
+      src: String,
+      clickEffect: Boolean,
+      scale: {
+        type: Number,
+        default: 1,
+      },
+      textAfter: Boolean,
+      text: String,
+    },
     data: () => ({
       active: false,
-      type: 'default',
-      color: null,
-      background: 'rgba(255,255,255,.6)',
-      src: '',
-      leftx: 0,
-      topx: 0,
-      clickEffect: false,
-      activeEffectClick: false,
-      scale: 1,
-      textAfter: false,
-      text: null,
     }),
     computed: {
       styleEffectClick() {
         return {
           left: `${this.leftx}px`,
           top: `${this.topx}px`,
+          topx: 0,
+          leftx: 0,
+          activeEffectClick: false,
         };
       },
       styleEffect1() {

@@ -1,39 +1,33 @@
 import Vue from 'vue';
-import utils from '../../utils';
-import vsDialog from './index.vue';
+import vsPopup from '../../components/vsPopup/vsPopup';
 
-const dialogConstructor = Vue.extend(vsDialog);
+const dialogConstructor = Vue.extend(vsPopup);
 
 let instance;
 
 export default {
   name: 'dialog',
-  vsfunction(props) {
-    instance = new dialogConstructor();
+  vsfunction(props, parent) {
+    return new Promise((resolve) => {
+      instance = new dialogConstructor({
+        propsData: { ...props, prompt: true },
+        parent,
+      });
 
-    instance.$props.text = props.text;
-    instance.$props.title = props.title || 'Dialog';
-    instance.$props.color = props.color;
-    instance.$props.type = props.type || 'alert';
-    instance.$props.buttonAccept = props.buttonAccept || 'filled';
-    instance.$props.buttonCancel = props.buttonCancel || 'flat';
-    instance.$props.acceptText = props.acceptText || 'Accept';
-    instance.$props.cancelText = props.cancelText || 'Cancel';
-    instance.$props.closeIcon = props.closeIcon || 'close';
-    instance.$props.iconPack = props.iconPack || 'material-icons';
-    instance.$props.isValid = props.isValid || 'none';
+      instance.vm = instance.$mount();
 
-    instance.$data.isPrompt = false;
-
-    instance.vm = instance.$mount();
-
-    if (props.accept) instance.vm.$on('accept', props.accept);
-    if (props.cancel) instance.vm.$on('cancel', props.cancel);
-    utils.insertBody(instance.vm.$el, props.parent);
-
-    Vue.nextTick(() => {
-      instance.$data.fActive = true;
-      instance.$data.parameters = props.parameters;
+      instance.vm.$on('accept', () => {
+        resolve(true);
+        if (props.accept) {
+          props.accept();
+        }
+      });
+      instance.vm.$on('cancel', () => {
+        resolve(false);
+        if (props.cancel) {
+          props.cancel();
+        }
+      });
     });
   },
 
