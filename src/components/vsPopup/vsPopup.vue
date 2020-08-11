@@ -16,9 +16,9 @@
         <header
           :style="styleHeader"
           class="vs-popup--header">
-          <span
-            :style="styleBefore"
-            class="before"></span>
+          <span v-if="prompt"
+                :style="styleBefore"
+                class="before"></span>
           <div class="vs-popup--title">
             <h3>{{title}}</h3>
           </div>
@@ -143,11 +143,17 @@
     },
     computed: {
       styleHeader() {
+        if (_color.isColor(this.color)) {
+          return {};
+        }
         return {
           color: _color.getColor(this.color, 1),
         };
       },
       styleBefore() {
+        if (_color.isColor(this.color)) {
+          return {};
+        }
         return {
           background: _color.getColor(this.color, 1),
         };

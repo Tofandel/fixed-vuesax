@@ -1,23 +1,24 @@
 //animations
 .popup-t-enter, .popup-t-leave-to /* .popup-t-leave-active below version 2.1.8 */
   opacity: 0 !important;
+
 //box popup
-.popup-t-enter .vs-popup/* .fade-leave-active below version 2.1.8 */
+.popup-t-enter .vs-popup /* .fade-leave-active below version 2.1.8 */
   transform: scale(.9) !important;
 
-.popup-t-leave-to .vs-popup/* .fade-leave-active below version 2.1.8 */
+.popup-t-leave-to .vs-popup /* .fade-leave-active below version 2.1.8 */
   transform: scale(.9) !important;
-  // animation: rebound .3s;
+
+// animation: rebound .3s;
 
 
 @keyframes rebound
-    0%
-      transform: scale(.9)
-    50%
-      transform: scale(1.08)
-    100%
-      transform: scale(1)
-
+  0%
+    transform: scale(.9)
+  50%
+    transform: scale(1.08)
+  100%
+    transform: scale(1)
 
 
 // cancel / text
@@ -33,7 +34,6 @@
 .popup-t-enter header h3, .popup-t-leave-to header h3
   propWithDir(transform, null, (-50px), !important)
   opacity: 0;
-
 
 
 .con-vs-popup
@@ -65,6 +65,7 @@
     box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.1)
     background: rgb(255, 255, 255);
     animation: rebound .3s;
+
     &.locked
       // background: rgb(3, 41, 203) !important;
       transform: scale(1.02);
@@ -75,7 +76,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(0, 0, 0,.05)
+  background: rgba(0, 0, 0, .05)
   border-radius: 5px 5px;
   position: relative;
 
@@ -84,7 +85,7 @@
     position: absolute;
     propWithDir(left, null, 0);
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     width: 3px;
     height: 100%;
     display: block;
@@ -95,6 +96,7 @@
   align-items: center;
   justify-content: flex-end;
   position: relative;
+
   button
     propWithDir(margin, left, 0px)
 
@@ -119,7 +121,8 @@
   propWithDir(transform, null, (8px -8px));
   background: rgb(255, 255, 255);
   font-size: 1.25em;
-  color: rgba(0,0,0,.6)
+  color: rgba(0, 0, 0, .6)
+
   &:hover
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1)
     propWithDir(transform, null, (5px -5px));
@@ -129,6 +132,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 5px 5px 0 0;
+
   h3
     transition: all .23s ease .1s;
     padding: 8px;
@@ -148,7 +152,8 @@
 
 for colorx, i in $vs-colors
   .vs-popup-{colorx}
-    header
+    .vs-popup--header
       color: getColor(colorx, 1)
+
       .before
         background: getColor(colorx, 1)
