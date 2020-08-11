@@ -65,6 +65,11 @@
         if (this.$slots.expand) this.parent.hasExpandableData = true;
       });
     },
+    updated() {
+      if (this.expandedInstance) {
+        this.expandedInstance.vm.$slots.default = this.$slots.expand;
+      }
+    },
     beforeDestroy() {
       this.collapseExpandedData();
     },
@@ -102,7 +107,7 @@
             },
             parent: this,
           });
-          instance.$scopedSlots.default = this.$scopedSlots.expand;
+          instance.$slots.default = this.$slots.expand;
 
           this.expandedInstance = instance;
           const el = document.createElement('tr');

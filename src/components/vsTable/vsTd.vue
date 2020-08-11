@@ -41,6 +41,11 @@
     beforeDestroy() {
       this.close();
     },
+    updated() {
+      if (this.expandedInstance) {
+        this.expandedInstance.vm.$slots.default = this.$slots.expand;
+      }
+    },
     methods: {
       insertAfter(e, i) {
         if (e.nextSibling) {
@@ -61,7 +66,7 @@
               },
               parent: this,
             });
-            instance.$scopedSlots.default = this.$scopedSlots.edit;
+            instance.$slots.default = this.$slots.edit;
             instance.$on('close', this.close);
             const el = document.createElement('tr');
             this.insertAfter(tr, el);
