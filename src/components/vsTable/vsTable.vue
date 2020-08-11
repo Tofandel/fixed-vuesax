@@ -36,7 +36,7 @@
                     :icon="isCheckedLine ? 'remove' : 'check'"
                     :value="isCheckedMultiple"
                     size="small"
-                    @change="changeCheckedMultiple"/>
+                    @input="changeCheckedMultiple"/>
                 </span>
               </th>
               <slot name="thead"></slot>
@@ -54,14 +54,22 @@
       <div
         v-if="pagination"
         class="con-pagination-table vs-table--pagination">
-        <vs-pagination
-          v-model="currentx"
-          :total="totalPages"
-          :description-items="descriptionItems"
-          :max-items="maxItemsx"
-          :size-array="items.length"
-          :description="description"
-          @changeMaxItems="changeMaxItems"/>
+        <slot name="pagination" :value="currentx" :total="totalPages"
+              :description-items="descriptionItems"
+              :max-items="maxItemsx"
+              :size-array="items.length"
+              :description="description"
+              :changeMaxItems="changeMaxItems">
+          <vs-pagination
+            v-model="currentx"
+            :total="totalPages"
+            :description-items="descriptionItems"
+            :max-items="maxItemsx"
+            :max="paginationMax"
+            :size-array="items.length"
+            :description="description"
+            @changeMaxItems="changeMaxItems"/>
+        </slot>
       </div>
     </div>
   </div>
@@ -94,13 +102,13 @@
         type: Array,
         default: null,
       },
-      notSpacer: Boolean,
       search: Boolean,
       maxItems: {
         default: 5,
         type: [Number, String],
       },
       pagination: Boolean,
+      paginationMax: Number,
       description: Boolean,
       descriptionItems: {
         default: () => [],
@@ -269,11 +277,11 @@
           return (typeof item === 'string') || (typeof item === 'number');
         });
       },
-      changeCheckedMultiple() {
-        if (this.isCheckedMultiple) {
-          this.$emit('input', []);
-        } else {
+      changeCheckedMultiple(v) {
+        if (v) {
           this.$emit('input', this.data);
+        } else {
+          this.$emit('input', []);
         }
       },
       handleCheckbox(tr) {

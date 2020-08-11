@@ -36,7 +36,7 @@
       vs-type="flex"
       vs-justify="flex-end"
       vs-align="center"
-      vs-lg="6"
+      :vs-lg="description ? 6 : 12"
       vs-sm="12"
       vs-xs="12">
       <div
@@ -115,9 +115,12 @@
         required: true,
         default: 1,
       },
+      description: Boolean,
       max: {
         type: Number,
-        default: 9,
+        default() {
+          return this.description ? 9 : 13;
+        },
       },
       goto: {
         type: Boolean,
@@ -135,7 +138,6 @@
         type: String,
         default: 'material-icons',
       },
-      description: Boolean,
       descriptionItems: {
         default: () => [],
         type: Array,
