@@ -1,14 +1,18 @@
 export default {
-  insertBody(elx, parent) {
+  insertBody(elx, parent = null, prepend = false) {
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
     }
     elx = elx instanceof Node ? elx : elx.$el;
     if (!elx) { return; }
     const bodyx = parent || document.body;
-    bodyx.appendChild(elx);
+    if (prepend) {
+      bodyx.prepend(elx);
+    } else {
+      bodyx.appendChild(elx);
+    }
   },
-  removeBody(elx, parent) {
+  removeBody(elx, parent = null) {
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
     }
