@@ -86,7 +86,7 @@
         type: String,
       },
       backgroundColorPopup: {
-        default: 'rgb(255,255,255)',
+        default: null,
         type: String,
       },
       prompt: Boolean,
@@ -144,7 +144,7 @@
     computed: {
       styleHeader() {
         if (_color.isColor(this.color)) {
-          return {};
+          return null;
         }
         return {
           color: _color.getColor(this.color, 1),
@@ -152,21 +152,27 @@
       },
       styleBefore() {
         if (_color.isColor(this.color)) {
-          return {};
+          return null;
         }
         return {
           background: _color.getColor(this.color, 1),
         };
       },
       styleCon() {
-        return {
-          background: _color.getColor(this.backgroundColor, 1),
-        };
+        if (this.backgroundColor) {
+          return {
+            background: _color.getColor(this.backgroundColor, 1),
+          };
+        }
+        return null;
       },
       stylePopup() {
-        return {
-          background: _color.getColor(this.backgroundColorPopup, 1),
-        };
+        if (this.backgroundColorPopup) {
+          return {
+            background: _color.getColor(this.backgroundColorPopup, 1),
+          };
+        }
+        return null;
       },
     },
     watch: {
