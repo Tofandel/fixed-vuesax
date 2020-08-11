@@ -176,6 +176,11 @@
         }
       },
     },
+    mounted() {
+      if (this.value) {
+        _utils.insertBody(this.$el, this.parent);
+      }
+    },
     beforeDestroy() {
       if (this.value) {
         _utils.removeBody(this.$el, this.parent);
