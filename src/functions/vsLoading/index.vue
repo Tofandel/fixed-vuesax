@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div
-      v-if="active"
+      v-if="value"
       :style="style"
       :class="[`vs-loading-background-${background}`,`vs-loading-color-${color}`,{'textAfter':textAfter}]"
       class="con-vs-loading"
@@ -61,6 +61,7 @@
 </template>
 <script>
   import _color from '../../utils/color.js';
+  import _utils from '../../utils';
 
   export default {
     components: {},
@@ -79,10 +80,17 @@
       },
       textAfter: Boolean,
       text: String,
+      value: {
+        type: Boolean,
+        default: true,
+      },
+      container: [Object, String],
     },
-    data: () => ({
-      active: false,
-    }),
+    data() {
+      return {
+        activeEffectClick: false,
+      };
+    },
     computed: {
       styleEffectClick() {
         return {
@@ -206,8 +214,22 @@
         };
       },
     },
-    mounted() {
-      this.active = true;
+    watch: {
+      value: {
+        immediate: true,
+        handler(val) {
+          if (val) {
+            _utils.insertBody(this.$el, this.container);
+          } else {
+            _utils.removeBody(this.$el, this.container);
+          }
+        },
+      },
+    },
+    beforeDestroy() {
+      if (this.value) {
+        _utils.removeBody(this.$el, this.container);
+      }
     },
     methods: {
       effectClick(evt) {
@@ -217,9 +239,6 @@
         setTimeout(() => {
           this.activeEffectClick = false;
         }, 50);
-      },
-      close() {
-        this.active = false;
       },
     },
   };
