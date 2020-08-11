@@ -102,7 +102,7 @@
             },
             parent: this,
           });
-          instance.$slots.default = this.$slots.expand;
+          instance.$scopedSlots.default = this.$scopedSlots.expand;
 
           this.expandedInstance = instance;
           const el = document.createElement('tr');

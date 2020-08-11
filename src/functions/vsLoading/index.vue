@@ -87,7 +87,9 @@
         type: Boolean,
         default: true,
       },
-      container: [Object, String],
+      container: {
+        type: null,
+      },
     },
     data() {
       return {

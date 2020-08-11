@@ -61,7 +61,7 @@
               },
               parent: this,
             });
-            instance.$slots.default = this.$slots.edit;
+            instance.$scopedSlots.default = this.$scopedSlots.edit;
             instance.$on('close', this.close);
             const el = document.createElement('tr');
             this.insertAfter(tr, el);
