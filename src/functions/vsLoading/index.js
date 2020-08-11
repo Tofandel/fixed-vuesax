@@ -8,7 +8,7 @@ export default {
   name: 'loading',
   vsfunction(props = {}, parent = null) {
     const found = instances.find((i) => {
-      return parent === i.container || (parent && parent.isEqualNode(i.container));
+      return parent === i.container || (parent instanceof Node && parent.isEqualNode(i.container));
     });
     if (found) {
       return found;
@@ -26,7 +26,7 @@ export default {
     return instance.vm;
   },
   close(elx) {
-    if (elx instanceof Element) {
+    if (elx instanceof Node) {
       const instance = instances.find((i) => {
         return elx.isEqualNode(i.container);
       });
