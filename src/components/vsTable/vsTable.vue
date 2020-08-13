@@ -141,12 +141,7 @@
     },
     computed: {
       totalPages() {
-        if (this.searchx && !this.sst) {
-          const totalLength = this.sst && this.total ? this.total : this.data.length;
-          return Math.ceil(totalLength / this.maxItemsx);
-        } else {
-          return Math.ceil(this.queriedResults.length / this.maxItems);
-        }
+        return Math.ceil(this.queriedResults.length / this.maxItems);
       },
       queriedResults() {
         if (this.sst) {
