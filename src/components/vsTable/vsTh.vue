@@ -9,7 +9,7 @@
         v-if="isColumnSelectedForSort && currentSort"
         class="sort-th">
         <vs-icon
-          :icon="currentSort ? 'expand_less' : 'expand_more'"
+          :icon="sortIcon"
           class="th-sort-icon"/>
       </span>
     </div>
@@ -42,6 +42,15 @@
           this.resetSort();
         }
         return this.$parent.currentSortKey === this.sortKey;
+      },
+      sortIcon() {
+        switch (this.sortStatuses[this.currentSort]) {
+          case 'asc':
+            return 'expand_less';
+          case 'desc':
+            return 'expand_more';
+        }
+        return '';
       },
     },
     methods: {
