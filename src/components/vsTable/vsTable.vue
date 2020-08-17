@@ -130,6 +130,7 @@
     },
     data() {
       return {
+        searchKeys: [],
         headerWidth: '100%',
         searchx: null,
         currentx: 1,
@@ -149,7 +150,7 @@
         }
         if (this.searchx) {
           return this.items.filter((tr) => {
-            return this.normalize(this.getValues(tr).toString()).indexOf(this.searchString) >= 0;
+            return this.normalize(this.getValues(tr, this.searchKeys).toString()).indexOf(this.searchString) >= 0;
           });
         } else {
           return this.items;
@@ -263,7 +264,8 @@
       normalize(string) {
         return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
       },
-      getValues(obj) {
+      getValues(obj, keys) {
+        // TODO only keep keys
         function flattenDeep(val) {
           return Object.values(val || []).reduce((acc, val) => (typeof val === 'object') ? acc.concat(flattenDeep(val)) : acc.concat(val), []);
         }

@@ -16,12 +16,21 @@
   </th>
 </template>
 <script>
+  import InjectedChildMixin from '../../utils/InjectedChildMixin';
+
   export default {
     name: 'VsTh',
+    mixins: [InjectedChildMixin('vsTable')],
     props: {
       sortKey: {
         default: null,
         type: String,
+      },
+      searchKeys: {
+        type: [Array, String],
+        default() {
+          return [this.sortKey];
+        },
       },
     },
     data: () => ({
@@ -38,10 +47,10 @@
         if (!this.sortKey) {
           return false;
         }
-        if (this.$parent.currentSortKey !== this.sortKey) {
+        if (this.parent.currentSortKey !== this.sortKey) {
           this.resetSort();
         }
-        return this.$parent.currentSortKey === this.sortKey;
+        return this.parent.currentSortKey === this.sortKey;
       },
       sortIcon() {
         switch (this.sortStatuses[this.currentSort]) {
@@ -53,10 +62,18 @@
         return '';
       },
     },
+    watch: {
+      searchKeys: {
+        immediate: true,
+        handler(v) {
+          this.parent.searchKeys.push(...(Array.isArray(v) ? v : [v]));
+        },
+      },
+    },
     methods: {
       sortValue() {
         this.currentSort = (this.currentSort + 1) % 3;
-        this.$parent.sort(this.sortKey, this.sortStatuses[this.currentSort]);
+        this.parent.sort(this.sortKey, this.sortStatuses[this.currentSort]);
       },
       resetSort() {
         this.currentSort = 0;
