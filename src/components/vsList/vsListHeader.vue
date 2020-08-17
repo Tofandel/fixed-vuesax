@@ -20,6 +20,9 @@
       </div>
       <!-- <div class="list-subtitle" v-if="subtitle">{{subtitle}}</div> -->
     </div>
+    <div class="vs-list--slot">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
