@@ -73,6 +73,7 @@
         return {
           // ...this.$listeners,
           change: (evt) => {
+            evt.preventDefault();
             this.toggleValue(evt);
           },
           // input: (evt) => {
