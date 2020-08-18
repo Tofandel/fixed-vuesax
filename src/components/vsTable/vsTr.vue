@@ -12,7 +12,7 @@
       class="td-check">
       <vs-checkbox
         v-if="parent.multiple"
-        :checked="isSelected"
+        :value="isSelected"
         size="small"
         @click.stop
         @input="handleCheckbox"/>
