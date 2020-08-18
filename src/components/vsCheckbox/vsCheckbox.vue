@@ -81,7 +81,7 @@
         };
       },
       isChecked() {
-        return this.isArrayx() ? this.isArrayIncludes() : this.value;
+        return this.isArrayx() ? this.isArrayIncludes() : (this.value === this.vsValue);
       },
     },
     watch: {

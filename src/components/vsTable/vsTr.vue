@@ -14,7 +14,7 @@
         v-if="parent.multiple"
         :value="isSelected"
         size="small"
-        @click.stop
+        @click.native.stop
         @input="handleCheckbox"/>
 
       <vs-icon v-if="$slots.expand">
