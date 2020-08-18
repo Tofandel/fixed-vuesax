@@ -4,24 +4,20 @@
     class="vs-component con-vs-checkbox">
     <input
       v-bind="$attrs"
-      :checked="isChecked || $attrs.checked"
-      :value="value"
+      :checked="isChecked"
+      :value="vsValue"
       type="checkbox"
       class="vs-checkbox--input"
-      v-on="listeners">
-    <span
-      :style="style"
-      class="checkbox_x vs-checkbox">
-      <span
-        :style="styleCheck"
-        class="vs-checkbox--check">
-        <vs-icon
-          :icon="icon"
-          :icon-pack="iconPack"
-          class="vs-checkbox--icon"/>
-      </span>
-    </span>
-    <span class="con-slot-label">
+      v-on="listeners"> <span
+        :style="style"
+        class="checkbox_x vs-checkbox"> <span
+          :style="styleCheck"
+          class="vs-checkbox--check">
+          <vs-icon
+            :icon="icon"
+            :icon-pack="iconPack"
+            class="vs-checkbox--icon"/>
+        </span> </span> <span class="con-slot-label">
       <slot></slot>
     </span>
   </div>
@@ -29,6 +25,7 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsCheckbox',
     inheritAttrs: false,
@@ -37,7 +34,13 @@
         default: 'primary',
         type: String,
       },
-      value: {},
+      checked: Boolean,
+      value: {
+        type: [Boolean, String, Array, Number, Object],
+        default() {
+          return this.checked;
+        },
+      },
       icon: {
         default: 'check',
         type: String,
@@ -48,7 +51,7 @@
       },
       vsValue: {
         type: [Boolean, Array, String, Number, Object],
-        default: false,
+        default: true,
       },
       size: {
         default: 'default',
@@ -72,13 +75,20 @@
           change: (evt) => {
             this.toggleValue(evt);
           },
-        // input: (evt) => {
-        //   this.toggleValue(evt)
-        // }
+          // input: (evt) => {
+          //   this.toggleValue(evt)
+          // }
         };
       },
       isChecked() {
         return this.isArrayx() ? this.isArrayIncludes() : this.value;
+      },
+    },
+    watch: {
+      checked(c, pr) {
+        if (this.value === pr) {
+          this.value = c; // Deprecated because will mutate prop directly
+        }
       },
     },
     methods: {
@@ -88,12 +98,12 @@
       toggleValue(evt) {
         if (this.isArrayx()) {
           this.setArray();
-        } else if (typeof (this.vsValue) === 'string') {
-          this.setValueString();
+        } else if (this.value !== this.vsValue) {
+          this.$emit('input', this.vsValue);
         } else {
-          this.$emit('input', !this.value);
-          this.$emit('change', evt);
+          this.$emit('input', null);
         }
+        this.$emit('change', evt);
       },
       setArray() {
         // Copy Array
@@ -108,19 +118,8 @@
           this.$emit('change', value);
         }
       },
-      setValueString() {
-        if (this.value == this.vsValue) {
-          this.$emit('input', null);
-          this.$emit('change', null);
-        } else {
-          this.$emit('input', this.vsValue);
-          this.$emit('change', this.vsValue);
-        }
-      },
       isArrayIncludes() {
-        const modelx = this.value;
-        const value = this.vsValue;
-        return modelx.includes(value);
+        return this.value.includes(this.vsValue);
       },
       isArrayx() {
         return Array.isArray(this.value);

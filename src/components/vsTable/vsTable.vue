@@ -276,17 +276,16 @@
       },
       changeCheckedMultiple(v) {
         if (v) {
-          this.$emit('input', this.data);
+          this.$emit('input', this.data.slice());
         } else {
           this.$emit('input', []);
         }
       },
-      handleCheckbox(tr) {
+      handleCheckbox(tr, v) {
         if (this.multiple) {
           const val = this.value.slice();
-          const found = this.value.indexOf(tr);
-          if (found >= 0) {
-            val.splice(found);
+          if (!v) {
+            val.splice(this.value.indexOf(tr), 1);
           } else {
             val.push(tr);
           }
@@ -304,7 +303,7 @@
             const val = this.value.slice();
             const found = this.value.indexOf(tr);
             if (found >= 0) {
-              val.splice(found);
+              val.splice(found, 1);
             } else {
               val.push(tr);
             }

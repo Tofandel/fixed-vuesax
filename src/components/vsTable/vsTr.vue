@@ -76,8 +76,8 @@
       this.collapseExpandedData();
     },
     methods: {
-      handleCheckbox() {
-        this.parent.handleCheckbox(this.data);
+      handleCheckbox(v) {
+        this.parent.handleCheckbox(this.data, v);
       },
       insertAfter(e, i) {
         if (e.nextSibling) {
