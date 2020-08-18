@@ -282,11 +282,11 @@
         }
       },
       handleCheckbox(tr) {
-        if (!this.multiple && this.onlyClickCheckbox) {
+        if (!this.multiple) {
           const val = this.value.slice();
-          const found = val.indexOf(tr);
+          const found = this.value.indexOf(tr);
           if (found >= 0) {
-            val.splice(found, 1);
+            val.splice(found);
           } else {
             val.push(tr);
           }
@@ -296,18 +296,21 @@
         }
       },
       clicktr(tr, isTr) {
-        if (this.multiple && isTr && !this.onlyClickCheckbox) {
-          const val = this.value.slice(0);
-          if (val.includes(tr)) {
-            val.splice(val.indexOf(tr), 1);
+        if (isTr && !this.onlyClickCheckbox) {
+          if (this.multiple) {
+            const val = this.value.slice();
+            const found = this.value.indexOf(tr);
+            if (found >= 0) {
+              val.splice(found);
+            } else {
+              val.push(tr);
+            }
+            this.$emit('input', val);
+            this.$emit('selected', tr);
           } else {
-            val.push(tr);
+            this.$emit('input', tr);
+            this.$emit('selected', tr);
           }
-          this.$emit('input', val);
-          this.$emit('selected', tr);
-        } else if (isTr && !this.onlyClickCheckbox) {
-          this.$emit('input', tr);
-          this.$emit('selected', tr);
         }
       },
       dblclicktr(tr, isTr) {

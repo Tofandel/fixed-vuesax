@@ -14,7 +14,8 @@
         v-if="parent.multiple"
         :checked="isSelected"
         size="small"
-        @change="handleCheckbox"/>
+        @click.stop
+        @input="handleCheckbox"/>
 
       <vs-icon v-if="$slots.expand">
         keyboard_arrow_down
@@ -49,8 +50,8 @@
     }),
     computed: {
       isSelected() {
-        if (this.parent.multiple && this.parent.value) {
-          return this.data ? this.parent.value.includes(this.data) : false;
+        if (this.parent.multiple && Array.isArray(this.parent.value)) {
+          return this.data ? this.parent.value.indexOf(this.data) >= 0 : false;
         } else {
           return this.data ? this.parent.value === this.data : false;
         }
