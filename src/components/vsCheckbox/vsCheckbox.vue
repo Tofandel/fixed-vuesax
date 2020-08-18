@@ -82,7 +82,13 @@
         };
       },
       isChecked() {
-        return this.isArrayx() ? this.isArrayIncludes() : (this.value === this.vsValue);
+        return this.isArray ? this.isArrayIncludes : (this.value === this.vsValue);
+      },
+      isArray() {
+        return Array.isArray(this.value);
+      },
+      isArrayIncludes() {
+        return this.value.includes(this.vsValue);
       },
     },
     watch: {
@@ -97,7 +103,7 @@
         return _color.rColor(color);
       },
       toggleValue(evt) {
-        if (this.isArrayx()) {
+        if (this.isArray) {
           this.setArray();
         } else if (this.value !== this.vsValue) {
           this.$emit('input', this.vsValue, this.vsValue);
@@ -109,7 +115,7 @@
       setArray() {
         // Copy Array
         const value = this.value.slice(0);
-        if (this.isArrayIncludes()) {
+        if (this.isArrayIncludes) {
           value.splice(value.indexOf(this.vsValue), 1);
           this.$emit('input', value);
           this.$emit('change', value);
@@ -118,12 +124,6 @@
           this.$emit('input', value);
           this.$emit('change', value);
         }
-      },
-      isArrayIncludes() {
-        return this.value.includes(this.vsValue);
-      },
-      isArrayx() {
-        return Array.isArray(this.value);
       },
     },
   };
