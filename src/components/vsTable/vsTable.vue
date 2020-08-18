@@ -282,7 +282,7 @@
         }
       },
       handleCheckbox(tr) {
-        if (!this.multiple) {
+        if (this.multiple) {
           const val = this.value.slice();
           const found = this.value.indexOf(tr);
           if (found >= 0) {
@@ -292,6 +292,9 @@
           }
 
           this.$emit('input', val);
+          this.$emit('selected', tr);
+        } else {
+          this.$emit('input', tr);
           this.$emit('selected', tr);
         }
       },
