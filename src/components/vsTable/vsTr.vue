@@ -12,10 +12,11 @@
       class="td-check">
       <vs-checkbox
         v-if="parent.multiple"
-        :value="isSelected"
+        :value="parent.selected"
+        :vs-value="data"
         size="small"
-        @click.native.stop
-        @input="handleCheckbox"/>
+        @input="parent.setSelected"
+        @click.native.stop/>
 
       <vs-icon v-if="$slots.expand">
         keyboard_arrow_down

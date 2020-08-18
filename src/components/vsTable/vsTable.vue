@@ -281,21 +281,9 @@
           this.$emit('input', []);
         }
       },
-      handleCheckbox(tr, v) {
-        if (this.multiple) {
-          const val = this.value.slice();
-          if (!v) {
-            val.splice(this.value.indexOf(tr), 1);
-          } else {
-            val.push(tr);
-          }
-
-          this.$emit('input', val);
-          this.$emit('selected', tr);
-        } else {
-          this.$emit('input', tr);
-          this.$emit('selected', tr);
-        }
+      setSelected(val, sel) {
+        this.$emit('input', val);
+        this.$emit('selected', sel);
       },
       clicktr(tr, isTr) {
         if (isTr && !this.onlyClickCheckbox) {

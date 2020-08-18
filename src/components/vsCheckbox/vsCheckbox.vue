@@ -100,9 +100,9 @@
         if (this.isArrayx()) {
           this.setArray();
         } else if (this.value !== this.vsValue) {
-          this.$emit('input', this.vsValue);
+          this.$emit('input', this.vsValue, this.vsValue);
         } else {
-          this.$emit('input', null);
+          this.$emit('input', null, this.vsValue);
         }
         this.$emit('change', evt);
       },
