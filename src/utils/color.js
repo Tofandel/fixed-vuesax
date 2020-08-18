@@ -8,7 +8,7 @@ export default {
     if (/^[#]/.test(colorx)) {
       const c = this.hexToRgb(colorx);
 
-      if (alphax) {
+      if (!alphax) {
         colorx = `rgb(${c.r},${c.g},${c.b})`;
       } else {
         colorx = `rgba(${c.r},${c.g},${c.b},${alphax})`;

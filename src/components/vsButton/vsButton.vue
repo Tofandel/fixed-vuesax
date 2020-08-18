@@ -213,8 +213,7 @@
         });
       },
       is(which) {
-        const type = this.type;
-        return type === which;
+        return this.type === which;
       },
       mouseoverx(event) {
         this.$emit('mouseover', event);
