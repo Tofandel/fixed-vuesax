@@ -108,7 +108,7 @@
         } else if (this.value !== this.vsValue) {
           this.$emit('input', this.vsValue, this.vsValue);
         } else {
-          this.$emit('input', null, this.vsValue);
+          this.$emit('input', typeof this.vsValue === 'boolean' ? !this.vsValue : null, this.vsValue);
         }
         this.$emit('change', evt);
       },
