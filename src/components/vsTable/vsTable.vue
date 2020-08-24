@@ -240,7 +240,7 @@
         return items;
       },
       retrieve(obj, name) {
-        return name ? (name.indexOf('.') > 0 ? name.split('.').reduce(this.get, obj) : obj[name]) : null;
+        return name ? (name.indexOf('.') > 0 ? name.split('.').reduce(this.get, obj) : this.get(obj, name)) : null;
       },
       get(obj, i) {
         return typeof obj === 'object' && obj !== null ? obj[i] : null;
