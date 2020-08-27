@@ -53,6 +53,12 @@
         type: [Boolean, Array, String, Number, Object],
         default: true,
       },
+      offValue: {
+        type: [Boolean, Array, String, Number, Object],
+        default() {
+          return typeof this.vsValue === 'boolean' ? false : null;
+        },
+      },
       size: {
         default: 'default',
         type: String,
@@ -108,7 +114,7 @@
         } else if (this.value !== this.vsValue) {
           this.$emit('input', this.vsValue, this.vsValue);
         } else {
-          this.$emit('input', typeof this.vsValue === 'boolean' ? !this.vsValue : null, this.vsValue);
+          this.$emit('input', this.offValue);
         }
         this.$emit('change', evt);
       },
