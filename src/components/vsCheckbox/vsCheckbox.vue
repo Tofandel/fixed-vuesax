@@ -18,7 +18,7 @@
             :icon-pack="iconPack"
             class="vs-checkbox--icon"/>
         </span> </span> <span class="con-slot-label">
-      <slot></slot>
+      <slot>{{label}}</slot>
     </span>
   </div>
 </template>
@@ -47,6 +47,9 @@
       },
       iconPack: {
         default: 'material-icons',
+        type: String,
+      },
+      label: {
         type: String,
       },
       vsValue: {
