@@ -110,11 +110,6 @@
         default: 1,
         type: [Number, String],
       },
-      stepDecimals: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
       icon: {
         default: null,
         type: String,
@@ -139,6 +134,9 @@
       valueCircle2: 0,
     }),
     computed: {
+      stepDecimals() {
+        return this.step % 1 != 0;
+      },
       isEquals() {
         return Array.isArray(this.value) ? this.value[0] === this.value[1] : false;
       },
