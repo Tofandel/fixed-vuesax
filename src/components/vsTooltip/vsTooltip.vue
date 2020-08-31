@@ -70,7 +70,7 @@
     computed: {
       listeners() {
         return this.trigger === 'hover' ? {
-          mousenter: this.mouseEnter,
+          mouseenter: this.mouseEnter,
           mouseleave: this.mouseLeave,
         } : {
           click: this.toggle,
