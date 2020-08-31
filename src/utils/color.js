@@ -78,12 +78,16 @@ export default {
   },
   contrastColor(elementx) {
     let c = elementx;
-    if (/[#]/g.test(elementx)) {
-      const rgbx = this.hexToRgb(elementx);
-      c = `rgb(${rgbx.r},${rgbx.g},${rgbx.b})`;
-    }
     if (!c) {
       return '#fff';
+    }
+    if (/^[#]/.test(c)) {
+      const rgbx = this.hexToRgb(c);
+      c = `rgb(${rgbx.r},${rgbx.g},${rgbx.b})`;
+    }
+    const match = c.match(/rgba?\(var\(--vs-([^)]*)/);
+    if (match) {
+      c = `rgb(${this.getVariable(match[1])})`;
     }
     var rgb = c.replace(/^(rgb|rgba)\(/, '').replace(/\)$/, '').replace(/\s/g, '').split(',');
     var yiq = ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
@@ -95,24 +99,26 @@ export default {
   },
   setCssVariable(propertyName, value) {
     if (typeof window !== 'undefined') {
-      document.documentElement.style.setProperty(propertyName, value);
+      document.documentElement.style.setProperty('--vs-' + propertyName, value);
     }
   },
   hexToRgb(hex) {
     // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])([a-f\d])?$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
       return r + r + g + g + b + b;
     });
 
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
     return result ? {
       r: parseInt(result[1], 16),
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16),
     } : null;
   },
-  getVariable(styles, propertyName) {
-    return String(styles.getPropertyValue(propertyName)).trim();
+  getVariable(propertyName) {
+    if (typeof window !== 'undefined') {
+      return document.documentElement.style.getPropertyValue('--vs-' + propertyName).trim();
+    }
   },
 };
