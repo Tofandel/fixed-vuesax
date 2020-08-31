@@ -138,9 +138,14 @@
             background: _color.getColor(this.color, 1),
             boxShadow: this.hoverx ? `0px 8px 25px -8px ${_color.getColor(this.color, 1)}` : null,
           };
-        } else if (this.is('border') || this.is('flat')) {
+        } else if (this.is('border')) {
           return {
-            border: `${this.is('flat') ? 0 : 1}px solid ${_color.getColor(this.color, 1)}`,
+            border: `1px solid ${_color.getColor(this.color, 1)}`,
+            background: this.hoverx ? _color.getColor(this.color, 0.1) : 'transparent',
+            color: _color.getColor(this.textColor, 1) || _color.getColor(this.color, 1),
+          };
+        } else if (this.is('flat')) {
+          return {
             background: this.hoverx ? _color.getColor(this.color, 0.1) : 'transparent',
             color: _color.getColor(this.textColor, 1) || _color.getColor(this.color, 1),
           };
