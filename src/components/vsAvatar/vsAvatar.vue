@@ -23,7 +23,7 @@
       v-else
       :title="text"
       :style="textStyle"
-      :class="[text ? '' : iconPack, text ? '' : icon, textClass]"
+      :class="[text ? '' : iconPack, text || iconPack === 'material-icons' ? '' : icon, textClass]"
       translate="no"
       class="vs-avatar--text notranslate">
       {{text ? returnText : (iconPack === 'material-icons' ? icon : '')}}
