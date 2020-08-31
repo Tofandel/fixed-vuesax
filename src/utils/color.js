@@ -90,8 +90,12 @@ export default {
       c = `rgb(${this.getVariable(match[1])})`;
     }
     var rgb = c.replace(/^(rgb|rgba)\(/, '').replace(/\)$/, '').replace(/\s/g, '').split(',');
-    var yiq = ((rgb[0] * 299) + (rgb[1] * 587) + (rgb[2] * 114)) / 1000;
-    if (yiq > 128) {
+    const r = rgb[0] / 255;
+    const g = rgb[1] / 255;
+    const b = rgb[2] / 255;
+
+    var yiq = (r * r * 0.2126) + (g * g * 0.7152) + (b * b * 0.0722);
+    if (yiq > 0.51) {
       return '#000';
     } else {
       return '#fff';
