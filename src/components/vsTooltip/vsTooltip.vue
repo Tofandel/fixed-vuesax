@@ -2,8 +2,7 @@
   <div
     ref="convstooltip"
     class="con-vs-tooltip"
-    @mouseleave="mouseleavex"
-    @mouseenter="mouseenterx">
+    v-on="listeners">
     <transition name="tooltip-fade">
       <div
         v-show="activeTooltip"
@@ -51,7 +50,11 @@
       },
       active: {
         default: true,
-        type: [Boolean],
+        type: Boolean,
+      },
+      trigger: {
+        type: String,
+        default: 'hover',
       },
       value: Boolean,
     },
@@ -65,6 +68,14 @@
       };
     },
     computed: {
+      listeners() {
+        return this.trigger === 'hover' ? {
+          mousenter: this.mouseEnter,
+          mouseleave: this.mouseLeave,
+        } : {
+          click: this.toggle,
+        };
+      },
       style() {
         const background = _color.getColor(this.color, 1);
         return {
@@ -79,7 +90,9 @@
     },
     watch: {
       value(val) {
-        this.activeTooltip = val;
+        if (this.activeTooltip !== val) {
+          this.toggle();
+        }
       },
       activeTooltip(val) {
         if (this.value !== val) {
@@ -88,35 +101,40 @@
       },
     },
     updated() {
-      if (!this.$slots.default) {
-        this.activeTooltip = false;
+      if (this.activeTooltip && !this.$slots.default) {
+        this.toggle();
       }
-      // if (this.activeTooltip) {
-      //   utils.insertBody(this.$refs.vstooltip);
-      // }
-    },
-    beforeUpdate() {
-      // utils.removeBody(this.$refs.vstooltip);
     },
     beforeDestroy() {
-      if (this.$refs.vstooltip && this.activeTooltip) {
-        utils.removeBody(this.$refs.vstooltip);
+      if (this.activeTooltip) {
+        this.toggle();
       }
     },
     methods: {
-      mouseenterx() {
-        if (this.active) {
-          this.activeTooltip = true;
-          this.$nextTick(() => {
-            utils.insertBody(this.$refs.vstooltip);
-            this.changePosition(this.$refs.convstooltip, this.$refs.vstooltip);
-          });
+      mouseEnter() {
+        if (!this.activeTooltip) {
+          this.toggle();
         }
       },
-      mouseleavex() {
-        this.activeTooltip = false;
-        if (this.$refs.vstooltip) {
-          utils.removeBody(this.$refs.vstooltip);
+      mouseLeave() {
+        if (this.activeTooltip) {
+          this.toggle();
+        }
+      },
+      toggle() {
+        if (!this.activeTooltip) {
+          if (this.active) {
+            this.activeTooltip = true;
+            this.$nextTick(() => {
+              utils.insertBody(this.$refs.vstooltip);
+              this.changePosition(this.$refs.convstooltip, this.$refs.vstooltip);
+            });
+          }
+        } else {
+          this.activeTooltip = false;
+          if (this.$refs.vstooltip) {
+            utils.removeBody(this.$refs.vstooltip);
+          }
         }
       },
       changePosition(elxEvent, tooltip) {

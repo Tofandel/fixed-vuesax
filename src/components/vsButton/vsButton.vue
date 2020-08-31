@@ -127,8 +127,8 @@
           ...this.$listeners,
           click: (event) => this.clickButton(event),
           blur: (event) => this.blurButton(event),
-          mouseover: (event) => this.mouseoverx(event),
-          mouseout: (event) => this.mouseoutx(event),
+          mouseenter: (event) => this.mouseEnter(event),
+          mouseleave: (event) => this.mouseLeave(event),
         };
       },
       styles() {
@@ -220,12 +220,12 @@
       is(which) {
         return this.type === which;
       },
-      mouseoverx(event) {
+      mouseEnter(event) {
         this.$emit('mouseover', event);
         this.hoverx = true;
       },
-      mouseoutx(event) {
-        this.$emit('mouseout', event);
+      mouseLeave(event) {
+        this.$emit('mouseleave', event);
         this.hoverx = false;
       },
       blurButton(event) {
@@ -240,6 +240,7 @@
       },
       clickButton(event) {
         if (this.isActive) {
+          this.blurButton(event);
           return;
         }
         if (this.to) {
