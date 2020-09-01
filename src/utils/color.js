@@ -3,17 +3,24 @@ const vscolors = ['primary', 'success', 'danger', 'warning', 'dark', 'light'];
 
 export default {
   darken(color, percent) {
-    var f = color.split(','); var t = percent < 0 ? 0 : 255; var p = percent < 0 ? percent * -1 : percent; var R = parseInt(f[0].slice(4)); var G = parseInt(f[1]); var B = parseInt(f[2]);
+    var f = color.split(',');
+    var t = percent < 0 ? 0 : 255;
+    var p = percent < 0 ? percent * -1 : percent;
+    var R = parseInt(f[0].slice(4));
+    var G = parseInt(f[1]);
+    var B = parseInt(f[2]);
     return 'rgb(' + (Math.round((t - R) * p) + R) + ',' + (Math.round((t - G) * p) + G) + ',' + (Math.round((t - B) * p) + B) + ')';
   },
   getColor(colorx, alphax = 1, defaultx = true) {
     // change color hex to RGB
-    if (typeof colorx !== 'string') { return null; }
+    if (typeof colorx !== 'string') {
+      return null;
+    }
 
     if (/^[#]/.test(colorx)) {
       const c = this.hexToRgb(colorx);
 
-      if (!alphax) {
+      if (alphax === 1) {
         colorx = `rgb(${c.r},${c.g},${c.b})`;
       } else {
         colorx = `rgba(${c.r},${c.g},${c.b},${alphax})`;
@@ -23,8 +30,8 @@ export default {
         colorx = colorx.replace(/.?([0-9]\))$/, `${alphax})`);
       }
     } else if (/^(rgb)/.test(colorx)) {
-    // change rgb and rgba
-      if (!alphax) {
+      // change rgb and rgba
+      if (alphax === 1) {
         colorx = colorx.replace(/^(rgb)/, 'rgba');
         colorx = colorx.replace(/\)$/, `,${alphax})`);
       }
@@ -40,9 +47,14 @@ export default {
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     }
+
     return `rgb(${getRandomInt(0, 255)},${getRandomInt(0, 255)},${getRandomInt(0, 255)})`;
   },
   rColor(colorx, opacity = 1) {
+    if (colorx in stringColors) {
+      colorx = stringColors[colorx];
+    }
+
     if (/^[#]/.test(colorx)) {
       const c = this.hexToRgb(colorx);
       colorx = `rgba(${c.r},${c.g},${c.b},${opacity})`;
@@ -56,25 +68,12 @@ export default {
         colorSplit += ')';
       }
       colorx = colorSplit;
-    }
-
-    if (colorx in stringColors) {
-      colorx = stringColors[colorx];
-    }
-
-    if (colorx) {
-      if (/[#()]/.test(colorx)) {
-        return colorx;
-      } else {
-        if (vscolors.includes(colorx)) {
-          return `rgba(var(--vs-${colorx}),${opacity})`;
-        } else {
-          return `rgba(var(--vs-primary),${opacity})`;
-        }
-      }
+    } else if (vscolors.includes(colorx)) {
+      colorx = `rgba(var(--vs-${colorx}),${opacity})`;
     } else {
-      return `rgba(var(--vs-primary),${opacity})`;
+      colorx = `rgba(var(--vs-primary),${opacity})`;
     }
+    return colorx;
   },
   contrastColor(elementx) {
     let c = elementx;
