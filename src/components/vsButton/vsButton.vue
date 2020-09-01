@@ -110,6 +110,7 @@
         default: 'button',
         type: String,
       },
+      value: Boolean,
     },
     data: () => ({
       isActive: false,
@@ -197,6 +198,16 @@
           right: lineOrigin === 'auto' ? '0px' : null,
           transform: lineOrigin === '50%' ? 'translate(-50%)' : null,
         };
+      },
+    },
+    watch: {
+      isActive(v) {
+        if (this.value !== v) {
+          this.$emit('input', v);
+        }
+      },
+      value(val) {
+        this.isActive = val;
       },
     },
     methods: {
