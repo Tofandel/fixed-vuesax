@@ -125,6 +125,7 @@
         if (!this.activeTooltip) {
           if (this.active) {
             this.activeTooltip = true;
+            this.$emit('open');
             this.$nextTick(() => {
               utils.insertBody(this.$refs.vstooltip);
               this.changePosition(this.$refs.convstooltip, this.$refs.vstooltip);
@@ -132,6 +133,7 @@
           }
         } else {
           this.activeTooltip = false;
+          this.$emit('close');
           if (this.$refs.vstooltip) {
             utils.removeBody(this.$refs.vstooltip);
           }
