@@ -7,13 +7,13 @@
   .con-edit-td
     position: absolute
     padding: 6px
-    // top: 0px
+    // top: 0
     propWithDir(left, null, 0)
     transform: translate(0px, 15%)
     border-radius: 5px
     z-index: 300
     background: rgb(255,255,255)
-    box-shadow: 0px 6px 10px 0px rgba(0,0,0,.05)
+    box-shadow: 0 6px 10px 0 rgba(0,0,0,.05)
     display: flex
     align-items: center
     justify-content: center
@@ -32,7 +32,7 @@
     tbody
       width: 100%
   td
-    border: 0px
+    border: 0
     padding: 2px 8px
     // border-left: 1px solid rgba(0,0,0,.04)
     &:first-child
@@ -41,8 +41,8 @@
       cursor: pointer
       padding: 5px !important
       .con-vs-checkbox
-        margin-left: 0px !important
-        margin-right: 0px !important
+        margin-left: 0 !important
+        margin-right: 0 !important
       .vs-icon
         transition: all .25s ease
         transform translate(7px) rotate(-90deg)
@@ -88,25 +88,25 @@
 
 .vs-table--tbody-table
   width: 100%
-  margin: 0px
+  margin: 0
   min-width: 400px
   position: relative
   .tr-table:last-child
     .con-edit-td
-      // top: 0px
+      // top: 0
       transform translateY(-100%) !important
 
   .tr-spacer
     height: 4px
     opacity: 1
-    // width: 0px
+    // width: 0
   &:nth-child(2n)
     background: rgb(0,0,0)
   tr:not(.tr-expand)
     // border-bottom: 1px solid rgba(0,0,0,.03)
   .tr-expand
     td
-      padding: 0px
+      padding: 0
       overflow: hidden
       .con-expand
         transition: all .25s ease
@@ -120,7 +120,7 @@
   //   margin-bottom: 5px
   //   border-radius: 5px
   //   background: rgb(255,255,255)
-  //   padding: 6px 0px
+  //   padding: 6px 0
   //   position: relative
   tr
     transition: all .3s ease
@@ -140,15 +140,16 @@
       // border-radius: 5px
       transform: translate(0, -4px)
       .tr-values
-        box-shadow: 0px 2px 12px 0px rgba(0,0,0,.05)
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.05)
       ~ tbody
         z-index: 10
 
     td
       padding: 10px
     .tr-expand
+      transform scale(.98)
       td
-        padding 0px
+        padding 0
     &.selected
       cursor: pointer
     &:last-child
@@ -156,14 +157,13 @@
 
 
     &.is-expand
-      box-shadow: 0px 2px 10px 0px rgba(0,0,0,.08)
-      transform scale(1.025)
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,.08)
       z-index: 300
       .tr-values
         z-index: 300
-        box-shadow: 0px 2px 10px 0px rgba(0,0,0,.0)
+        box-shadow: 0 2px 10px 0 rgba(0,0,0,.0)
       .tr-spacer
-        height: 0px
+        height: 0
       .tr-expand
         .con-expand
           border-top: 1px solid rgba(0,0,0,.05) !important
@@ -209,7 +209,7 @@
   color: rgba(0,0,0,.7)
   transition: all .25s ease
   &:focus
-    box-shadow: 0px 4px 10px 0px rgba(0,0,0,.03)
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,.03)
     + i
       color: getColor('primary', 1)
 
@@ -222,7 +222,7 @@
   position relative
 
 // .vs-table--thead-table
-//   margin: 0px
+//   margin: 0
 //   z-index 100
 //   padding-top: 5px
   // border-bottom: 1px solid rgba(0,0,0,.06)
@@ -230,7 +230,7 @@
     padding: 6px 10px
     padding-top: 5px
     padding-bottom: 3px
-    border: 0px
+    border: 0
     text-align: left
     font-size: .85rem
     .vs-table-text
@@ -250,7 +250,7 @@
         transition: all .25s ease
         border-radius: 2px
     &.td-check
-      padding: 0px !important
+      padding: 0 !important
       .con-td-check
         display: block
         padding-top: 3px
@@ -258,14 +258,14 @@
         border-radius 6px
         padding: 5px
         padding-right: 2px
-        box-shadow: 0px 3px 10px 0px rgba(0,0,0,.05)
+        box-shadow: 0 3px 10px 0 rgba(0,0,0,.05)
         transition: all .25s ease
       &:hover
-        box-shadow: 0px 0px 0px 0px rgba(0,0,0,.05)
+        box-shadow: 0 0 0 0 rgba(0,0,0,.05)
 
       .con-vs-checkbox
         margin-right: 0 !important
-        margin-left: 0px !important
+        margin-left: 0 !important
 
 .vs-table--not-data
   padding: 10px
@@ -275,13 +275,13 @@ for colorx, i in $vs-colors
   .tr-table-state-{colorx}
     background: getColor(colorx, .1) !important
     color: getColor(colorx, 1)
-    box-shadow: 0px 0px 1px 0px getColor(colorx, 1) !important
+    box-shadow: 0 0 1px 0 getColor(colorx, 1) !important
   .vs-table-{colorx}
     .is-selected
       transform: translate(0) !important
       color: getColor(colorx, 1)
       background: getColor(colorx, .05) !important
-      box-shadow: 0px 0px 1px 0px getColor(colorx, 1) !important
+      box-shadow: 0 0 1px 0 getColor(colorx, 1) !important
       td
         &:first-child
           border-left: 1px solid rgba(0,0,0,.0) !important
@@ -303,7 +303,7 @@ for colorx, i in $vs-colors
 }
 .tr-expand-enter, .tr-expand-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
-  height 0px
+  height 0
 }
 
 
@@ -324,10 +324,10 @@ for colorx, i in $vs-colors
       position absolute
       width: 30px
       height 30px
-      right 0px
+      right 0
       background: inherit
       color getColor('danger', 1)
-      border 0px
+      border 0
       margin-left: 10px
       background: rgb(245,245,245)
       display: flex
