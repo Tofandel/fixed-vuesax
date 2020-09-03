@@ -6,7 +6,7 @@
     <div class="vs-table-text">
       <slot></slot>
       <span
-        v-if="isColumnSelectedForSort && currentSort"
+        v-if="sortKey"
         class="sort-th">
         <vs-icon
           :icon="sortIcon"
@@ -34,7 +34,6 @@
       },
     },
     data: () => ({
-      thIndex: 0,
       currentSort: 0,
       sortStatuses: [
         null,
@@ -49,17 +48,20 @@
         }
         if (this.parent.currentSortKey !== this.sortKey) {
           this.resetSort();
+          return false;
         }
-        return this.parent.currentSortKey === this.sortKey;
+        return true;
       },
       sortIcon() {
-        switch (this.sortStatuses[this.currentSort]) {
-          case 'asc':
-            return 'expand_less';
-          case 'desc':
-            return 'expand_more';
+        if (this.isColumnSelectedForSort) {
+          switch (this.sortStatuses[this.currentSort]) {
+            case 'asc':
+              return 'expand_less';
+            case 'desc':
+              return 'expand_more';
+          }
         }
-        return '';
+        return 'unfold_more';
       },
     },
     watch: {
@@ -72,8 +74,10 @@
     },
     methods: {
       sortValue() {
-        this.currentSort = (this.currentSort + 1) % 3;
-        this.parent.sort(this.sortKey, this.sortStatuses[this.currentSort]);
+        if (this.sortKey) {
+          this.currentSort = (this.currentSort + 1) % 3;
+          this.parent.sort(this.sortKey, this.sortStatuses[this.currentSort]);
+        }
       },
       resetSort() {
         this.currentSort = 0;
