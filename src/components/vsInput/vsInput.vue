@@ -229,7 +229,7 @@
         };
       },
       isValue() {
-        return this.labelPlaceholder ? true : !!this.value;
+        return this.labelPlaceholder ? true : !this.value;
       },
       getIcon() {
         return this.danger ? this.valIconDanger
