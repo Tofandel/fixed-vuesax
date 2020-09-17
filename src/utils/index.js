@@ -2,6 +2,7 @@ export default {
   insertBody(elx, parent = null, prepend = false) {
     if (Array.isArray(parent)) {
       parent.forEach((par) => this.insertBody(elx, par, prepend));
+      return;
     }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
@@ -22,6 +23,7 @@ export default {
   removeBody(elx, parent = null) {
     if (Array.isArray(parent)) {
       parent.forEach((par) => this.removeBody(elx, par));
+      return;
     }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
