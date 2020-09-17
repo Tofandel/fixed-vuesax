@@ -6,10 +6,10 @@
     class="tr-values vs-table--tr"
     @dblclick="dblclicktr"
     @click="clicktr">
-    <td
-      v-if="parent.multiple || $slots.expand"
-      :class="{'active-expanded': expanded}"
-      class="td-check">
+    <td v-if="parent.multiple || $slots.expand"
+        :class="{'active-expanded': expanded}"
+        class="td-check"
+        @click="clicktd">
       <vs-checkbox
         v-if="parent.multiple"
         :value="parent.value"
@@ -87,12 +87,8 @@
           e.parentNode.appendChild(i);
         }
       },
-      clicktr(evt) {
+      clicktr() {
         this.parent.clicktr(this.data, true);
-
-        if (this.$slots.expand) {
-          this.clicktd(evt);
-        }
       },
       dblclicktr() {
         this.parent.dblclicktr(this.data, true);
