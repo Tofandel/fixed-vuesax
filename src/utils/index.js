@@ -1,7 +1,12 @@
 export default {
   insertBody(elx, parent = null, prepend = false) {
+    if (Array.isArray(parent)) {
+      parent.forEach(() => this.insertBody(elx, parent, prepend));
+    }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
+    } else if (parent && !(parent instanceof Node)) {
+      parent = parent.$el;
     }
     elx = elx instanceof Node ? elx : elx.$el;
     if (!elx) {
@@ -15,8 +20,13 @@ export default {
     }
   },
   removeBody(elx, parent = null) {
+    if (Array.isArray(parent)) {
+      parent.forEach(() => this.removeBody(elx, parent));
+    }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
+    } else if (parent && !(parent instanceof Node)) {
+      parent = parent.$el;
     }
     elx = elx instanceof Node ? elx : elx.$el;
     const bodyx = parent || document.body;
