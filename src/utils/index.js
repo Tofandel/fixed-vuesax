@@ -1,7 +1,7 @@
 export default {
   insertBody(elx, parent = null, prepend = false) {
     if (Array.isArray(parent)) {
-      parent.forEach(() => this.insertBody(elx, parent, prepend));
+      parent.forEach((par) => this.insertBody(elx, par, prepend));
     }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
@@ -21,7 +21,7 @@ export default {
   },
   removeBody(elx, parent = null) {
     if (Array.isArray(parent)) {
-      parent.forEach(() => this.removeBody(elx, parent));
+      parent.forEach((par) => this.removeBody(elx, par));
     }
     if (typeof parent === 'string') {
       parent = document.querySelector(parent);
