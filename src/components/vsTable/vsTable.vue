@@ -286,17 +286,19 @@
         this.$emit('selected', sel);
       },
       clicktr(tr, isTr) {
-        if (isTr && !this.onlyClickCheckbox) {
+        if (isTr) {
           if (this.multiple) {
-            const val = this.value.slice();
-            const found = this.value.indexOf(tr);
-            if (found >= 0) {
-              val.splice(found, 1);
-            } else {
-              val.push(tr);
+            if (!this.onlyClickCheckbox) {
+              const val = this.value.slice();
+              const found = this.value.indexOf(tr);
+              if (found >= 0) {
+                val.splice(found, 1);
+              } else {
+                val.push(tr);
+              }
+              this.$emit('input', val);
+              this.$emit('selected', tr);
             }
-            this.$emit('input', val);
-            this.$emit('selected', tr);
           } else {
             this.$emit('input', tr);
             this.$emit('selected', tr);
