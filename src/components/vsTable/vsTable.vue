@@ -157,7 +157,7 @@
         }
       },
       paginatedResults() {
-        if (this.pagination) {
+        if (!this.sst && this.pagination) {
           return this.queriedResults.slice(this.min, this.max);
         } else {
           return this.queriedResults;
