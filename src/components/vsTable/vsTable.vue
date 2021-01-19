@@ -142,7 +142,7 @@
     },
     computed: {
       totalPages() {
-        return Math.ceil(this.queriedResults.length / this.maxItems);
+        return Math.ceil((this.sst && this.total ? this.total : this.queriedResults.length) / this.maxItems);
       },
       queriedResults() {
         if (this.sst) {

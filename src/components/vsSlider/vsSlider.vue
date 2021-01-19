@@ -20,8 +20,8 @@
 
       <span
         :class="{'run-effect':effect}"
-        :style="styleEfect"
-        class="vs-slider-line-efect"></span>
+        :style="styleEffect"
+        class="vs-slider-line-effect"></span>
 
       <!-- vsTicks -->
       <template v-if="ticks">
@@ -135,7 +135,7 @@
     }),
     computed: {
       stepDecimals() {
-        return this.step % 1 != 0;
+        return this.step % 1 !== 0;
       },
       isEquals() {
         return Array.isArray(this.value) ? this.value[0] === this.value[1] : false;
@@ -176,7 +176,7 @@
           border: `2px solid ${_color.getColor(this.color, 1)}`,
         };
       },
-      styleEfect() {
+      styleEffect() {
         return {
           left: `${this.leftx}%`,
           background: _color.getColor(this.color, 1),
