@@ -199,11 +199,11 @@
         }
 
         if (this.current >= 4 && this.current <= this.total - 3) {
-          const incr = Math.floor((this.max - 4) / 2);
+          const incr = (this.max - 4) / 2;
           const pages = [1];
 
-          const min = this.current - incr;
-          const max = this.current + incr;
+          const min = this.current - Math.ceil(incr);
+          const max = this.current + Math.floor(incr);
 
           if (min > 2) {
             pages.push('...');
