@@ -163,7 +163,7 @@
             }
           },
           input: (evt) => {
-            this.$emit('input', evt.target.value);
+            this.input(evt.target.value);
           },
         };
       },
@@ -190,8 +190,12 @@
     },
     methods: {
       input(newValue) {
-        const inv = 1 / this.cStep;
-        newValue = Math.floor(newValue * inv) / inv;
+        if (this.cStep !== 1) {
+          const inv = 1 / this.cStep;
+          newValue = Math.floor(newValue * inv) / inv;
+        } else {
+          newValue = parseFloat(newValue);
+        }
         this.$emit('input', newValue);
       },
       plus() {
