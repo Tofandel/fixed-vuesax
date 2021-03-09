@@ -28,14 +28,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
-    "@vue/cli": "^4.4.6",
-    "@vue/cli-plugin-babel": "^4.4.6",
-    "@vue/cli-plugin-eslint": "^4.4.6",
+    "@vue/cli": "^4.5.11",
+    "@vue/cli-plugin-babel": "^4.5.11",
+    "@vue/cli-plugin-eslint": "^4.5.11",
     "@vue/cli-service": "^4.4.6",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "copy-webpack-plugin": "^6.0.3",
-    "eslint": "^7.6.0",
+    "core-js": "^3.9.1",
+    "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -46,7 +47,7 @@
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",
     "viewcode": "0.0.27",
-    "vuepress": "^0.14.10"
+    "vuepress": "^1.8.2"
   },
   "babel": {
     "presets": [
