@@ -6,21 +6,22 @@
     class="tr-values vs-table--tr"
     @dblclick="dblclicktr"
     @click="clicktr">
-    <td v-if="parent.multiple || $slots.expand"
+    <td v-if="$slots.expand"
         :class="{'active-expanded': expanded}"
-        class="td-check"
-        @click="clicktd">
+        class="td-expand"
+        @click="toggleExpand">
+      <vs-icon>
+        keyboard_arrow_down
+      </vs-icon>
+    </td>
+    <td v-if="parent.multiple"
+        class="td-check">
       <vs-checkbox
-        v-if="parent.multiple"
         :value="parent.value"
         :vs-value="data"
         size="small"
         @input="parent.setSelected"
         @click.native.stop/>
-
-      <vs-icon v-if="$slots.expand">
-        keyboard_arrow_down
-      </vs-icon>
     </td>
     <slot></slot>
   </tr>
@@ -93,12 +94,11 @@
       dblclicktr() {
         this.parent.dblclicktr(this.data, true);
       },
-      clicktd(evt) {
-        if (this.parent.multiple || !this.$slots.expand) return;
-        const tr = evt.target.closest('tr');
+      toggleExpand() {
         if (this.expanded) {
           this.collapseExpandedData();
         } else {
+          const tr = this.$refs.tableTr;
           const trx = Vue.extend(trExpand);
           const instance = new trx({
             propsData: {

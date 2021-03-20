@@ -43,6 +43,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "file-loader": "^6.0.0",
+    "npm": "^7.6.1",
     "prefixfree": "^1.0.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.2",

@@ -37,7 +37,7 @@
     // border-left: 1px solid rgba(0,0,0,.04)
     &:first-child
       border-left: 1px solid rgba(0,0,0,.0)
-    &.td-check
+    &.td-check, &.td-expand
       cursor: pointer
       padding: 5px !important
       .con-vs-checkbox
@@ -168,14 +168,13 @@
         .con-expand
           border-top: 1px solid rgba(0,0,0,.05) !important
 
-.td-check
+.td-check, .td-expand
   user-select: none
   &.active-expanded
     .vs-icon
       transform: translate(7px) rotate(0deg) !important
   .vs-icon
     user-select: none
-    transform translate(7px) rotate(0deg)
 
 .vs-table--content
   width: 100%

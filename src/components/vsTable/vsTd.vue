@@ -55,9 +55,9 @@
           e.parentNode.appendChild(i);
         }
       },
-      clicktd(evt) {
+      clicktd() {
         if (this.$slots.edit) {
-          const tr = evt.target.closest('tr');
+          const tr = this.$refs.td.closest('tr');
           if (!this.activeEdit) {
             const trx = Vue.extend(trExpand);
             const instance = new trx({

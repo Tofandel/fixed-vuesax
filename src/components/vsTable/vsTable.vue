@@ -27,7 +27,11 @@
             class="vs-table--thead">
             <tr>
               <th
-                v-if="multiple || hasExpandableData"
+                v-if="hasExpandableData"
+                class="td-expand">
+              </th>
+              <th
+                v-if="multiple"
                 class="td-check">
                 <span
                   v-if="multiple"
