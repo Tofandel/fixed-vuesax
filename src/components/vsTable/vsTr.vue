@@ -53,9 +53,10 @@
     computed: {
       isSelected() {
         if (this.parent.multiple && Array.isArray(this.parent.value)) {
-          return this.data ? this.parent.value.indexOf(this.data) >= 0 : false;
+          const str = JSON.stringify(this.data);
+          return this.data ? this.parent.value.findIndex((d) => this.data === d || str === JSON.stringify(d)) >= 0 : false;
         } else {
-          return this.data ? this.parent.value === this.data : false;
+          return this.data ? this.parent.value === this.data || JSON.stringify(this.parent.value) === JSON.stringify(this.data) : false;
         }
       },
     },
