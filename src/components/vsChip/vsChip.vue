@@ -43,10 +43,7 @@
         type: String,
         default: null,
       },
-      closable: {
-        type: [Boolean, String],
-        default: false,
-      },
+      closable: Boolean,
       color: {
         type: String,
         default: null,

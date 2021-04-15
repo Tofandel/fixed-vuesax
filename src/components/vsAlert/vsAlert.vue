@@ -49,7 +49,7 @@
     name: 'VsAlert',
     props: {
       active: {
-        type: [Boolean, String],
+        type: Boolean,
         default: true,
       },
       title: {

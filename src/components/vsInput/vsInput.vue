@@ -131,7 +131,7 @@
       },
       autofocus: {
         default: false,
-        type: [Boolean, String],
+        type: Boolean,
       },
       icon: {
         default: null,

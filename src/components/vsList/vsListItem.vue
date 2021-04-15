@@ -40,10 +40,6 @@
   export default {
     name: 'VsListItem',
     props: {
-      vsAvatar: {
-        type: [Boolean, String],
-        default: false,
-      },
       title: {
         type: String,
         default: null,

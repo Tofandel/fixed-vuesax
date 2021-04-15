@@ -91,7 +91,7 @@
       },
       disabled: {
         default: false,
-        type: [Boolean, String],
+        type: Boolean,
       },
       color: {
         default: 'primary',
