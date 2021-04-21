@@ -2,19 +2,24 @@
 .dropdown-group-enter-active, .dropdown-group-leave-active {
   transition: opacity .25s;
 }
-.dropdown-group-enter, .dropdown-group-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.dropdown-group-enter, .dropdown-group-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
 }
 
 .vs-con-dropdown
   position: relative;
   display: inline-block;
-  border: 0px;
+  border: 0;
   background: transparent;
+
   *
     pointer-events: none
+
   a
     user-select: none !important;
+
   &:active
     opacity: 1 !important;
 
@@ -26,7 +31,6 @@
 .vs-dropdown--group
   position: relative;
   list-style: none;
-  width: calc(100% - 6px);
   margin-left: 3px;
   width: auto;
   display: block;
@@ -36,14 +40,18 @@
   box-sizing: border-box;
   cursor: pointer;
   transition: all .3s ease;
+
   &.marginIcon
     padding-right: 25px;
+
     &:hover
       .con-dropdown--group
         border-left: 1px solid rgba(0, 0, 0, 0.1);
-      >.icon-group
-        transform: translate(0,-50%) rotate(-180deg);
+
+      > .icon-group
+        transform: translate(0, -50%) rotate(-180deg);
         opacity: 0;
+
 .vs-dropdown--group-label
   font-size: 0.9375em;
   font-weight: normal;
@@ -55,13 +63,13 @@
   font-size: 1.125em;
   top: 50%;
   transition: all .25s ease;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
 
 .con-dropdown--group-con-ul
   padding-left: 3px
   position: relative;
-  right: 0px;
-  top: 0px;
+  right: 0;
+  top: 0;
   min-width: 130px;
   width: auto;
   z-index: 1000;
@@ -69,9 +77,10 @@
   overflow: hidden;
   transition: all .3s ease;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+
 .con-dropdown--group-ul
   padding-top: 5px;
-  padding-left: 0px;
+  padding-left: 0;
   position: relative;
   background: rgb(255, 255, 255);
   border-radius: 5px;
@@ -79,26 +88,29 @@
 .no-cascading
   font-weight: bold;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
-  padding-left: 0px !important;
-  padding-right: 0px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   margin-top: 5px !important;
-  margin-left: 0px;
-  >h3
-    padding: 0px 10px;
+  margin-left: 0;
+
+  > h3
+    padding: 0 10px;
     font-size: 0.9375em;
     padding-top: 6px;
     padding-bottom: 6px;
     cursor: default;
+
   .con-dropdown--group-no-cascading
     width: 100% !important;
     font-weight: bold;
     height: auto !important;
     opacity: 1 !important;
     border-left: 1px solid rgba(0, 0, 0, 0.0) !important;
+
     ul
       width: 100%;
-      box-shadow: 0px 5px 20px 0px rgba(0, 0, 0,0) !important;
-      padding-left: 0px !important;
+      box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0) !important;
+      padding-left: 0 !important;
 
 
 .vs-dropdown--item
@@ -108,10 +120,11 @@
   dirValue(text-align, left)
   border-radius: 5px;
   width: calc(100% - 6px)
-  margin: 0px 3px;
+  margin: 0 3px;
   list-style: none;
   font-weight: normal !important;
   font-size: 0.9375em;
+
   .vs-dropdown--item-link
     background: inherit !important;
     color: inherit !important;
@@ -123,23 +136,26 @@
     width: 100%;
     position: relative;
     display: block;
-    color: rgba(0, 0, 0, 0.7);
+
     &.disabled
       user-select: none;
       pointer-events: none !important;
       cursor: default;
       opacity: $vs-disabled-opacity !important;
-      color: rgba(0,0,0,$vs-disabled-opacity) !important;
+      color: rgba(0, 0, 0, $vs-disabled-opacity) !important;
+
   &.divider
     border-top: 1px solid rgba(0, 0, 0, 0.08)
     margin-top: 5px;
 
 
 //transitions
-.dropdownx-enter, .dropdownx-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.dropdownx-enter, .dropdownx-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
-  transform: translate(-100%,8px) !important;
+  transform: translate(-100%, 8px) !important;
 }
+
 .con-vs-dropdown--menu
   padding-top: 10px
   position: absolute;
@@ -148,10 +164,12 @@
   z-index: 40000
   transform: translate(-100%);
   transition: opacity .25s, transform .25s, width .3s ease;
+
   &.rightx
     .vs-dropdown--menu--after
       left: 30px
       right: 0
+
   &::after
     content: ''
     display block
@@ -163,14 +181,14 @@
 
 .vs-dropdown--menu
   background: rgb(255, 255, 255);
-  padding-left: 0px !important;
+  padding-left: 0 !important;
   border-radius: 5px;
-  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 25px 0 rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.1)
   padding-top: 5px;
   padding-bottom: 5px;
   position: relative;
-  margin: 0px;
+  margin: 0;
 
 .vs-dropdown-right--menu--after
   position: absolute;
@@ -201,7 +219,7 @@
 &.notHeight .vs-dropdown-menu
   &::after
     top: auto;
-    bottom: 0px;
+    bottom: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.0);
     border-left: 1px solid rgba(0, 0, 0, 0.0);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);

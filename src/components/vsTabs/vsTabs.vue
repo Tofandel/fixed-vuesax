@@ -8,69 +8,42 @@
         ref="ul"
         :class="[`ul-tabs-${alignment}`]"
         class="ul-tabs vs-tabs--ul">
-        <li
-          v-for="(child,index) in children"
-          :key="index"
-          ref="li"
-          :class="{'activeChild':childActive === index}"
-          :style="childActive === index ? styleTab : {}"
-          class="vs-tabs--li"
-          @mouseover="hover = true"
-          @mouseout="hover = false">
-          <button
-            v-bind="child.attrs"
-            :style="styleAlignIcon(child.icon)"
-            class="vs-tabs--btn"
-            type="button"
-            @click="activeChild(index)"
-            v-on="child.listeners">
-            <vs-icon
-              v-if="child.icon"
-              :icon-pack="child.iconPack"
-              :icon="child.icon"
-              :color="color"
-              class="vs-tabs--btn-icon"/>
-            <span v-if="child.label">{{child.label}}</span>
-          </button>
-
-          <button
-            v-if="child.tag"
-            class="vs-tabs--btn-tag"
-            @click="clickTag(child)">
-            <vs-icon
-              :icon-pack="child.iconPack"
-              :icon="child.tag"
-              :color="child.tagColor"/>
-          </button>
-        </li>
       </ul>
       <span
         :style="stylex"
         class="line-vs-tabs"></span>
     </div>
     <div class="con-slot-tabs">
-      <slot></slot>
+      <transition :name="!forward?vertical?'fade-tab-vertical-invert':'fade-tab-invert':vertical?'fade-tab-vertical':'fade-tab'">
+        <div
+          v-if="active"
+          class="con-tab vs-tabs--content">
+          <vnodes :vnodes="activeChild.$scopedSlots.default"/>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
   import _color from '../../utils/color.js';
-  import vsIcon from '../vsIcon/vsIcon.vue';
+  import ProviderParentMixin, { Sorted } from '../../utils/ProviderParentMixin';
 
   export default {
     name: 'VsTabs',
-    components: { vsIcon },
+    components: {
+      Vnodes: {
+        functional: true,
+        render: (h, ctx) => ctx.props.vnodes(),
+      },
+    },
+    mixins: [ProviderParentMixin('vsTabs', Sorted)],
     props: {
       value: {
         default: 0,
         type: [Number, String],
       },
       color: {
-        default: 'primary',
-        type: String,
-      },
-      tagColor: {
         default: 'primary',
         type: String,
       },
@@ -87,17 +60,18 @@
       topx: 'auto',
       heightx: 2,
       hover: false,
-      children: [],
-      childActive: 0,
+      previous: null,
+      childActive: null,
       leftx: 0,
       widthx: 0,
       these: false,
     }),
     computed: {
-      styleTab() {
-        return {
-          color: _color.getColor(this.color, 1),
-        };
+      forward() {
+        return this.sortedItems.findIndex((f) => f === this.childActive) > this.sortedItems.findIndex((f) => f === this.previous);
+      },
+      vertical() {
+        return this.position === 'left' || this.position === 'right';
       },
       stylex() {
         return {
@@ -105,42 +79,28 @@
           left: `${this.leftx}px`,
           width: `${this.widthx}px`,
           height: `${this.heightx}px`,
-          background: `linear-gradient(30deg, ${_color.getColor(this.color, 1)} 0%, ${_color.getColor(this.color, 0.5)} 100%)`,
-          boxShadow: `0px 0px 8px 0px ${_color.getColor(this.color, 0.5)}`,
+          background: `linear-gradient(30deg, ${_color.getColor(this.childActive.cleanColor, 1)} 0%, ${_color.getColor(this.childActive.cleanColor, 0.5)} 100%)`,
+          boxShadow: `0px 0px 8px 0px ${_color.getColor(this.childActive.color, 0.5)}`,
           transform: `scaleX(${this.these ? 1.3 : 1})`,
         };
       },
     },
     watch: {
-      value(index) {
-        const activeIndex = this.parseIndex(index);
-        this.activeChild(activeIndex);
+      value(id) {
+        this.goTo(id);
       },
     },
     mounted() {
-      const activeIndex = this.parseIndex(this.value);
-      this.childActive = activeIndex;
-      this.$nextTick(() => {
-        this.activeChild(activeIndex, true);
-      });
+      this.childActive = this.value !== undefined ? this.childItems.find((c) => this.value === c.id)
+        : (this.sortedItems.length ? this.sortedItems[0] : null);
     },
     methods: {
-      clickTag(child) {
-        this.$emit('click-tag', child);
-      },
-      styleAlignIcon(icon) {
-        return icon ? 'display:flex;align-items:center' : '';
-      },
-      parseIndex(index) {
-        let activeIndex = this.childActive;
-        if (index < 0) {
-          activeIndex = 0;
-        } else if (index >= this.$children.length) {
-          activeIndex = this.$children.length - 1;
-        } else if (typeof this.$children[index].$attrs.disabled === 'undefined') {
-          activeIndex = parseInt(index);
+      goTo(id) {
+        if (!this.childActive || this.childActive.id !== id) {
+          this.previous = this.childActive;
+          this.childActive = id;
+          this.$emit('input', id);
         }
-        return activeIndex;
       },
       activeChild(index, initialAnimation) {
         initialAnimation = !!initialAnimation;
@@ -154,46 +114,35 @@
           }, 200);
         }
 
-        this.$children.map((item, item_index) => {
+        this.childItems.map((item, item_index) => {
           if (item_index !== index) {
             item.active = false;
           }
         });
 
         if (this.childActive > index) {
-          this.$children[index].invert = true;
-          this.$children[this.childActive].invert = false;
+          this.sortedItems[index].invert = true;
+          this.sortedItems[this.childActive].invert = false;
         } else {
-          this.$children[this.childActive].invert = true;
-          this.$children[index].invert = false;
+          this.sortedItems[this.childActive].invert = true;
+          this.sortedItems[index].invert = false;
         }
 
-        this.$children[index].active = true;
+        this.sortedItems[index].active = true;
         this.childActive = index;
         this.$emit('input', this.childActive);
 
-        if (this.position === 'left' || this.position === 'right') {
-          this.$children[index].vertical = true;
-        }
-
         this.changePositionLine(elem, initialAnimation);
       },
-      changePositionLine(elem, initialAnimation) {
-        if (this.position === 'left' || this.position === 'right') {
+      changePositionLine(elem) {
+        if (this.vertical) {
           this.topx = elem.offsetTop;
           this.heightx = elem.offsetHeight;
           this.widthx = 2;
         } else {
-          const update = () => {
-            this.leftx = elem.offsetLeft;
-            this.widthx = elem.offsetWidth;
-            this.topx = (elem.offsetHeight + (elem.getBoundingClientRect().top - this.$refs.ul.getBoundingClientRect().top));
-          };
-          if (!initialAnimation) {
-            update();
-          } else {
-            setTimeout(update, 100);
-          }
+          this.leftx = elem.offsetLeft;
+          this.widthx = elem.offsetWidth;
+          this.topx = (elem.offsetHeight + (elem.getBoundingClientRect().top - this.$refs.ul.getBoundingClientRect().top));
         }
       },
     },

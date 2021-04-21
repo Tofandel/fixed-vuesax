@@ -1,6 +1,6 @@
 .vs-switch
   border-radius: 12px
-  border: 0px
+  border: 0
   min-width: 42px
   height: 22px
   position: relative
@@ -9,19 +9,23 @@
   display: flex
   align-items: center
   justify-content: center
+
   &:disabled
     opacity $vs-disabled-opacity
     cursor: default
     pointer-events: none
+
   &:active:not(.vs-switch--circle)
     .vs-switch--circle
       width: 24px
       border-radius: 15px
+
   &.vs-switch-active
     &:active
       .vs-switch--circle
         width: 24px
         margin-left: calc(100% - 29px)
+
     .vs-switch--circle
       margin-left: calc(100% - 22px)
 
@@ -35,11 +39,10 @@
   top: 2px
   border-radius: 50%
   transition: all .25s ease
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1)
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1)
 
 .vs-switch--text
   position: absolute
-  display: block
   font-size: 0.625em
   opacity: 0
   transition: all .2s ease
@@ -48,16 +51,19 @@
   justify-content: center
   white-space: nowrap
   overflow: hidden
+
   &.text-on
     padding-left: 6px
-    left: 0px
+    left: 0
     color: rgb(255, 255, 255)
     transform: translate(10px)
+
   &.text-off
-    right: 0px
+    right: 0
     padding-right: 5px
     color: rgb(160, 160, 160)
     transform: translate(-10px)
+
   &.active-text
     opacity: 1
     transform: translate(0px)
@@ -69,7 +75,7 @@
   justify-content: center
   overflow: hidden
   max-width: 16px
-  padding: 0px 2px
+  padding: 0 2px
 
 .vs-switch--input
   position: absolute
@@ -82,5 +88,6 @@
 for colorx, i in $vs-colors
   .vs-switch-{colorx}
     background: rgb(226, 226, 226)
+
     &.vs-switch-active
       background: getColor(colorx, 1)

@@ -1,9 +1,11 @@
 .vs-con-table
-  background: rgb(251,251,251)
+  background: rgb(251, 251, 251)
   border-radius: 5px
-  padding: 5p
+  padding: 5px
+
   .empty
     color: getColor('danger', 1)
+
   .con-edit-td
     position: absolute
     padding: 6px
@@ -12,8 +14,8 @@
     transform: translate(0px, 15%)
     border-radius: 5px
     z-index: 300
-    background: rgb(255,255,255)
-    box-shadow: 0 6px 10px 0 rgba(0,0,0,.05)
+    background: rgb(255, 255, 255)
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .05)
     display: flex
     align-items: center
     justify-content: center
@@ -21,34 +23,43 @@
     // display: block
     // transition: all .25s ease
     overflow: hidden
+
   &.stripe
     .tr-values
       &:nth-child(2n)
         background: transparent !important
+
   table
     font-size: .8rem
     width: 100%
     border-collapse: collapse
+
     tbody
       width: 100%
+
   td
     border: 0
     padding: 2px 8px
     // border-left: 1px solid rgba(0,0,0,.04)
+
     &:first-child
-      border-left: 1px solid rgba(0,0,0,.0)
+      border-left: 1px solid rgba(0, 0, 0, .0)
+
     &.td-check, &.td-expand
       cursor: pointer
       padding: 5px !important
+
       .con-vs-checkbox
         margin-left: 0 !important
         margin-right: 0 !important
+
       .vs-icon
         transition: all .25s ease
         transform translate(7px) rotate(-90deg)
 
 .td-edit
   text-decoration: underline
+
   .icon-edit
     transition: all .25s ease
     font-size: .75rem
@@ -56,17 +67,19 @@
     opacity: 0
     padding-top: 3px
     transform translate(-0px)
-    background: rgb(240,240,240)
+    background: rgb(240, 240, 240)
     width: 17px
     height: 17px
     display: flex
     align-items: center
     justify-content: center
     border-radius: 5px
-  >span
+
+  > span
     // display: block
     cursor: pointer
-    // transform translate(0px)
+
+// transform translate(0px)
 
 .vs-table--pagination
   width 100%
@@ -74,9 +87,11 @@
   display: flex
   align-items: center
   justify-content: flex-end
+
   .vs-pagination--buttons
     width: 30px
     height: 30px
+
   .item-pagination
     width: 30px
     height: 30px
@@ -91,6 +106,7 @@
   margin: 0
   min-width: 400px
   position: relative
+
   .tr-table:last-child
     .con-edit-td
       // top: 0
@@ -99,18 +115,23 @@
   .tr-spacer
     height: 4px
     opacity: 1
-    // width: 0
+
+  // width: 0
+
   &:nth-child(2n)
-    background: rgb(0,0,0)
+    background: rgb(0, 0, 0)
+
   tr:not(.tr-expand)
     // border-bottom: 1px solid rgba(0,0,0,.03)
   .tr-expand
     td
       padding: 0
       overflow: hidden
+
       .con-expand
         transition: all .25s ease
-        // padding: 10px
+
+  // padding: 10px
   // .tr-table
   //   transition: all .25s ease
   //   width: calc(100% - 10px)
@@ -122,57 +143,74 @@
   //   background: rgb(255,255,255)
   //   padding: 6px 0
   //   position: relative
+
   tr
     transition: all .3s ease
-    background: rgb(255,255,255)
-    // border-radius: 5px
+    background: rgb(255, 255, 255)
+
+  // border-radius: 5px
+
   .tr-values
     &.activeEdit
       z-index 500 !important
+
       + .tr-table
         transform: translate(0) !important
+
     &.hoverFlat
       &:not(.activeEdit):not(.is-expand):hover
         opacity: .8
+
     &:not(.activeEdit):not(.tr-expandedx):not(.hoverFlat):hover
 
       z-index 200
       // border-radius: 5px
       transform: translate(0, -4px)
+
       .tr-values
-        box-shadow: 0 2px 12px 0 rgba(0,0,0,.05)
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .05)
+
       ~ tbody
         z-index: 10
 
     td
       padding: 10px
+
     .tr-expand
       transform scale(.98)
+
       td
         padding 0
+
     &.selected
       cursor: pointer
+
     &:last-child
-      border-bottom: 1px solid rgba(0,0,0,.0)
+      border-bottom: 1px solid rgba(0, 0, 0, .0)
 
 
     &.is-expand
-      box-shadow: 0 2px 10px 0 rgba(0,0,0,.08)
+      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .08)
       z-index: 300
+
       .tr-values
         z-index: 300
-        box-shadow: 0 2px 10px 0 rgba(0,0,0,.0)
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .0)
+
       .tr-spacer
         height: 0
+
       .tr-expand
         .con-expand
-          border-top: 1px solid rgba(0,0,0,.05) !important
+          border-top: 1px solid rgba(0, 0, 0, .05) !important
 
 .td-check, .td-expand
   user-select: none
+
   &.active-expanded
     .vs-icon
       transform: translate(7px) rotate(0deg) !important
+
   .vs-icon
     user-select: none
 
@@ -192,6 +230,7 @@
   max-width: 200px
   position: relative
   propWithDir(margin, left, auto)
+
   i
     position: absolute
     transition: all .25s ease
@@ -202,13 +241,15 @@
   padding: 5px 10px
   propWithDir(padding, left, 30px)
   border-radius: 20px
-  border: 1px solid rgba(0,0,0,.04)
+  border: 1px solid rgba(0, 0, 0, .04)
   font-size: .7rem
   width: 200px
-  color: rgba(0,0,0,.7)
+  color: rgba(0, 0, 0, .7)
   transition: all .25s ease
+
   &:focus
-    box-shadow: 0 4px 10px 0 rgba(0,0,0,.03)
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .03)
+
     + i
       color: getColor('primary', 1)
 
@@ -220,11 +261,12 @@
   width: 100%
   position relative
 
-// .vs-table--thead-table
-//   margin: 0
-//   z-index 100
-//   padding-top: 5px
+  // .vs-table--thead-table
+  //   margin: 0
+  //   z-index 100
+  //   padding-top: 5px
   // border-bottom: 1px solid rgba(0,0,0,.06)
+
   th
     padding: 6px 10px
     padding-top: 5px
@@ -232,11 +274,13 @@
     border: 0
     text-align: left
     font-size: .85rem
+
     .vs-table-text
       display: flex
       align-items: center
       justify-content: flex-start
       cursor: pointer
+
     .sort-th
       display: flex
       align-items: center
@@ -244,23 +288,26 @@
       flex-direction: column
       padding-left: 6px
       transform translate(0, 2px)
+
       .th-sort-icon
         font-size: .9rem
         transition: all .25s ease
         border-radius: 2px
+
     &.td-check
       padding: 0 !important
+
       .con-td-check
         display: block
-        padding-top: 3px
-        background: rgb(255,255,255)
+        background: rgb(255, 255, 255)
         border-radius 6px
         padding: 5px
         padding-right: 2px
-        box-shadow: 0 3px 10px 0 rgba(0,0,0,.05)
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .05)
         transition: all .25s ease
+
       &:hover
-        box-shadow: 0 0 0 0 rgba(0,0,0,.05)
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, .05)
 
       .con-vs-checkbox
         margin-right: 0 !important
@@ -281,9 +328,10 @@ for colorx, i in $vs-colors
       color: getColor(colorx, 1)
       background: getColor(colorx, .05) !important
       box-shadow: 0 0 1px 0 getColor(colorx, 1) !important
+
       td
         &:first-child
-          border-left: 1px solid rgba(0,0,0,.0) !important
+          border-left: 1px solid rgba(0, 0, 0, .0) !important
 
 // animation
 
@@ -291,7 +339,9 @@ for colorx, i in $vs-colors
 .td-enter-active, .td-leave-active {
   transition: all .25s ease;
 }
-.td-enter, .td-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.td-enter, .td-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
   transform: translate(0px, 15%) scale(.4) !important
 }
@@ -300,7 +350,9 @@ for colorx, i in $vs-colors
 .tr-expand-enter-active, .tr-expand-leave-active {
   transition: all .3s ease;
 }
-.tr-expand-enter, .tr-expand-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.tr-expand-enter, .tr-expand-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
   height 0
 }
@@ -314,8 +366,8 @@ for colorx, i in $vs-colors
       display: flex
       align-items: center
       justify-content: center
-      border-top: 1px solid rgba(0,0,0,.05)
-      border-bottom: 1px solid rgba(0,0,0,.05)
+      border-top: 1px solid rgba(0, 0, 0, .05)
+      border-bottom: 1px solid rgba(0, 0, 0, .05)
       width: 100%
       padding-right: 30px
 
@@ -328,17 +380,19 @@ for colorx, i in $vs-colors
       color getColor('danger', 1)
       border 0
       margin-left: 10px
-      background: rgb(245,245,245)
+      background: rgb(245, 245, 245)
       display: flex
       align-items: center
       justify-content: center
       border-radius: 3px
       cursor pointer
       transition all .25s ease
+
       &:hover
         opacity .7
         background: getColor('danger', 1)
-        color rgb(255,255,255)
+        color rgb(255, 255, 255)
+
       i
         font-size: 1.1rem
 
@@ -348,6 +402,7 @@ for colorx, i in $vs-colors
       &.td-check
         .vs-icon
           transform translate(-7px) rotate(90deg)
+
         .vs-checkbox--check
           .vs-icon
             transform translate(1px) rotate(0deg)

@@ -1,11 +1,13 @@
 {
   "name": "fixed-vuesax",
   "version": "3.13.81",
+  "engines": {
+    "npm": ">=7"
+  },
   "private": false,
   "description": "Framework Components for Vue js",
   "author": "ldrovira <luisdanielrovira8@gmail.com>",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build --target lib src/index.js --name vuesax",
     "lint": "vue-cli-service lint",
     "deploy": "npm run build && git add . && git commit -m 'deploy' && npm run v && npm run p && git push",
@@ -23,32 +25,33 @@
   "main": "dist/vuesax.common.js",
   "unpkg": "dist/vuesax.umd.min.js",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "vue": "^2.6.11"
+    "chalk": "^4.1.1",
+    "vue": "^2.6.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
-    "@vue/cli": "^4.5.11",
-    "@vue/cli-plugin-babel": "^4.5.11",
-    "@vue/cli-plugin-eslint": "^4.5.11",
-    "@vue/cli-service": "^4.4.6",
-    "@vue/eslint-config-standard": "^5.1.2",
-    "babel-eslint": "^10.1.0",
-    "copy-webpack-plugin": "^6.0.3",
-    "core-js": "^3.9.1",
-    "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.2",
+    "@babel/core": "^7.13.16",
+    "@babel/eslint-parser": "^7.13.14",
+    "@vue/cli": "^5.0.0-alpha.8",
+    "@vue/cli-plugin-babel": "^5.0.0-alpha.8",
+    "@vue/cli-plugin-eslint": "^5.0.0-alpha.8",
+    "@vue/cli-service": "^5.0.0-alpha.8",
+    "@vue/eslint-config-standard": "^6.0.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "core-js": "^3.10.2",
+    "eslint": "^7.24.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "file-loader": "^6.0.0",
-    "npm": "^7.6.1",
-    "prefixfree": "^1.0.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "eslint-plugin-vue": "^7.9.0",
+    "file-loader": "^6.2.0",
     "stylus": "^0.54.8",
-    "stylus-loader": "^3.0.2",
+    "stylus-loader": "^5.0.0",
+    "terser-webpack-plugin": "^5.1.1",
     "viewcode": "0.0.27",
-    "vuepress": "^1.8.2"
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "vuepress": "^2.0.0-beta.9",
+    "webpack": "^5.35.0"
   },
   "babel": {
     "presets": [
@@ -66,7 +69,7 @@
       "node": true
     },
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@babel/eslint-parser"
     },
     "rules": {}
   },
@@ -78,7 +81,8 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie <= 10",
+    "not dead"
   ],
   "bugs": {
     "url": "https://github.com/lusaxweb/vuesax/issues"

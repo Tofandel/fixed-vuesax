@@ -1,21 +1,24 @@
 .vs-con-textarea
   width: 100%
   position relative
-  border: 1px solid rgba(0,0,0,.08)
-  box-shadow: 0 0 0 0 rgba(0,0,0,.0)
+  border: 1px solid rgba(0, 0, 0, .08)
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, .0)
   border-radius: 6px
   transition: boxShadow .25s ease, border .25s ease, transform .25s ease
   // overflow hidden
   transform: translate(0, 0)
   margin-bottom: 16px
+
   &.focusx
     // box-shadow: 0 4px 16px 0 rgba(0,0,0,.05)
     // border: 1px solid rgba(0,0,0,.02)
     // transform: translate(0, -3px)
+
     h4
-      background: rgb(252,252,252)
+      background: rgb(252, 252, 252)
       padding-top: 4px
       padding-bottom: 4px
+
   h4
     font-size: .7rem
     padding: 8px
@@ -28,26 +31,30 @@
 .vs-textarea
   resize: none
   border-radius: 6px
-  border: 0 solid rgba(0,0,0,.0)
+  border: 0 solid rgba(0, 0, 0, .0)
   display: block
   padding: 9px
-  color: rgba(0,0,0,.8)
+  color: rgba(0, 0, 0, .8)
   font-size: .8rem
   width: 100%
   max-width 100%
   min-width 100%
   background: transparent
+
   &:focus
     resize: both;
+
     ~
-      .count
-        opacity 1
+    .count
+      opacity 1
 
 &.textarea-danger
   border: 1px solid getColor('danger', .4)
   box-shadow: 0 4px 20px 0 getColor('danger', .1)
+
   .vs-textarea
     color getColor('danger', .8)
+
   .count
     background: getColor('danger', 1)
 
@@ -62,10 +69,10 @@
 
   border-radius: 0 0 5px 5px
   font-weight: bold
-  box-shadow: 0 4px 20px 0 rgba(0,0,0,.05)
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, .05)
   cursor default
   background: getColor('primary', 1)
-  color rgba(255,255,255,1)
+  color rgba(255, 255, 255, 1)
   opacity .3
   transition: all .25s ease
 

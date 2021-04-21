@@ -1,6 +1,7 @@
 .vs-con-loading__container
   position: relative;
   overflow: hidden;
+
   .con-vs-loading
     position: absolute !important;
     width: 100%;
@@ -8,177 +9,199 @@
     min-height: 60px;
     top: 50%;
     left 50%;
-    transform: translate(-50%,-50%)
+    transform: translate(-50%, -50%)
+
 .beforeRemove
   opacity 0
+
 .con-vs-loading
-    width: 100%;
-    height 100%;
-    position fixed
-    left 0px;
-    top: 0px;
-    background: rgba(255,255,255,.6)
-    z-index 300000
-    display flex
-    align-items: center
-    justify-content: center
-    flex-direction: column
-    transition: all .3s ease
-    &.textAfter
-      flex-direction: column-reverse !important
-    .title-loading
-      position relative
-      padding: 5px;
-    .effect-click
-      position absolute
-      width: 0px;
-      height 0px;
-      background: rgba(0,0,0,.1)
-      border-radius: 50%;
-      transform: translate(-50%,-50%)
+  width: 100%;
+  height 100%;
+  position fixed
+  left 0;
+  top: 0;
+  background: rgba(255, 255, 255, .6)
+  z-index 300000
+  display flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  transition: all .3s ease
 
-    .vs-loading
-      position: relative
-      width: 55px;
-      height: 55px;
-      display: block
-      border-radius: 50%;
-      box-sizing: border-box
-      border: 3px solid transparent
-      .effects
-        transition: all .3s ease
-      &.material
-        display: flex
-        align-items: center
-        justify-content: center
-      &.default,&.border
-        .effect-1
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid transparent
-          border-left: 3px solid getColor(primary)
-          animation: rotate 1s ease infinite;
-          border-radius: 50%;
-          box-sizing: border-box
-        .effect-2
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid transparent
-          border-left: 3px solid getColor(primary)
-          animation: rotateOpacity 1s ease infinite .1s;
-          border-radius: 50%;
-          box-sizing: border-box
-        .effect-3
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid transparent
-          border-left: 3px solid getColor(primary)
-          animation: rotateOpacity 1s ease infinite .2s;
-          border-radius: 50%;
-          box-sizing: border-box
-      //border type
-      &.border
-        border: 1px solid rgb(240,240,240)
-        .effect-1,.effect-2,.effect-3
-          border: 1px solid transparent
-          border-left: 1px solid getColor(primary)
-      //point type
-      &.point
-        .effect-1
-          background: getColor(primary,.4)
-          position: absolute
-          width: 100%
-          height: 100%
-          animation: scale 1.2s ease infinite;
-          border-radius: 50%;
-          box-sizing: border-box
-        .effect-2
-          background: getColor(primary,.4)
-          position: absolute
-          width: 100%
-          height: 100%
-          animation: scale 1.8s ease infinite;
-          border-radius: 50%;
-          box-sizing: border-box
-        .effect-3
-          background: getColor(primary,.4)
-          position: absolute
-          width: 100%
-          height: 100%
-          animation: scale 3.6s ease-out infinite;
-          border-radius: 50%;
-          box-sizing: border-box
+  &.textAfter
+    flex-direction: column-reverse !important
 
-      &.radius
-        .effect-1
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid getColor(primary)
-          animation: radius 1s ease infinite;
-          border-radius: 10px;
-          box-sizing: border-box
-        .effect-2
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid getColor(primary)
-          animation: radius 2s ease infinite .1s;
-          border-radius: 10px;
-          box-sizing: border-box
-        .effect-3
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid getColor(primary)
-          animation: radius 3s ease infinite .2s;
-          border-radius: 10px;
-          box-sizing: border-box
+  .title-loading
+    position relative
+    padding: 5px;
 
-      &.corners
-        .effect-1
-          position: absolute
-          width: 100%
-          height: 100%
-          border: 3px solid getColor(primary)
-          animation: corners 1s ease infinite;
-          border-radius: 10px;
-          box-sizing: border-box
+  .effect-click
+    position absolute
+    width: 0;
+    height 0;
+    background: rgba(0, 0, 0, .1)
+    border-radius: 50%;
+    transform: translate(-50%, -50%)
 
-      &.sound
-        display: flex
-        align-items: center
-        justify-content: center
-        .effect-1
-          position: relative
-          width: 5px
-          height: 100%
-          animation: sound 1.4s ease infinite alternate;
-          border-radius: 10px;
-          box-sizing: border-box
-          background: getColor(primary)
-          margin: 0px 4px
-        .effect-2
-          position: relative
-          width: 5px
-          height: 60%
-          animation: sound .7s ease infinite alternate;
-          border-radius: 10px;
-          box-sizing: border-box
-          background: getColor(primary)
-          margin: 0px 4px
-        .effect-3
-          position: relative
-          width: 5px
-          height: 80%
-          animation: sound 1s ease-out infinite alternate;
-          border-radius: 10px;
-          box-sizing: border-box
-          background: getColor(primary)
-          margin: 0px 4px
+  .vs-loading
+    position: relative
+    width: 55px;
+    height: 55px;
+    display: block
+    border-radius: 50%;
+    box-sizing: border-box
+    border: 3px solid transparent
+
+    .effects
+      transition: all .3s ease
+
+    &.material
+      display: flex
+      align-items: center
+      justify-content: center
+
+    &.default, &.border
+      .effect-1
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid transparent
+        border-left: 3px solid getColor(primary)
+        animation: rotate 1s ease infinite;
+        border-radius: 50%;
+        box-sizing: border-box
+
+      .effect-2
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid transparent
+        border-left: 3px solid getColor(primary)
+        animation: rotateOpacity 1s ease infinite .1s;
+        border-radius: 50%;
+        box-sizing: border-box
+
+      .effect-3
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid transparent
+        border-left: 3px solid getColor(primary)
+        animation: rotateOpacity 1s ease infinite .2s;
+        border-radius: 50%;
+        box-sizing: border-box
+
+    //border type
+
+    &.border
+      border: 1px solid rgb(240, 240, 240)
+
+      .effect-1, .effect-2, .effect-3
+        border: 1px solid transparent
+        border-left: 1px solid getColor(primary)
+
+    //point type
+
+    &.point
+      .effect-1
+        background: getColor(primary, .4)
+        position: absolute
+        width: 100%
+        height: 100%
+        animation: scale 1.2s ease infinite;
+        border-radius: 50%;
+        box-sizing: border-box
+
+      .effect-2
+        background: getColor(primary, .4)
+        position: absolute
+        width: 100%
+        height: 100%
+        animation: scale 1.8s ease infinite;
+        border-radius: 50%;
+        box-sizing: border-box
+
+      .effect-3
+        background: getColor(primary, .4)
+        position: absolute
+        width: 100%
+        height: 100%
+        animation: scale 3.6s ease-out infinite;
+        border-radius: 50%;
+        box-sizing: border-box
+
+    &.radius
+      .effect-1
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid getColor(primary)
+        animation: radius 1s ease infinite;
+        border-radius: 10px;
+        box-sizing: border-box
+
+      .effect-2
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid getColor(primary)
+        animation: radius 2s ease infinite .1s;
+        border-radius: 10px;
+        box-sizing: border-box
+
+      .effect-3
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid getColor(primary)
+        animation: radius 3s ease infinite .2s;
+        border-radius: 10px;
+        box-sizing: border-box
+
+    &.corners
+      .effect-1
+        position: absolute
+        width: 100%
+        height: 100%
+        border: 3px solid getColor(primary)
+        animation: corners 1s ease infinite;
+        border-radius: 10px;
+        box-sizing: border-box
+
+    &.sound
+      display: flex
+      align-items: center
+      justify-content: center
+
+      .effect-1
+        position: relative
+        width: 5px
+        height: 100%
+        animation: sound 1.4s ease infinite alternate;
+        border-radius: 10px;
+        box-sizing: border-box
+        background: getColor(primary)
+        margin: 0 4px
+
+      .effect-2
+        position: relative
+        width: 5px
+        height: 60%
+        animation: sound .7s ease infinite alternate;
+        border-radius: 10px;
+        box-sizing: border-box
+        background: getColor(primary)
+        margin: 0 4px
+
+      .effect-3
+        position: relative
+        width: 5px
+        height: 80%
+        animation: sound 1s ease-out infinite alternate;
+        border-radius: 10px;
+        box-sizing: border-box
+        background: getColor(primary)
+        margin: 0 4px
 
 .spinner
   animation: rotator 1.4s linear infinite;
@@ -187,23 +210,26 @@
   stroke-dasharray: 187;
   stroke-dashoffset: 0;
   transform-origin: center;
-  animation:
-    dash 1.4s ease-in-out infinite,
+  animation: dash 1.4s ease-in-out infinite,
     colors 5.6s ease-in-out infinite;
 
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
 }
 
 
- .effect-click-leave-active {
+.effect-click-leave-active {
   transition: all .3s;
 }
- .effect-click-leave-to /* .fade-leave-active below version 2.1.8 */ {
+
+.effect-click-leave-to /* .fade-leave-active below version 2.1.8 */
+{
   opacity: 0;
   width: 1000px !important;
   height 1000px !important
@@ -285,24 +311,24 @@
 
 
 @keyframes dash
- 0%
-  stroke-dashoffset: 187;
- 50%
-  stroke-dashoffset: 46.75;
-  transform:rotate(135deg);
- 100%
-  stroke-dashoffset: 187;
-  transform:rotate(450deg);
+  0%
+    stroke-dashoffset: 187;
+  50%
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  100%
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
 
 
 @keyframes colors
-	0%
-   stroke: #4285F4;
-	25%
+  0%
+    stroke: #4285F4;
+  25%
     stroke: #DE3E35;
-	50%
+  50%
     stroke: #F7C223;
-	75%
+  75%
     stroke: #1B9A59;
   100%
     stroke: #4285F4;
@@ -318,31 +344,41 @@ for colorx, i in $vs-colors
   .vs-loading-background-{colorx}
     background: getColor(colorx, 1)
   .vs-loading-color-{colorx}
-    .default,.border
+    .default, .border
       .effect-1
         border-left: 3px solid getColor(colorx, 1) !important
+
       .effect-2
         border-left: 3px solid getColor(colorx, 1) !important
+
       .effect-3
         border-left: 3px solid getColor(colorx, 1) !important
-      //border type
+
+    //border type
+
     .border
-      .effect-1,.effect-2,.effect-3
+      .effect-1, .effect-2, .effect-3
         border-left: 1px solid getColor(colorx, 1) !important
+
     //point type
+
     .point
       .effect-1
         background: getColor(colorx, .4) !important
+
       .effect-2
         background: getColor(colorx, .4) !important
+
       .effect-3
         background: getColor(colorx, .4) !important
 
     .radius
       .effect-1
         border: 3px solid getColor(colorx, 1) !important
+
       .effect-2
         border: 3px solid getColor(colorx, 1) !important
+
       .effect-3
         border: 3px solid getColor(colorx, 1) !important
 
@@ -353,7 +389,9 @@ for colorx, i in $vs-colors
     .sound
       .effect-1
         background: getColor(colorx, 1) !important
+
       .effect-2
         background: getColor(colorx, 1) !important
+
       .effect-3
         background: getColor(colorx, 1) !important

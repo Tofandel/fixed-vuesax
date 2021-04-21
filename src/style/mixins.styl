@@ -1,11 +1,10 @@
-
 // get color ver css
 getColor(colorx, alpha = 1)
-    unquote("rgba(var(--vs-"+colorx+"), "+alpha+")")
+  unquote("rgba(var(--vs-" + colorx + "), " +alpha + ")")
 
 
 getVar(var)
-    unquote("var(--vs-"+var+")")
+  unquote("var(--vs-" + var + ")")
 
 /**
 * dirValue
@@ -14,8 +13,8 @@ getVar(var)
 * vuesax-app-is-rtl forwared with class in RTL case
 * vuesax-app-is-ltr forwared with class in LTR case
 * the value passed will be used in LTR case and the opposite will be assigned automatically
-* for the RTL 
-* example: 
+* for the RTL
+* example:
   .someClass
     dirValue(float, left)
 
@@ -28,12 +27,12 @@ getVar(var)
   .vuesax-app-is-ltr
     .someClass
       float: left
-* 
+*
 */
 dirValue(prop, value)
-  rtDir=right
-  if value == right 
-    rtDir=left
+  rtDir = right
+  if value == right
+    rtDir = left
   .vuesax-app-is-rtl &
     {prop}: rtDir
   .vuesax-app-is-ltr &
@@ -80,7 +79,7 @@ dirValue(prop, value)
     propWithValue(right, null, 0px)
 
     [Compiled]
-  
+
   .vuesax-app-is-rtl
     .someClass
       left: 0px
@@ -99,35 +98,35 @@ propWithDir(prop, dir = null, value = null, otherValues = null)
       transform: translate(rtlTransDir[0], rtlTransDir[1])  otherValues
     .vuesax-app-is-ltr &
       transform: translate(value[0], value[1] || rtlTransDir[1])  otherValues
-  // justify-content case
+    // justify-content case
   else if prop == justify-content
     rtlVal = ''
     if value == flex-start
       rtlVal = flex-end
-    else 
+    else
       rtlVal = flex-start
-    .vuesax-app-is-rtl & 
+    .vuesax-app-is-rtl &
       justify-content: rtlVal otherValues
     .vuesax-app-is-ltr &
       justify-content: value otherValues
 
-  // right or left properties case
-  else if prop == right || prop == left 
-    rtlProp = '' 
-    if prop == right 
-      rtlProp = left 
-    else 
-      rtlProp = right 
-    .vuesax-app-is-rtl & 
+    // right or left properties case
+  else if prop == right || prop == left
+    rtlProp = ''
+    if prop == right
+      rtlProp = left
+    else
+      rtlProp = right
+    .vuesax-app-is-rtl &
       {rtlProp}: value otherValues
     .vuesax-app-is-ltr &
       {prop}: value otherValues
 
-  // default case
-  else 
-    rtlDir=right 
+    // default case
+  else
+    rtlDir = right
     if dir == right
-      rtlDir=left
+      rtlDir = left
     .vuesax-app-is-rtl &
       {prop}-{rtlDir}: value otherValues
     .vuesax-app-is-ltr &
