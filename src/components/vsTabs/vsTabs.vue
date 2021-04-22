@@ -16,10 +16,9 @@
     </div>
     <div class="con-slot-tabs">
       <transition :name="!forward?vertical?'fade-tab-vertical-invert':'fade-tab-invert':vertical?'fade-tab-vertical':'fade-tab'">
-        <div v-if="childActive" :key="childActive.uid"
-             class="con-tab vs-tabs--content">
-          <vnodes v-if="childActive.$scopedSlots.default" :vnodes="childActive.$scopedSlots.default"/>
-        </div>
+        <keep-alive>
+          <vs-tab-content v-if="childActive" :key="childActive._uid" :tab="childActive"/>
+        </keep-alive>
       </transition>
     </div>
   </div>
@@ -28,15 +27,11 @@
 <script>
   import _color from '../../utils/color.js';
   import ProviderParentMixin, { Sorted } from '../../utils/ProviderParentMixin';
+  import VsTabContent from './vsTabContent';
 
   export default {
     name: 'VsTabs',
-    components: {
-      Vnodes: {
-        functional: true,
-        render: (h, ctx) => ctx.props.vnodes(),
-      },
-    },
+    components: { VsTabContent },
     mixins: [ProviderParentMixin('vsTabs', Sorted)],
     props: {
       value: {
@@ -95,6 +90,7 @@
       this.childActive = (this.value !== undefined
         ? this.childItems.find((c) => this.value.toString() === c.uid.toString())
         : (this.sortedItems.length ? this.sortedItems[0] : null));
+      this.changePositionLine(this.childActive.$el);
     },
     methods: {
       goTo(id) {
