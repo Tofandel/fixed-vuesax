@@ -85,12 +85,14 @@
       value(id) {
         this.goTo(id);
       },
+      childItems() {
+        if (!this.childActive) {
+          this.goTo(this.value);
+        }
+      },
     },
     mounted() {
-      this.childActive = (this.value !== undefined
-        ? this.childItems.find((c) => this.value.toString() === c.uid.toString())
-        : (this.sortedItems.length ? this.sortedItems[0] : null));
-      this.changePositionLine(this.childActive.$el);
+      this.childActive = this.goTo(this.value);
     },
     methods: {
       goTo(id) {
