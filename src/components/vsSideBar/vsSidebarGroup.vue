@@ -2,10 +2,11 @@
   <div
     :class="{'vs-sidebar-group-open' : openItems}"
     class="vs-sidebar-group"
-    @mouseover="mouseover"
-    @mouseout="mouseout">
+    @mouseout="mouseout"
+    @mouseover="mouseover">
     <h4 @click="clickGroup">
-      {{title}} <vs-icon>keyboard_arrow_down</vs-icon>
+      {{title}}
+      <vs-icon>keyboard_arrow_down</vs-icon>
     </h4>
     <span class="vs-sidebar--tooltip">{{title}}</span>
     <ul
@@ -41,7 +42,7 @@
     },
     watch: {
       maxHeight() {
-        this.openItems = this.maxHeight != '0px';
+        this.openItems = this.maxHeight !== '0px';
       },
     },
     mounted() {
@@ -60,7 +61,7 @@
       clickGroup() {
         if (!this.openHover) {
           const scrollHeight = this.$refs.items.scrollHeight;
-          if (this.maxHeight == '0px') {
+          if (this.maxHeight === '0px') {
             this.maxHeight = `${scrollHeight}px`;
             setTimeout(() => {
               this.maxHeight = 'none';

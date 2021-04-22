@@ -1,8 +1,8 @@
 <template lang="html">
   <transition
-    @before-enter="beforeEnter"
     @enter="enter"
-    @leave="leave">
+    @leave="leave"
+    @before-enter="beforeEnter">
     <div
       v-if="active"
       ref="alert"
@@ -18,8 +18,8 @@
         class="con-x vs-alert--close"
         @click="$emit('update:active',false)">
         <vs-icon
-          :icon-pack="iconPack"
-          :icon="closeIcon"/>
+          :icon="closeIcon"
+          :icon-pack="iconPack"/>
       </div>
 
       <h4
@@ -33,8 +33,8 @@
         class="vs-alert">
         <vs-icon
           v-if="icon"
-          :icon-pack="iconPack"
           :icon="icon"
+          :icon-pack="iconPack"
           class="icon-alert"/>
         <slot></slot>
       </div>

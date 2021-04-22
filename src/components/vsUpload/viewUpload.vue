@@ -12,6 +12,7 @@
 </template>
 <script>
   import utils from '../../utils';
+
   export default {
     name: 'ViewUpload',
     props: {
@@ -29,7 +30,7 @@
     },
     methods: {
       closeView(evt) {
-        if (evt.target.tagName != 'IMG') {
+        if (evt.target.tagName !== 'IMG') {
           this.$parent.viewActive = false;
         }
       },

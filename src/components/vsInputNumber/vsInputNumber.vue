@@ -8,51 +8,51 @@
     class="vs-input-number">
     <button
       v-repeat-click="less"
-      :disabled="$attrs.disabled"
       :class="{
         limit:value <= min
       }"
+      :disabled="$attrs.disabled"
       :style="{
         background:getColor
       }"
       class="btn-less vs-input-number--button-less"
       type="button">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="iconDec"/>
+        :icon="iconDec"
+        :icon-pack="iconPack"/>
     </button>
-    <span v-if="label">{{label}}</span>
-    <input
+    <span v-if="label">{{label}}</span> <input
       ref="input"
-      :style="styleInput"
-      :value="value"
       v-bind="$attrs"
       :disabled="isDisabled"
-      :min="min"
       :max="max"
-      type="number"
+      :min="min"
+      :style="styleInput"
+      :value="value"
       class="vs-input-number--input"
+      type="number"
       v-on="listeners">
     <button
       v-repeat-click="plus"
-      :disabled="$attrs.disabled"
       :class="{
         limit:value >= max && max !== null
       }"
+      :disabled="$attrs.disabled"
       :style="{
         background:getColor
       }"
       class="btn-plus vs-input-number--button-plus"
       type="button">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="iconInc"/>
+        :icon="iconInc"
+        :icon-pack="iconPack"/>
     </button>
   </div>
 </template>
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsInputNumber',
     directives: {
@@ -71,7 +71,7 @@
           const eventx = (e) => {
             if (e.button !== 0) return;
             startT = new Date();
-            var escuchando = function () {
+            const escuchando = function () {
               if (bucle) {
                 bucle.apply(this, arguments);
               }

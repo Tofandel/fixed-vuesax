@@ -1,39 +1,33 @@
 <template lang="html">
   <label
     :class="[`vs-radio-${color}`]"
-    class="vs-component con-vs-radio">
-    <input
+    class="vs-component con-vs-radio"> <input
+      :name="vsName"
       v-bind="$attrs"
       :checked="isChecked"
       :value="value"
-      :name="vsName || value"
-      type="radio"
       class="vs-radio--input"
-      v-on="listeners">
-    <span
-      class="vs-radio">
-      <span
+      type="radio"
+      v-on="listeners"> <span
+        class="vs-radio"> <span
         :style="styles"
-        class="vs-radio--borde"></span>
-      <span
-        :style="styleCircle"
-        class="vs-radio--circle"></span>
-    </span>
-    <span class="vs-radio--label">
-      <slot></slot>
-    </span>
-  </label>
+        class="vs-radio--borde"></span> <span
+          :style="styleCircle"
+          class="vs-radio--circle"></span> </span> <span class="vs-radio--label">
+            <slot></slot>
+          </span> </label>
 </template>
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsRadio',
     inheritAttrs: false,
     props: {
-      value: {},
-      vsValue: {},
-      vsName: {},
+      value: [String, Boolean, Number],
+      vsValue: [String, Boolean, Number],
+      vsName: String,
       color: {
         default: 'primary',
         type: String,
@@ -54,7 +48,7 @@
         };
       },
       isChecked() {
-        return this.vsValue == this.value;
+        return this.vsValue.toString() === this.value.toString();
       },
       styles() {
         return {

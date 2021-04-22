@@ -19,10 +19,8 @@
           type="button"
           @click="removeFile(index)">
           <i
-            translate="no"
-            class="material-icons notranslate">
-            clear
-          </i>
+            class="material-icons notranslate"
+            translate="no"> clear </i>
         </button>
         <button
           v-if="showUploadButton"
@@ -36,40 +34,33 @@
           class="btn-upload-file"
           @click="upload(index)">
           <i
-            translate="no"
-            class="material-icons notranslate">
-            {{img.percent >= 100?img.error?'report_problem':'cloud_done':'cloud_upload'}}
-          </i>
+            class="material-icons notranslate"
+            translate="no"> {{img.percent >= 100 ? img.error ? 'report_problem' : 'cloud_done' : 'cloud_upload'}} </i>
           <span>{{img.percent}} %</span>
         </button>
         <img
           v-if="img.src"
           :key="index"
+          :src="img.src"
           :style="{
             maxWidth:img.orientation === 'h'?'100%':'none',
             maxHeight:img.orientation === 'w'?'100%':'none'
           }"
-          :src="img.src"
-          @touchend="viewImage(img.src,$event)"
-          @click="viewImage(img.src,$event)">
+          @click="viewImage(img.src,$event)"
+          @touchend="viewImage(img.src,$event)">
         <h4
           v-if="!img.src"
           class="text-archive">
           <i
-            translate="no"
-            class="material-icons notranslate">
-            description
-          </i>
-          <span>
-            {{img.name}}
-          </span>
+            class="material-icons notranslate"
+            translate="no"> description </i> <span> {{img.name}} </span>
         </h4>
       </div>
       <!-- </transition-group > -->
 
       <div
         :class="{
-          'on-progress-all-upload':percent != 0,
+          'on-progress-all-upload':percent > 0,
           'is-ready-all-upload':percent >= 100,
           'disabled-upload':$attrs.hasOwnProperty('disabled') || limit?(srcs.length - itemRemove.length) >= Number(limit):false
         }"
@@ -79,29 +70,23 @@
           v-bind="$attrs"
           :disabled="$attrs.disabled || limit?(srcs.length - itemRemove.length) >= Number(limit):false"
           type="file"
-          @change="getFiles">
-        <span class="text-input">
-          {{text}}
-        </span>
-        <span
-          :style="{
-            width:`${percent}%`
-          }"
-          class="input-progress">
+          @change="getFiles"> <span class="text-input"> {{text}} </span> <span
+            :style="{
+              width:`${percent}%`
+            }"
+            class="input-progress">
 
-        </span>
+          </span>
         <button
           v-if="showUploadButton"
           :disabled="filesx.length === 0"
-          type="button"
-          title="Upload"
           class="btn-upload-all vs-upload--button-upload"
+          title="Upload"
+          type="button"
           @click="upload('all')">
           <i
-            translate="no"
-            class="material-icons notranslate">
-            cloud_upload
-          </i>
+            class="material-icons notranslate"
+            translate="no"> cloud_upload </i>
         </button>
       </div>
     </div>
@@ -109,7 +94,8 @@
 </template>
 <script>
   import viewUpload from './viewUpload';
-  var lastTap = 0;
+
+  let lastTap = 0;
   export default {
     name: 'VsUpload',
     components: {
@@ -164,11 +150,9 @@
     }),
     computed: {
       getFilesFilter() {
-        const files = this.srcs.filter((item) => {
+        return this.srcs.filter((item) => {
           return !item.remove;
         });
-
-        return files;
       },
       postFiles() {
         let postFiles = Array.prototype.slice.call(this.filesx);
@@ -192,16 +176,16 @@
     },
     methods: {
       viewImage(src, evt) {
-        var timeout;
+        let timeout;
 
-        var eventx = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch)) ? 'touchstart' : 'click';
+        const eventx = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch)) ? 'touchstart' : 'click';
         if (eventx === 'click') {
           this.viewActive = true;
           this.viewSrc = src;
         } else {
           if (evt.type === 'touchend') {
-            var currentTime = new Date().getTime();
-            var tapLength = currentTime - lastTap;
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
             clearTimeout(timeout);
             if (tapLength < 500 && tapLength > 0) {
               this.viewActive = true;
@@ -222,9 +206,10 @@
       getFiles(e) {
         this.$emit('update:vsFile', e.target.value);
         const _this = this;
+
         function uploadImage(e) {
           let orientation = 'h';
-          var image = new Image();
+          const image = new Image();
           image.src = e.target.result;
           image.onload = function () {
             if (this.width > this.height) {
@@ -233,6 +218,7 @@
             switchImage(this, orientation);
           };
         }
+
         function switchImage(image, orientation) {
           _this.srcs.push({
             src: image.src,
@@ -244,7 +230,7 @@
           });
         }
 
-        var files = e.target.files;
+        const files = e.target.files;
         let count = (this.srcs.length - this.itemRemove.length);
         for (const file in files) {
           if (files.hasOwnProperty(file)) {
@@ -255,7 +241,7 @@
               }
             }
 
-            var reader = new FileReader();
+            const reader = new FileReader();
             const filex = files[file];
             if (/image.*/.test(filex.type)) {
               this.typex = 'image';
@@ -306,14 +292,14 @@
         }
 
         const data = this.data || {};
-        for (var key in data) {
+        for (const key in data) {
           formData.append(key, data[key]);
         }
 
         if (this.singleUpload) {
           postFiles.forEach((filex) => {
             const formData = new FormData();
-            for (var key in data) {
+            for (const key in data) {
               formData.append(key, data[key]);
             }
             formData.append(this.fileName, filex, filex.name);

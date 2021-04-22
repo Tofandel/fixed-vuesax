@@ -22,7 +22,7 @@
       },
       closeAllItems(el) {
         const children = this.$children;
-        children.map((item) => {
+        children.forEach((item) => {
           if (item.$el !== el) {
             item.maxHeight = '0px';
           }

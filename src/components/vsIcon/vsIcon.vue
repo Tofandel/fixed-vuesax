@@ -1,8 +1,8 @@
 <template>
   <i
-    :style="iconStyle"
-    :class="[iconPack, iconPack !== 'material-icons' ? icon : '',iconClass,getBg,getBgSize,{'round':round}]"
     v-bind="$attrs"
+    :class="[iconPack, iconPack !== 'material-icons' ? icon : '',iconClass,getBg,getBgSize,{'round':round}]"
+    :style="iconStyle"
     class="vs-icon notranslate icon-scale"
     v-on="$listeners">
     <slot>{{iconPack == 'material-icons' ? icon : ''}}</slot>

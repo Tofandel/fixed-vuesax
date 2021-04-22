@@ -85,7 +85,7 @@
       changeColor() {
         const child = this.$children;
         child.forEach(item => {
-          if (item.$vnode.tag.indexOf('dropdown') != -1) {
+          if (item.$vnode.tag.indexOf('dropdown') !== -1) {
             item.color = this.color;
           }
         });
@@ -104,7 +104,7 @@
         }
 
         this.$nextTick(() => {
-          var w = window.innerWidth ||
+          const w = window.innerWidth ||
             document.documentElement.clientWidth ||
             document.body.clientWidth;
 
@@ -121,7 +121,7 @@
         });
       },
       clickToogleMenu(evt) {
-        if (evt.type == 'contextmenu') {
+        if (evt.type === 'contextmenu') {
           evt.preventDefault();
         }
         const [dropdownMenu] = this.$children.filter(item => item.hasOwnProperty('dropdownVisible'));
@@ -143,7 +143,7 @@
       toggleMenu(typex, evt) {
         const [dropdownMenu] = this.$children.filter(item => item.hasOwnProperty('dropdownVisible'));
         if (!this.vsTriggerClick && !this.vsTriggerContextmenu) {
-          if (typex == 'over') {
+          if (typex === 'over') {
             dropdownMenu.dropdownVisible = this.vsDropdownVisible = true;
           } else {
             if (!evt.relatedTarget.classList.contains('vs-dropdown-menu')) {

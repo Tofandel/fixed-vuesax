@@ -18,8 +18,8 @@
       v-text="vsLabel"></h3>
     <vs-icon
       v-if="vsCollapse"
-      :icon-pack="iconPack"
       :icon="vsIcon"
+      :icon-pack="iconPack"
       class="icon-group notranslate vs-dropdown--group-icon"/>
     <!-- <transition
       @before-enter="beforeEnter"
@@ -29,8 +29,8 @@
     <!-- v-if="activeGroup||!vsCollapse" -->
     <div
       ref="ulx"
-      :style="styleItems"
       :class="{'con-dropdown-group-no-cascading':!vsCollapse}"
+      :style="styleItems"
       class="con-dropdown--group-con-ul">
       <ul class="con-dropdown--group-ul">
         <slot></slot>
@@ -73,10 +73,10 @@
     },
     methods: {
       clickGroup(evt) {
-        if (evt.target != this.$refs.group) return;
+        if (evt.target !== this.$refs.group) return;
         if (!this.openHover) {
           const scrollHeight = this.$refs.ulx.scrollHeight;
-          if (this.maxHeight == '0px') {
+          if (this.maxHeight === '0px') {
             this.maxHeight = `${scrollHeight}px`;
             setTimeout(() => {
               this.maxHeight = 'none';
@@ -112,6 +112,7 @@
       leave: function (el) {
         const __this = this;
         addParents(this);
+
         function addParents(_this) {
           if (_this.$parent.$refs.ulx) {
             const hp = _this.$parent.$refs.ulx.scrollHeight - __this.$refs.ulx.scrollHeight;
@@ -119,6 +120,7 @@
             addParents(_this.$parent);
           }
         }
+
         if (!this.$parent.$refs.ulx) {
           this.$refs.ulx.style.height = 0 + 'px';
         }
@@ -126,7 +128,7 @@
         el.style.opacity = 0;
       },
       toggleGroup(evt) {
-        if (evt.target == this.$refs.group) {
+        if (evt.target === this.$refs.group) {
           this.activeGroup = !this.activeGroup;
         }
       },

@@ -8,6 +8,7 @@
         ref="ul"
         :class="[`ul-tabs-${alignment}`]"
         class="ul-tabs vs-tabs--ul">
+        <slot></slot>
       </ul>
       <span
         :style="stylex"
@@ -15,10 +16,9 @@
     </div>
     <div class="con-slot-tabs">
       <transition :name="!forward?vertical?'fade-tab-vertical-invert':'fade-tab-invert':vertical?'fade-tab-vertical':'fade-tab'">
-        <div
-          v-if="active"
-          class="con-tab vs-tabs--content">
-          <vnodes :vnodes="activeChild.$scopedSlots.default"/>
+        <div v-if="childActive" :key="childActive.uid"
+             class="con-tab vs-tabs--content">
+          <vnodes v-if="childActive.$scopedSlots.default" :vnodes="childActive.$scopedSlots.default"/>
         </div>
       </transition>
     </div>
@@ -40,7 +40,7 @@
     mixins: [ProviderParentMixin('vsTabs', Sorted)],
     props: {
       value: {
-        default: 0,
+        default: undefined,
         type: [Number, String],
       },
       color: {
@@ -74,13 +74,14 @@
         return this.position === 'left' || this.position === 'right';
       },
       stylex() {
+        const col_a = _color.getColor(this.childActive ? this.childActive.cleanColor : this.color, 0.5);
         return {
           top: `${this.topx}px`,
           left: `${this.leftx}px`,
           width: `${this.widthx}px`,
           height: `${this.heightx}px`,
-          background: `linear-gradient(30deg, ${_color.getColor(this.childActive.cleanColor, 1)} 0%, ${_color.getColor(this.childActive.cleanColor, 0.5)} 100%)`,
-          boxShadow: `0px 0px 8px 0px ${_color.getColor(this.childActive.color, 0.5)}`,
+          background: `linear-gradient(30deg, ${_color.getColor(this.childActive ? this.childActive.cleanColor : this.color, 1)} 0%, ${col_a} 100%)`,
+          boxShadow: `0px 0px 8px 0px ${col_a}`,
           transform: `scaleX(${this.these ? 1.3 : 1})`,
         };
       },
@@ -91,48 +92,18 @@
       },
     },
     mounted() {
-      this.childActive = this.value !== undefined ? this.childItems.find((c) => this.value === c.id)
-        : (this.sortedItems.length ? this.sortedItems[0] : null);
+      this.childActive = (this.value !== undefined
+        ? this.childItems.find((c) => this.value.toString() === c.uid.toString())
+        : (this.sortedItems.length ? this.sortedItems[0] : null));
     },
     methods: {
       goTo(id) {
-        if (!this.childActive || this.childActive.id !== id) {
+        if (!this.childActive || this.childActive.uid !== id) {
           this.previous = this.childActive;
-          this.childActive = id;
-          this.$emit('input', id);
+          this.childActive = this.childItems.find((c) => id.toString() === c.uid.toString()) || this.sortedItems[0];
+          this.$emit('input', this.childActive.uid);
+          this.changePositionLine(this.childActive.$el);
         }
-      },
-      activeChild(index, initialAnimation) {
-        initialAnimation = !!initialAnimation;
-        const elem = this.$refs.li[index];
-        if (this.childActive === index && !initialAnimation) {
-          this.these = true;
-          elem.classList.add('isActive');
-          setTimeout(() => {
-            elem.classList.remove('isActive');
-            this.these = false;
-          }, 200);
-        }
-
-        this.childItems.map((item, item_index) => {
-          if (item_index !== index) {
-            item.active = false;
-          }
-        });
-
-        if (this.childActive > index) {
-          this.sortedItems[index].invert = true;
-          this.sortedItems[this.childActive].invert = false;
-        } else {
-          this.sortedItems[this.childActive].invert = true;
-          this.sortedItems[index].invert = false;
-        }
-
-        this.sortedItems[index].active = true;
-        this.childActive = index;
-        this.$emit('input', this.childActive);
-
-        this.changePositionLine(elem, initialAnimation);
       },
       changePositionLine(elem) {
         if (this.vertical) {

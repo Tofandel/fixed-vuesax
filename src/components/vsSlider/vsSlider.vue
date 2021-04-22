@@ -14,8 +14,8 @@
       class="vs-slider"
       @click="clickSlider">
       <span
-        :style="styleLineOne"
         :class="{'hasTransition':effect}"
+        :style="styleLineOne"
         class="vs-slider-line-one"></span> <span class="vs-slider-line-two"></span>
 
       <span
@@ -35,47 +35,45 @@
     </button>
     <button
       ref="circle1"
-      :disabled="disabled"
       :class="{
         'hasTransition':effect,
         'isEquals':isEquals,
         'changeValue':changeValue,
         'isEndValue':value >= max
       }"
+      :disabled="disabled"
       :style="styleCircle"
       class="vs-circle-slider vs-circles-slider vs-slider--circles vs-slider--circle"
-      @touchstart="activeFocus"
-      @mousedown="activeFocus">
+      @mousedown="activeFocus"
+      @touchstart="activeFocus">
       <span
         :style="styleText"
-        class="text-circle-slider vs-slider--circle-text"> {{valueCircle1}} <span v-if="textFixed">
-          {{textFixed}} </span>
+        class="text-circle-slider vs-slider--circle-text"> {{valueCircle1}} <span v-if="textFixed"> {{textFixed}} </span>
         <vs-icon
-          :icon-pack="iconPack"
-          :icon="icon"/>
+          :icon="icon"
+          :icon-pack="iconPack"/>
       </span>
     </button>
     <button
       v-if="Array.isArray(value)"
       ref="circle2"
-      :disabled="disabled"
       :class="{
         'hasTransition':effect,
         'isEquals':isEquals,
         'changeValue':changeValue,
         'isEndValue':value >= max
       }"
+      :disabled="disabled"
       :style="styleCircleTwo"
       class="vs-circle-slider-two vs-circles-slider vs-slider--circles vs-slider--circle-two"
-      @touchstart="activeFocusTwo"
-      @mousedown="activeFocusTwo">
+      @mousedown="activeFocusTwo"
+      @touchstart="activeFocusTwo">
       <span
         :style="styleText"
-        class="text-circle-slider vs-slider--circle-text"> {{valueCircle2}} <span v-if="textFixed">
-          {{textFixed}} </span> <i
+        class="text-circle-slider vs-slider--circle-text"> {{valueCircle2}} <span v-if="textFixed"> {{textFixed}} </span> <i
         v-if="icon"
-        translate="no"
-        class="material-icons notranslate"> {{icon}} </i> </span>
+        class="material-icons notranslate"
+        translate="no"> {{icon}} </i> </span>
     </button>
   </div>
 </template>

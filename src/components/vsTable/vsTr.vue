@@ -4,18 +4,20 @@
     :class="[`tr-table-state-${state}`, {'is-selected':isSelected, 'selected': data, 'is-expand': expanded, 'activeEdit':
       activeEdit, 'hoverFlat': parent.hoverFlat}]"
     class="tr-values vs-table--tr"
-    @dblclick="dblclicktr"
-    @click="clicktr">
-    <td v-if="$slots.expand"
-        :class="{'active-expanded': expanded}"
-        class="td-expand"
-        @click="toggleExpand">
+    @click="clicktr"
+    @dblclick="dblclicktr">
+    <td
+      v-if="$slots.expand"
+      :class="{'active-expanded': expanded}"
+      class="td-expand"
+      @click="toggleExpand">
       <vs-icon>
         keyboard_arrow_down
       </vs-icon>
     </td>
-    <td v-if="parent.multiple"
-        class="td-check">
+    <td
+      v-if="parent.multiple"
+      class="td-check">
       <vs-checkbox
         :value="parent.value"
         :vs-value="data"

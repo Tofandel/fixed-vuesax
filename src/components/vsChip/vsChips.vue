@@ -9,15 +9,15 @@
       <input
         v-model="newChip"
         :placeholder="value.length > 0 ? null : placeholder"
-        type="text"
         class="con-chips--input"
+        type="text"
         @keypress.enter="addItem">
       <div
         class="x-global con-chips--remove-all"
         @click="removeTotalItems">
         <vs-icon
-          :icon-pack="iconPack"
-          :icon="removeIcon"/>
+          :icon="removeIcon"
+          :icon-pack="iconPack"/>
       </div>
     </div>
   </div>
@@ -27,7 +27,7 @@
   export default {
     name: 'VsChips',
     props: {
-      value: {},
+      value: Array,
       vsColor: {
         type: String,
         default: 'primary',

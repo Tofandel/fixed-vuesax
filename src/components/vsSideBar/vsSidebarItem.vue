@@ -7,16 +7,16 @@
       v-if="to"
       :to="to">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="icon"/>
+        :icon="icon"
+        :icon-pack="iconPack"/>
       <slot></slot>
     </router-link>
     <a
       v-else
       :href="href">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="icon"/>
+        :icon="icon"
+        :icon-pack="iconPack"/>
       <slot></slot>
     </a>
   </div>
@@ -48,7 +48,7 @@
     },
     computed: {
       getActive() {
-        return this.$parent.getActive() == this.index;
+        return this.$parent.getActive().toString() === this.index.toString();
       },
     },
     methods: {

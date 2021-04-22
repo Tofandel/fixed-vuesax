@@ -66,7 +66,7 @@
     name: 'VsTimePicker',
     inheritAttrs: false,
     props: {
-      value: {},
+      value: String,
     },
     data() {
       return {

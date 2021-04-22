@@ -1,5 +1,8 @@
 
 module.exports = {
+  configureWebpack: {
+    devtool: 'source-map',
+  },
   base: '/vuesax/',
   head: [
     ['link', { rel: 'icon', href: `/favicon-vuesax.png` }],

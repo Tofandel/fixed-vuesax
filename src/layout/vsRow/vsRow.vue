@@ -36,8 +36,8 @@
 </script>
 
 <style lang="css">
-  .vs-row {
-    clear: both;
-    flex-flow: wrap;
-  }
+.vs-row {
+  clear: both;
+  flex-flow: wrap;
+}
 </style>

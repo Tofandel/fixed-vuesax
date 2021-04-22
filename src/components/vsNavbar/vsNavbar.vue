@@ -1,7 +1,7 @@
 <template lang="html">
   <header
-    :style="[styleNavbar]"
     :class="[`vs-navbar-${type}`, `vs-navbar-color-${color}`, {'collapse':collapse}]"
+    :style="[styleNavbar]"
     class="vs-navbar">
     <div class="vs-navbar--header">
       <button
@@ -17,7 +17,7 @@
     </div>
 
     <div
-      :class="{'activeMenuResponsive' : activeMenuResponsive}"
+      :class="{'activeMenuResponsive': activeMenuResponsive}"
       class="vs-con-items">
       <slot></slot>
     </div>
@@ -31,7 +31,7 @@
     name: 'VsNavbar',
 
     props: {
-      value: {},
+      value: [String, Number],
       type: {
         default: null,
         type: String,

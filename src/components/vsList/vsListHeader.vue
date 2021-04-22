@@ -9,8 +9,8 @@
       v-if="icon"
       class="vs-list--icon">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="icon"/>
+        :icon="icon"
+        :icon-pack="iconPack"/>
     </div>
     <div class="list-titles">
       <div
@@ -31,6 +31,7 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsListHeader',
     props: {

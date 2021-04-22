@@ -69,12 +69,14 @@
     },
     computed: {
       listeners() {
-        return this.trigger === 'hover' ? {
-          mouseenter: this.mouseEnter,
-          mouseleave: this.mouseLeave,
-        } : {
-          click: this.toggle,
-        };
+        return this.trigger === 'hover'
+          ? {
+            mouseenter: this.mouseEnter,
+            mouseleave: this.mouseLeave,
+          }
+          : {
+            click: this.toggle,
+          };
       },
       style() {
         const background = _color.getColor(this.color, 1);

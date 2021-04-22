@@ -20,30 +20,28 @@
         :readonly="!autocomplete"
         class="input-select vs-select--input"
         type="text"
-        @keydown.esc.stop.prevent="closeOptions"
-        v-on="listeners">
+        v-on="listeners"
+        @keydown.esc.stop.prevent="closeOptions">
 
       <button
         :class="{'activeBtnClear': activeBtnClear}"
         class="icon-select-clear vs-select--icon-clear"
         @click="clearValue">
-        <i class="material-icons">
-          close
-        </i>
+        <i class="material-icons"> close </i>
       </button>
 
       <vs-icon
         v-if="!activeBtnClear"
-        :icon-pack="iconPack"
         :icon="icon"
+        :icon-pack="iconPack"
         class="icon-select vs-select--icon"/>
 
       <transition name="fadeselect">
         <div
           v-show="active"
           ref="vsSelectOptions"
-          :style="cords"
           :class="[`vs-select-${color}`,{'scrollx':scrollx}]"
+          :style="cords"
           class="vs-select--options">
           <ul ref="ulx">
             <slot></slot>
@@ -58,40 +56,32 @@
     </div>
 
     <transition-group
-      @before-enter="beforeEnter"
       @enter="enter"
-      @leave="leave">
+      @leave="leave"
+      @before-enter="beforeEnter">
       <div
         v-if="success"
         key="success"
         class="con-text-validation">
-        <span class="span-text-validation span-text-validation-success">
-          {{successText}}
-        </span>
+        <span class="span-text-validation span-text-validation-success"> {{successText}} </span>
       </div>
       <div
         v-else-if="danger"
         key="danger"
         class="con-text-validation span-text-validation-danger">
-        <span class="span-text-validation">
-          {{dangerText}}
-        </span>
+        <span class="span-text-validation"> {{dangerText}} </span>
       </div>
       <div
         v-else-if="warning"
         key="warning"
         class="con-text-validation span-text-validation-warning">
-        <span class="span-text-validation">
-          {{warningText}}
-        </span>
+        <span class="span-text-validation"> {{warningText}} </span>
       </div>
       <div
         v-if="descriptionText"
         key="description"
         class="con-text-validation span-text-validation">
-        <span class="span-text-validation">
-          {{descriptionText}}
-        </span>
+        <span class="span-text-validation"> {{descriptionText}} </span>
       </div>
     </transition-group>
   </div>
@@ -103,7 +93,7 @@
   export default {
     name: 'VsSelect',
     props: {
-      value: {},
+      value: null,
       noData: {
         default: 'No data available',
         type: String,
@@ -218,7 +208,7 @@
               }
             }
 
-            this.$children.map(item => {
+            this.$children.forEach(item => {
               item.valueInputx = this.$refs.inputselect.value;
             });
           },
@@ -319,7 +309,7 @@
           }
         });
 
-        items.map(item => {
+        items.forEach(item => {
           if (!('text' in item)) return;
 
           const text = item.text;

@@ -3,21 +3,21 @@
     :class="{'activeChild':active}"
     :style="styleTab"
     class="vs-tabs--li"
-    @mouseover="hover = true"
-    @mouseout="hover = false">
+    @mouseout="hover = false"
+    @mouseover="hover = true">
     <button
       v-bind="$attrs"
       :disabled="disabled"
       :style="styleAlignIcon"
       class="vs-tabs--btn"
       type="button"
-      @click="clicked"
-      v-on="$listeners">
+      v-on="$listeners"
+      @click="clicked">
       <vs-icon
         v-if="icon"
-        :icon-pack="iconPack"
-        :icon="icon"
         :color="cleanColor"
+        :icon="icon"
+        :icon-pack="iconPack"
         class="vs-tabs--btn-icon"/>
       <span v-if="label">{{label}}</span>
     </button>
@@ -27,9 +27,9 @@
       class="vs-tabs--btn-tag"
       @click="$emit('click-tag')">
       <vs-icon
-        :icon-pack="iconPack"
+        :color="tagColor || cleanColor"
         :icon="tag"
-        :color="cleanColor"/>
+        :icon-pack="iconPack"/>
     </button>
   </li>
 </template>
@@ -66,10 +66,10 @@
         default: 'material-icons',
       },
       color: String,
+      tagColor: String,
     },
     data: () => ({
       vertical: false,
-      id: null,
       invert: false,
     }),
     computed: {
@@ -77,26 +77,26 @@
         return this.color ? _color.getColor(this.color) : _color.getColor(this.parent.color);
       },
       active() {
-        return this.parent && this.parent.childActive && this.parent.childActive.id === this.id;
+        return this.parent && this.parent.childActive && this.parent.childActive.uid === this.uid;
       },
       styleTab() {
-        return this.active ? {
-          color: this.cleanColor,
-        } : {};
+        return this.active
+          ? {
+            color: this.cleanColor,
+          }
+          : {};
       },
       styleAlignIcon() {
         return this.icon ? 'display:flex;align-items:center' : '';
       },
-    },
-    created() {
-      if (this.id === undefined) {
-        this.id = this.index + 1;
-      }
+      uid() {
+        return this.id || this.index + 1;
+      },
     },
     methods: {
       clicked() {
         if (!this.disabled) {
-          this.parent.goTo(this.id);
+          this.parent.goTo(this.uid);
         }
       },
     },

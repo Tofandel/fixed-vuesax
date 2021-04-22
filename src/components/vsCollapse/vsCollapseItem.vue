@@ -1,9 +1,9 @@
 <template>
   <div
-    :class="{'open-item': maxHeight != '0px', 'disabledx': disabled}"
+    :class="{'open-item': maxHeight !== '0px', 'disabledx': disabled}"
     class="vs-collapse-item"
-    @mouseover="mouseover"
-    @mouseout="mouseout">
+    @mouseout="mouseout"
+    @mouseover="mouseover">
     <header
       class="vs-collapse-item--header"
       @click="toggleContent">
@@ -12,8 +12,8 @@
         v-if="!notArrow"
         class="icon-header vs-collapse-item--icon-header">
         <vs-icon
-          :icon-pack="iconPack"
-          :icon="iconArrow"/>
+          :icon="iconArrow"
+          :icon-pack="iconPack"/>
       </span>
     </header>
     <div
@@ -66,7 +66,7 @@
         this.$parent.emitChange();
       },
       ready(newVal, oldVal) {
-        if (oldVal != newVal && newVal) {
+        if (oldVal !== newVal && newVal) {
           this.initMaxHeight();
         }
       },
@@ -81,7 +81,7 @@
     methods: {
       changeHeight() {
         const maxHeightx = this.$refs.content.scrollHeight;
-        if (this.maxHeight != '0px') {
+        if (this.maxHeight !== '0px') {
           this.maxHeight = `${maxHeightx}px`;
         }
       },
@@ -105,7 +105,7 @@
       },
       initMaxHeight() {
         const maxHeightx = this.$refs.content.scrollHeight;
-        if (this.maxHeight == '0px') {
+        if (this.maxHeight === '0px') {
           this.maxHeight = `${maxHeightx}px`;
         } else {
           this.maxHeight = '0px';

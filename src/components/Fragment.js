@@ -1,8 +1,12 @@
 const freeze = (object, property, value) => {
   Object.defineProperty(object, property, {
     configurable: true,
-    get() { return value; },
-    set(v) { console.warn(`tried to set frozen property ${property} with ${v}`); },
+    get() {
+      return value;
+    },
+    set(v) {
+      console.warn(`tried to set frozen property ${property} with ${v}`);
+    },
   });
 };
 
@@ -66,7 +70,9 @@ export default {
     const removeChild = parent.removeChild;
     parent.removeChild = (node) => {
       if (node === container) {
-        while (head.nextSibling !== tail) { container.removeChild(head.nextSibling); }
+        while (head.nextSibling !== tail) {
+          container.removeChild(head.nextSibling);
+        }
 
         parent.removeChild(head);
         parent.removeChild(tail);

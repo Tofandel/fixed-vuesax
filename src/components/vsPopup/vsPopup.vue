@@ -16,16 +16,17 @@
         <header
           :style="styleHeader"
           class="vs-popup--header">
-          <span v-if="prompt"
-                :style="styleBefore"
-                class="before"></span>
+          <span
+            v-if="prompt"
+            :style="styleBefore"
+            class="before"></span>
           <div class="vs-popup--title">
             <h3>{{title}}</h3>
           </div>
           <vs-icon
             v-if="!noCloseButton"
-            :icon-pack="iconPack"
             :icon="iconClose"
+            :icon-pack="iconPack"
             :style="stylePopup"
             class="vs-popup--close vs-popup--close--icon notranslate"
             @click="close"/>
@@ -33,8 +34,8 @@
 
         <!-- // slots  -->
         <div
-          :style="styleContent"
           :class="classContent"
+          :style="styleContent"
           class="vs-popup--content">
           <slot>{{text}}</slot>
         </div>
@@ -42,8 +43,8 @@
         <footer v-if="prompt" class="vs-popup--footer">
           <slot name="footer">
             <vs-button
-              :disabled="!valid"
               :color="color"
+              :disabled="!valid"
               :type="buttonAccept"
               class="vs-popup--accept-button"
               @click="acceptDialog">

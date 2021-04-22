@@ -2,8 +2,8 @@
   <transition name="fade">
     <div
       v-if="value"
-      :style="style"
       :class="[`vs-loading-background-${background}`,`vs-loading-color-${color}`,{'textAfter':textAfter}]"
+      :style="style"
       class="con-vs-loading"
       @click="effectClick">
       <transition name="effect-click">
@@ -21,10 +21,10 @@
       </h4>
 
       <div
+        :class="[type]"
         :style="{
           transform:`scale(${scale})`
         }"
-        :class="[type]"
         class="vs-loading">
         <img v-if="src" :src="src">
         <template
@@ -42,18 +42,18 @@
         <svg
           v-else
           class="spinner"
-          width="50px"
           height="50px"
           viewBox="0 0 66 66"
+          width="50px"
           xmlns="http://www.w3.org/2000/svg">
           <circle
             class="path"
-            fill="none"
-            stroke-width="5"
-            stroke-linecap="round"
             cx="33"
             cy="33"
-            r="30"/>
+            fill="none"
+            r="30"
+            stroke-linecap="round"
+            stroke-width="5"/>
         </svg>
       </div>
     </div>

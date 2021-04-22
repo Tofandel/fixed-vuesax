@@ -6,16 +6,16 @@
     <vs-col
       v-if="description"
       class="vs-pagination--mb"
-      vs-type="flex"
-      vs-justify="flex-start"
       vs-align="center"
+      vs-justify="flex-start"
       vs-lg="6"
       vs-sm="12"
+      vs-type="flex"
       vs-xs="12">
       <div>
         <span
-          style="margin-right:5px"> {{descriptionTitle}}: {{minRows}} - {{maxRows}} {{descriptionConnector}}
-          {{sizeArray}} | {{descriptionBody}}:
+          style="margin-right:5px"> {{descriptionTitle}}: {{minRows}} - {{maxRows}} {{descriptionConnector}} {{sizeArray}} |
+          {{descriptionBody}}:
 
         </span>
         <ul class="vs-pagination--array">
@@ -23,25 +23,24 @@
             v-for="(row,index) in descriptionItems"
             :key="index">
             <span
-              :style="styleDescription"
               :class="[`vs-description-${color}`,{ 'vs-pagination--bold': (index===indexRows)}]"
-              @click="changeRowMaxItems(index)">{{row}}</span><span v-if="index !== (descriptionItems.length - 1)">
-                , </span>
+              :style="styleDescription"
+              @click="changeRowMaxItems(index)">{{row}}</span><span v-if="index !== (descriptionItems.length - 1)"> , </span>
           </li>
         </ul>
       </div>
     </vs-col>
     <vs-col
-      class="vs-pagination--mb"
-      vs-type="flex"
-      vs-justify="flex-end"
-      vs-align="center"
       :vs-lg="description ? 6 : 12"
+      class="vs-pagination--mb"
+      vs-align="center"
+      vs-justify="flex-end"
       vs-sm="12"
+      vs-type="flex"
       vs-xs="12">
       <div
-        :style="stylePagination"
         :class="[`vs-pagination-${color}`]"
+        :style="stylePagination"
         class="con-vs-pagination">
         <nav class="vs-pagination--nav">
           <button
@@ -50,8 +49,8 @@
             class="vs-pagination--buttons btn-prev-pagination vs-pagination--button-prev"
             @click="prevPage">
             <vs-icon
-              :icon-pack="iconPack"
-              :icon="prevIcon ? prevIcon : defaultPrevIcon"/>
+              :icon="prevIcon ? prevIcon : defaultPrevIcon"
+              :icon-pack="iconPack"/>
           </button>
           <ul class="vs-pagination--ul">
             <li
@@ -72,8 +71,8 @@
             class="vs-pagination--buttons btn-next-pagination vs-pagination--button-next"
             @click="nextPage">
             <vs-icon
-              :icon-pack="iconPack"
-              :icon="nextIcon ? nextIcon : defaultNextIcon"/>
+              :icon="nextIcon ? nextIcon : defaultNextIcon"
+              :icon-pack="iconPack"/>
           </button>
           <input
             v-if="goto"
@@ -167,7 +166,8 @@
         return ((this.current * this.maxItems) <= this.sizeArray) ? this.current * this.maxItems : this.sizeArray;
       },
       minRows() {
-        return ((this.current * this.maxItems) <= this.sizeArray) ? (this.maxRows - this.maxItems) + 1
+        return ((this.current * this.maxItems) <= this.sizeArray)
+          ? (this.maxRows - this.maxItems) + 1
           : ((this.current - 1) * this.maxItems) + 1;
       },
       defaultNextIcon() {
@@ -225,17 +225,21 @@
 
           return pages;
         } else if (this.current < 4) {
-          return this.max - 2 < this.total - 1 ? [
-            ...this.setPages(1, this.max - 2),
-            '...',
-            this.total,
-          ] : [...this.setPages(1, this.max)];
+          return this.max - 2 < this.total - 1
+            ? [
+              ...this.setPages(1, this.max - 2),
+              '...',
+              this.total,
+            ]
+            : [...this.setPages(1, this.max)];
         } else {
-          return this.total - this.max > 2 ? [
-            1,
-            '...',
-            ...this.setPages(this.total - this.max - 2, this.total),
-          ] : [...this.setPages(1, this.max)];
+          return this.total - this.max > 2
+            ? [
+              1,
+              '...',
+              ...this.setPages(this.total - this.max - 2, this.total),
+            ]
+            : [...this.setPages(1, this.max)];
         }
       },
     },

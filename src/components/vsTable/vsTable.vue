@@ -58,20 +58,21 @@
       <div
         v-if="pagination"
         class="con-pagination-table vs-table--pagination">
-        <slot name="pagination" :value="currentx" :total="totalPages"
-              :description-items="descriptionItems"
-              :max-items="maxItemsx"
-              :size-array="items.length"
-              :description="description"
-              :changeMaxItems="changeMaxItems">
+        <slot
+          :changeMaxItems="changeMaxItems" :description="description" :description-items="descriptionItems"
+          :max-items="maxItemsx"
+          :size-array="items.length"
+          :total="totalPages"
+          :value="currentx"
+          name="pagination">
           <vs-pagination
             v-model="currentx"
-            :total="totalPages"
-            :description-items="descriptionItems"
-            :max-items="maxItemsx"
-            :max="paginationMax"
-            :size-array="items.length"
             :description="description"
+            :description-items="descriptionItems"
+            :max="paginationMax"
+            :max-items="maxItemsx"
+            :size-array="items.length"
+            :total="totalPages"
             @changeMaxItems="changeMaxItems"/>
         </slot>
       </div>
@@ -86,7 +87,7 @@
     name: 'VsTable',
     mixins: [ProviderParentMixin('vsTable')],
     props: {
-      value: {},
+      value: null,
       color: {
         default: 'primary',
         type: String,

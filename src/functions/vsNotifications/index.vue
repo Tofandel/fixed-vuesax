@@ -1,21 +1,28 @@
 <template lang="html">
   <transition
     name="noti"
-    @before-enter="beforeEnter"
     @enter="enter"
-    @leave="leave">
+    @leave="leave"
+    @before-enter="beforeEnter">
     <div
       v-if="active"
       ref="noti"
-      :style="stylex"
       :class="[`vs-noti-${position}`,`vs-noti-${color}`,{'activeNoti':active}]"
+      :style="stylex"
       class="vs-component vs-notifications"
       @click="clickNoti">
       <div class="content-noti">
         <div class="con-text-noti">
-          <h3 v-html="title"></h3>
-          <p v-html="text"></p>
-
+          <template v-if="html">
+            <!-- eslint-disable vue/no-v-html -->
+            <h3 v-html="title"></h3>
+            <p v-html="text"></p>
+            <!-- eslint-enable vue/no-v-html -->
+          </template>
+          <template v-else>
+            <h3>{{title}}</h3>
+            <p>{{text}}</p>
+          </template>
           <slot></slot>
         </div>
         <vs-icon
@@ -38,6 +45,9 @@
     components: {
       vsIcon,
     },
+    props: {
+      html: Boolean,
+    },
     data: () => ({
       fullWidth: false,
       icon: null,
@@ -57,7 +67,6 @@
       },
       widthx: 0,
       fixed: false,
-
     }),
     computed: {
       fillingStyle() {
@@ -148,9 +157,9 @@
       },
       moverNotis() {
         const notisx = document.querySelectorAll('.vs-noti-' + this.position);
-        for (var i = 0; i < notisx.length; i++) {
+        for (let i = 0; i < notisx.length; i++) {
           let hx = 10;
-          for (var i2 = 0; i2 < i; i2++) {
+          for (let i2 = 0; i2 < i; i2++) {
             hx += notisx[i2].clientHeight + 6;
           }
           if (this.position.search('center') === -1) {

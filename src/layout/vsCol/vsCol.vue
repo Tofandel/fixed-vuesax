@@ -63,168 +63,168 @@
 </script>
 
 <style lang="css">
-  .vs-col {
-    float: left;
-  }
+.vs-col {
+  float: left;
+}
 
-  .vs-lg-12 {
+.vs-lg-12 {
+  width: 100% !important;
+}
+
+.vs-lg-11 {
+  width: 91.66666666666667% !important;
+}
+
+.vs-lg-10 {
+  width: 83.33333333333333% !important;
+}
+
+.vs-lg-9 {
+  width: 75% !important;
+}
+
+.vs-lg-8 {
+  width: 66.66666666666667% !important;
+}
+
+.vs-lg-7 {
+  width: 58.33333333333333% !important;
+}
+
+.vs-lg-6 {
+  width: 50% !important;
+}
+
+.vs-lg-5 {
+  width: 41.66666666666667% !important;
+}
+
+.vs-lg-4 {
+  width: 33.33333333333333% !important;
+}
+
+.vs-lg-3 {
+  width: 25% !important;
+}
+
+.vs-lg-2 {
+  width: 16.66666666666667% !important;
+}
+
+.vs-lg-1 {
+  width: 8.333333333333333% !important;
+}
+
+.vs-lg-0 {
+  display: none !important;
+}
+
+@media only screen and (max-width: 900px) {
+  .vs-sm-12 {
     width: 100% !important;
   }
 
-  .vs-lg-11 {
+  .vs-sm-11 {
     width: 91.66666666666667% !important;
   }
 
-  .vs-lg-10 {
+  .vs-sm-10 {
     width: 83.33333333333333% !important;
   }
 
-  .vs-lg-9 {
+  .vs-sm-9 {
     width: 75% !important;
   }
 
-  .vs-lg-8 {
+  .vs-sm-8 {
     width: 66.66666666666667% !important;
   }
 
-  .vs-lg-7 {
+  .vs-sm-7 {
     width: 58.33333333333333% !important;
   }
 
-  .vs-lg-6 {
+  .vs-sm-6 {
     width: 50% !important;
   }
 
-  .vs-lg-5 {
+  .vs-sm-5 {
     width: 41.66666666666667% !important;
   }
 
-  .vs-lg-4 {
+  .vs-sm-4 {
     width: 33.33333333333333% !important;
   }
 
-  .vs-lg-3 {
+  .vs-sm-3 {
     width: 25% !important;
   }
 
-  .vs-lg-2 {
+  .vs-sm-2 {
     width: 16.66666666666667% !important;
   }
 
-  .vs-lg-1 {
+  .vs-sm-1 {
     width: 8.333333333333333% !important;
   }
 
-  .vs-lg-0 {
+  .vs-sm-0 {
     display: none !important;
   }
+}
 
-  @media only screen and (max-width: 900px) {
-    .vs-sm-12 {
-      width: 100% !important;
-    }
-
-    .vs-sm-11 {
-      width: 91.66666666666667% !important;
-    }
-
-    .vs-sm-10 {
-      width: 83.33333333333333% !important;
-    }
-
-    .vs-sm-9 {
-      width: 75% !important;
-    }
-
-    .vs-sm-8 {
-      width: 66.66666666666667% !important;
-    }
-
-    .vs-sm-7 {
-      width: 58.33333333333333% !important;
-    }
-
-    .vs-sm-6 {
-      width: 50% !important;
-    }
-
-    .vs-sm-5 {
-      width: 41.66666666666667% !important;
-    }
-
-    .vs-sm-4 {
-      width: 33.33333333333333% !important;
-    }
-
-    .vs-sm-3 {
-      width: 25% !important;
-    }
-
-    .vs-sm-2 {
-      width: 16.66666666666667% !important;
-    }
-
-    .vs-sm-1 {
-      width: 8.333333333333333% !important;
-    }
-
-    .vs-sm-0 {
-      display: none !important;
-    }
+@media only screen and (max-width: 600px) {
+  .vs-xs-12 {
+    width: 100% !important;
   }
 
-  @media only screen and (max-width: 600px) {
-    .vs-xs-12 {
-      width: 100% !important;
-    }
-
-    .vs-xs-11 {
-      width: 91.66666666666667% !important;
-    }
-
-    .vs-xs-10 {
-      width: 83.33333333333333% !important;
-    }
-
-    .vs-xs-9 {
-      width: 75% !important;
-    }
-
-    .vs-xs-8 {
-      width: 66.66666666666667% !important;
-    }
-
-    .vs-xs-7 {
-      width: 58.33333333333333% !important;
-    }
-
-    .vs-xs-6 {
-      width: 50% !important;
-    }
-
-    .vs-xs-5 {
-      width: 41.66666666666667% !important;
-    }
-
-    .vs-xs-4 {
-      width: 33.33333333333333% !important;
-    }
-
-    .vs-xs-3 {
-      width: 25% !important;
-    }
-
-    .vs-xs-2 {
-      width: 16.66666666666667% !important;
-    }
-
-    .vs-xs-1 {
-      width: 8.333333333333333% !important;
-    }
-
-    .vs-xs-0 {
-      display: none !important;
-    }
+  .vs-xs-11 {
+    width: 91.66666666666667% !important;
   }
+
+  .vs-xs-10 {
+    width: 83.33333333333333% !important;
+  }
+
+  .vs-xs-9 {
+    width: 75% !important;
+  }
+
+  .vs-xs-8 {
+    width: 66.66666666666667% !important;
+  }
+
+  .vs-xs-7 {
+    width: 58.33333333333333% !important;
+  }
+
+  .vs-xs-6 {
+    width: 50% !important;
+  }
+
+  .vs-xs-5 {
+    width: 41.66666666666667% !important;
+  }
+
+  .vs-xs-4 {
+    width: 33.33333333333333% !important;
+  }
+
+  .vs-xs-3 {
+    width: 25% !important;
+  }
+
+  .vs-xs-2 {
+    width: 16.66666666666667% !important;
+  }
+
+  .vs-xs-1 {
+    width: 8.333333333333333% !important;
+  }
+
+  .vs-xs-0 {
+    display: none !important;
+  }
+}
 
 </style>

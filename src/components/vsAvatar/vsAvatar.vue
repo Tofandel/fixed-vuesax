@@ -1,14 +1,14 @@
 <template lang="html">
   <div
     v-bind="$attrs"
-    :style="avatarStyle"
     :class="avatarClass"
+    :style="avatarStyle"
     class="con-vs-avatar"
     v-on="$listeners">
     <div
       v-if="badge && badge > 0"
-      :style="badgeStyle"
       :class="badgeClass"
+      :style="badgeStyle"
       class="dot-count vs-avatar--count">
       {{typeof badge !== 'boolean' ? badge : null}}
     </div>
@@ -16,18 +16,16 @@
       v-if="src"
       class="con-img vs-avatar--con-img">
       <img
-        :src="src"
-        :alt="text">
+        :alt="text"
+        :src="src">
     </div>
     <span
       v-else
-      :title="text"
-      :style="textStyle"
       :class="[text ? '' : iconPack, text || iconPack === 'material-icons' ? '' : icon, textClass]"
-      translate="no"
-      class="vs-avatar--text notranslate">
-      {{text ? returnText : (iconPack === 'material-icons' ? icon : '')}}
-    </span>
+      :style="textStyle"
+      :title="text"
+      class="vs-avatar--text notranslate"
+      translate="no"> {{text ? returnText : (iconPack === 'material-icons' ? icon : '')}} </span>
   </div>
 </template>
 
@@ -134,7 +132,7 @@
           return this.text;
         }
         const exp = /\s/g;
-        var letras = '';
+        let letras = '';
         if (exp.test(this.text)) {
           this.text.split(exp).forEach((word) => {
             letras += word[0].toUpperCase();

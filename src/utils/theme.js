@@ -1,8 +1,9 @@
 import color from './color.js';
+
 export default {
   name: 'theme',
   vsfunction(json) {
-    for (var clave in json) {
+    for (const clave in json) {
       let colorx;
       if (/^[rgb(]/g.test(json[clave])) {
         colorx = json[clave].replace(/[rgb()]/g, '');

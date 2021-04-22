@@ -9,8 +9,8 @@
         'top':`${topx}px`
       }"
       class="con-vs-dropdown--menu vs-dropdown-menu"
-      @mouseleave="mouseleavex"
-      @mouseenter="mouseenterx">
+      @mouseenter="mouseenterx"
+      @mouseleave="mouseleavex">
       <!-- @mouseout="toggleMenu($event)" -->
       <!-- @mouseover="toggleMenu($event)" -->
       <ul
@@ -56,7 +56,9 @@
         });
         this.setDirection();
 
-        if (!val) { this.$parent.rightx = false; }
+        if (!val) {
+          this.$parent.rightx = false;
+        }
       },
     },
     mounted() {

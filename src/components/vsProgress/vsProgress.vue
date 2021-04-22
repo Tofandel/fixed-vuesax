@@ -17,6 +17,7 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsProgress',
     props: {

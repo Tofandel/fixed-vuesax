@@ -52,8 +52,8 @@ export default (itemName, flags = 0) => {
                 } else if (child.tag) {
                   const sub = child.componentInstance
                     ? (child.componentInstance.$scopedSlots.default
-                      ? child.componentInstance.$scopedSlots.default()
-                      : child.componentInstance.$children)
+                        ? child.componentInstance.$scopedSlots.default()
+                        : child.componentInstance.$children)
                     : child.children;
                   if (Array.isArray(sub) && sub.length > 0) {
                     deepSearch(sub.map((e) => e.$vnode));

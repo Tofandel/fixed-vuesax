@@ -1,15 +1,15 @@
 <template lang="html">
   <div
-    :style="style"
     :class="[`vs-textarea-${color}`, {'textarea-danger': counter ? (value && value.length > counter) : false, 'focusx': isFocus}]"
+    :style="style"
     class="vs-component vs-con-textarea">
     <h4 v-if="label">
       {{label}}
     </h4>
 
     <textarea
-      :value="value"
       v-bind="$attrs"
+      :value="value"
       class="vs-textarea"
       v-on="listeners">
     </textarea>
@@ -24,11 +24,12 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsTextarea',
     inheritAttrs: false,
     props: {
-      value: {},
+      value: String,
       label: {
         default: null,
         type: String,

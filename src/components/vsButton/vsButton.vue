@@ -23,13 +23,13 @@
 
     <vs-icon
       v-if="icon"
+      :icon="icon"
+      :icon-pack="iconPack"
       :style="{
         'order':iconAfter ? 2 : 0,
         ['margin-' + isRTL('left')]: $slots.default && !iconAfter ? '5px' : '0px',
         ['margin-' + isRTL('right')]: $slots.default && iconAfter ? '5px' : '0px'
       }"
-      :icon-pack="iconPack"
-      :icon="icon"
       class="vs-button--icon"/>
 
     <span

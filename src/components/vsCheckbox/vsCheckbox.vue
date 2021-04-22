@@ -6,8 +6,8 @@
       v-bind="$attrs"
       :checked="isChecked"
       :value="vsValue"
-      type="checkbox"
       class="vs-checkbox--input"
+      type="checkbox"
       v-on="listeners"> <span
         :style="style"
         class="checkbox_x vs-checkbox"> <span
@@ -85,9 +85,9 @@
             evt.preventDefault();
             this.toggleValue(evt);
           },
-          // input: (evt) => {
-          //   this.toggleValue(evt)
-          // }
+        // input: (evt) => {
+        //   this.toggleValue(evt)
+        // }
         };
       },
       isChecked() {
@@ -103,6 +103,7 @@
     watch: {
       checked(c, pr) {
         if (this.value === pr) {
+          // eslint-disable-next-line vue/no-mutating-props
           this.value = c; // Deprecated because will mutate prop directly
         }
       },

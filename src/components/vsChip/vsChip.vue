@@ -1,6 +1,5 @@
 <template lang="html">
   <div
-    :style="styleChip"
     :class="[
       `vs-chip-${color}`,
       {
@@ -9,6 +8,7 @@
         'bg-chip-transparent': transparent
       }
     ]"
+    :style="styleChip"
     class="con-vs-chip">
     <span class="text-chip vs-chip--text">
       <slot></slot>
@@ -20,8 +20,8 @@
       type="button"
       @click="closeChip">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="closeIcon"/>
+        :icon="closeIcon"
+        :icon-pack="iconPack"/>
     </button>
   </div>
 </template>

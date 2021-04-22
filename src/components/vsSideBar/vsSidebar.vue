@@ -12,7 +12,7 @@
         :class="[
           `vs-sidebar-${color}`,
           {
-            'vs-sidebar-parent': parent != 'body',
+            'vs-sidebar-parent': parent !== 'body',
             'vs-sidebar-staticPosition': staticPosition,
             'vs-sidebar-position-right': positionRight,
             'vs-sidebar-reduce': reduce,
@@ -48,9 +48,7 @@
   export default {
     name: 'VsSidebar',
     props: {
-      value: {
-        default: false,
-      },
+      value: Boolean,
       defaultIndex: {
         default: null,
         type: [String, Number],

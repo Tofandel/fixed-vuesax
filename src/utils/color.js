@@ -3,12 +3,12 @@ const vscolors = ['primary', 'success', 'danger', 'warning', 'dark', 'light'];
 
 export default {
   darken(color, percent) {
-    var f = color.split(',');
-    var t = percent < 0 ? 0 : 255;
-    var p = percent < 0 ? percent * -1 : percent;
-    var R = parseInt(f[0].slice(4));
-    var G = parseInt(f[1]);
-    var B = parseInt(f[2]);
+    const f = color.split(',');
+    const t = percent < 0 ? 0 : 255;
+    const p = percent < 0 ? percent * -1 : percent;
+    const R = parseInt(f[0].slice(4));
+    const G = parseInt(f[1]);
+    const B = parseInt(f[2]);
     return 'rgb(' + (Math.round((t - R) * p) + R) + ',' + (Math.round((t - G) * p) + G) + ',' + (Math.round((t - B) * p) + B) + ')';
   },
   getColor(colorx, alphax = null) {
@@ -110,12 +110,14 @@ export default {
     });
 
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16),
-      a: result[4] ? parseInt(result[4], 16) : null,
-    } : null;
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16),
+          a: result[4] ? parseInt(result[4], 16) : null,
+        }
+      : null;
   },
   getVariable(propertyName) {
     if (typeof window !== 'undefined') {

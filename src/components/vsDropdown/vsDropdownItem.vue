@@ -7,13 +7,13 @@
     }"
     class="vs-component vs-dropdown--item"
     @click="closeParent"
-    @mouseover="hoverx=true"
-    @mouseout="hoverx=false">
+    @mouseout="hoverx=false"
+    @mouseover="hoverx=true">
     <router-link
       v-if="to"
-      :to="to"
       v-bind="$attrs"
       :class="{'disabled':disabled}"
+      :to="to"
       class="vs-dropdown--item-link"
       v-on="$listeners">
       {{$attrs.disabled}}
@@ -33,11 +33,12 @@
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsDropdownItem',
     inheritAttrs: false,
     props: {
-      to: {},
+      to: [Object, String],
       disabled: Boolean,
       divider: Boolean,
     },
@@ -56,10 +57,11 @@
       closeParent() {
         if (this.disabled) return;
         searchParent(this);
+
         function searchParent(_this) {
           const parent = _this.$parent;
           if (!parent.$el.className) return;
-          if (parent.$el.className.indexOf('parent-dropdown') == -1) {
+          if (parent.$el.className.indexOf('parent-dropdown') === -1) {
             searchParent(parent);
           } else {
             const [dropdownMenu] = parent.$children.filter(item => {
@@ -72,12 +74,13 @@
       changeColor() {
         const _self = this;
         searchParent(this);
+
         function searchParent(_this) {
           const parent = _this.$parent;
           if (!parent.$el.className) {
             return;
           }
-          if (parent.$el.className.indexOf('parent-dropdown') == -1) {
+          if (parent.$el.className.indexOf('parent-dropdown') === -1) {
             searchParent(parent);
           } else {
             _self.color = parent.color;

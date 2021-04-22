@@ -9,8 +9,8 @@
       v-if="icon"
       class="vs-list--icon">
       <vs-icon
-        :icon-pack="iconPack"
-        :icon="icon"/>
+        :icon="icon"
+        :icon-pack="iconPack"/>
     </div>
     <div class="list-titles">
       <div

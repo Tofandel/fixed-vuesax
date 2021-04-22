@@ -2,17 +2,17 @@
   <nav
     v-bind="$attrs"
     :class="`vs-align-${align}`"
-    class="vs-breadcrumb"
     aria-label="breadcrumb"
+    class="vs-breadcrumb"
     v-on="$listeners">
     <ol class="vs-breadcrumb--ol">
       <slot></slot>
       <li
-        v-for="item in items"
+        v-for="item in itemsTitle"
         v-show="!hasSlot"
         :key="item.title"
-        :class="{'vs-active':item.active,'disabled-link':item.disabled}"
-        :aria-current="item.active ? 'page' : null">
+        :aria-current="item.active ? 'page' : null"
+        :class="{'vs-active':item.active,'disabled-link':item.disabled}">
         <a
           v-if="!item.active"
           :href="item.url ? item.url : '#'"
@@ -29,9 +29,9 @@
         <span
           v-if="!item.active"
           :class="separator.length > 1 ? 'material-icons' : null"
+          aria-hidden="true"
           class="separator notranslate vs-breadcrum--separator"
           translate="no"
-          aria-hidden="true"
           v-text="separator"></span>
       </li>
     </ol>
@@ -78,10 +78,8 @@
       hasSlot() {
         return !!this.$slots.default;
       },
-    },
-    created() {
-      if (this.items) {
-        this.items = this.items.map(item => {
+      itemsTitle() {
+        return this.items.map(item => {
           if (typeof item.title === 'function') {
             return {
               ...item,
@@ -91,7 +89,7 @@
 
           return item;
         });
-      }
+      },
     },
   };
 </script>

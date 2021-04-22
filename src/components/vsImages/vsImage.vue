@@ -2,15 +2,15 @@
   <li class="vs-image">
     <div class="con-vs-image">
       <div
-        :v-bind="$attrs"
         :style="styleImage"
+        :v-bind="$attrs"
         class="vs-image--img">
       </div>
     </div>
     <img
       :src="src"
-      class="imag-blur"
-      alt="">
+      alt=""
+      class="imag-blur">
   </li>
 </template>
 <script>

@@ -1,5 +1,6 @@
 <template lang="html">
   <button
+    v-bind="$attrs"
     :class="[
       `vs-switch-${color}`,
       {
@@ -7,7 +8,6 @@
       }
     ]"
     :style="style"
-    v-bind="$attrs"
     class="vs-component vs-switch">
     <input
       ref="inputCheckbox"
@@ -25,32 +25,31 @@
       <slot name="on"></slot>
 
       <vs-icon
-        :icon-pack="iconPack"
         :icon="vsIconOn || vsIcon"
+        :icon-pack="iconPack"
         class="icons-switch vs-switch--icon"/>
-    </span>
-    <span
+    </span> <span
       ref="off"
       :class="{'active-text':!isChecked && !$attrs.checked}"
       class="text-off text-switch vs-switch--text">
       <!-- gato con botas -->
       <slot name="off"></slot>
       <vs-icon
-        :icon-pack="iconPack"
         :icon="vsIconOff || vsIcon"
+        :icon-pack="iconPack"
         class="icons-switch vs-switch--icon"/>
-    </span>
-    <span class="vs-circle-switch vs-switch--circle"></span>
+    </span> <span class="vs-circle-switch vs-switch--circle"></span>
   </button>
 </template>
 
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsSwitch',
     inheritAttrs: false,
     props: {
-      value: {},
+      value: [Number, String, Boolean],
       color: {
         default: 'primary',
         type: String,
@@ -71,7 +70,7 @@
         default: 'material-icons',
         type: String,
       },
-      vsValue: {},
+      vsValue: [Number, String, Boolean],
     },
     data: () => ({
       widthx: 42,

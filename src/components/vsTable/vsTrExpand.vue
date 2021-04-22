@@ -8,10 +8,10 @@
 
           <vs-button
             v-if="close"
-            type="border"
+            class="tr-expand--close"
             color="success"
             icon="done"
-            class="tr-expand--close"
+            type="border"
             @click="$emit('close', $event)"/>
         </div>
       </td>

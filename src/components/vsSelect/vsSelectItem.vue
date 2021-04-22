@@ -6,17 +6,17 @@
     v-on="listeners">
     <button
       ref="item"
-      :disabled="disabled"
       v-bind="$attrs"
-      :style="styles"
       :class="{
         'activex':$parent.parent.multiple?getValue.indexOf(value) >= 0:getValue === value,
         'con-icon':$parent.parent.multiple,
         'disabledx':disabledx
       }"
+      :disabled="disabled"
+      :style="styles"
       class="vs-select--item"
-      type="button"
       name="button"
+      type="button"
       @keydown.backspace.prevent="backspace"
       @keydown.down.prevent="navigateOptions('next')"
       @keydown.up.prevent="navigateOptions('prev')"
@@ -25,8 +25,9 @@
         v-if="$parent.parent.multiple"
         class="icon-item vs-select--item-icon"
         icon="check_circle"/>
-      <span
-        v-html="getText"></span>
+      <slot name="text">
+        <span>{{text}}</span>
+      </slot>
     </button>
   </li>
 </template>
@@ -43,6 +44,7 @@
         default: false,
       },
       value: {
+        type: null,
         default: null,
       },
       text: {
@@ -53,8 +55,7 @@
     data: () => ({
       hoverx: false,
       visible: true,
-      getText: null,
-      valueInputx: '',
+      // valueInputx: '',
     }),
     computed: {
       disabledx() {
@@ -62,14 +63,14 @@
           if (this.isActive) {
             return false;
           } else {
-            return this.$parent.parent.maxSelected == this.$parent.parent.value.length;
+            return parseInt(this.$parent.parent.maxSelected) === this.$parent.parent.value.length;
           }
         } else {
           return false;
         }
       },
       isActive() {
-        return this.$parent.parent.multiple ? this.getValue.indexOf(this.value) != -1 : this.getValue == this.value;
+        return this.$parent.parent.multiple ? this.getValue.indexOf(this.value) !== -1 : this.getValue.toString() === this.value.toString();
       },
       listeners() {
         return {
@@ -103,54 +104,42 @@
     },
     watch: {
       '$parent.parent.active': function () {
-        this.$nextTick(() => {
-          if (this.$parent.parent.multiple ? this.getValue.indexOf(this.value) != -1 : this.getValue == this.value) {
-            this.$emit('update:isSelected', true);
-            this.getText = this.text;
-            this.putValue();
-          } else {
-            this.$emit('update:isSelected', false);
-            this.getText = this.text;
-            this.putValue();
-          }
-        });
+        this.init();
       },
-      valueInputx() {
-        if (this.visible) {
-          const valueInputx = this.valueInputx.split(',');
-          if (valueInputx[valueInputx.length - 1] === '') {
-            this.getText = this.text;
-            return;
-          }
-          let valuex = valueInputx[valueInputx.length - 1];
-          var re = new RegExp(valuex, 'i');
-          if (this.text.toUpperCase().indexOf(valuex.toUpperCase()) === 0) {
-            valuex = this.MaysPrimera(valuex);
-          }
-          this.getText = this.text.replace(re, `<span class="searchx">${valuex}</span>`);
-        } else {
-          this.getText = this.text;
-        }
-      },
+      // valueInputx() {
+      //   if (this.visible) {
+      //     const valueInputx = this.valueInputx.split(',');
+      //     if (valueInputx[valueInputx.length - 1] === '') {
+      //       // this.getText = this.text;
+      //       return;
+      //     }
+      //     let valuex = valueInputx[valueInputx.length - 1];
+      //     const re = new RegExp(valuex, 'i');
+      //     if (this.text.toUpperCase().indexOf(valuex.toUpperCase()) === 0) {
+      //       valuex = this.MaysPrimera(valuex);
+      //     }
+      //     this.getText = this.text.replace(re, `<span class="searchx">${valuex}</span>`);
+      //   } else {
+      //     this.getText = this.text;
+      //   }
+      // },
     },
     created() {
       this.putValue();
-      this.$nextTick(() => {
-        if (this.$parent.parent.multiple ? this.getValue.indexOf(this.value) >= 0 : this.getValue === this.value) {
-          this.$emit('update:isSelected', true);
-          this.getText = this.text;
-          this.putValue();
-        } else {
-          this.$emit('update:isSelected', false);
-          this.getText = this.text;
-          this.putValue();
-        }
-      });
+      this.init();
     },
     updated() {
       this.putValue();
     },
     methods: {
+      init() {
+        this.$nextTick(() => {
+          this.$emit('update:isSelected', this.$parent.parent.multiple
+            ? this.getValue.indexOf(this.value) !== -1
+            : this.getValue.toString() === this.value.toString());
+          this.putValue();
+        });
+      },
       changeHover(booleanx) {
         this.hoverx = booleanx;
       },
@@ -186,7 +175,7 @@
           }
         }
 
-        var children = this.$parent.parent.$children;
+        let children = this.$parent.parent.$children;
 
         children.forEach((item) => {
           if (item.$children.length > 0) {
@@ -212,8 +201,10 @@
         }
       },
       focusValue(index) {
-        if (this.$parent.parent.multiple ? this.$parent.parent.value.indexOf(this.value) >= 0 : this.value ===
-          this.$parent.parent.value) {
+        if (this.$parent.parent.multiple
+          ? this.$parent.parent.value.indexOf(this.value) >= 0
+          : this.value ===
+            this.$parent.parent.value) {
           if (!this.$parent.parent.autocomplete) {
             setTimeout(() => {
               this.$refs.item.focus();
@@ -247,9 +238,9 @@
           this.$parent.parent.valuex = text;
           this.$parent.parent.addMultiple(this.value);
         }
-        this.$parent.parent.$children.map((item) => {
-          item.valueInputx = '';
-        });
+        // this.$parent.parent.$children.forEach((item) => {
+        //   item.valueInputx = '';
+        // });
       },
 
       // methods colors

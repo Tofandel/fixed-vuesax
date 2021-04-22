@@ -1,7 +1,7 @@
 <template>
   <li
-    :style="[styleHover]"
     :class="[{'is-active-item': isActiveItem}, `vs-navbar-item-${getActiveTextColor}`]"
+    :style="[styleHover]"
     class="vs-navbar--item"
     @click="clickItem()"
     @mouseout="mouseout"
@@ -14,6 +14,7 @@
 </template>
 <script>
   import _color from '../../utils/color.js';
+
   export default {
     name: 'VsNavbarItem',
     props: {
@@ -30,7 +31,7 @@
         return this.$parent.$props.activeTextColor;
       },
       isActiveItem() {
-        return this.$parent.value == this.index;
+        return this.$parent.value === this.index;
       },
       styleAfter() {
         return {

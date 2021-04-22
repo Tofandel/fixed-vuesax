@@ -3,28 +3,26 @@
     <span
       :class="borderClass"
       :style="afterStyle"
-      class="vs-divider-border after"></span>
-    <span
-      v-if=" icon || $slots.default"
-      :style="{
-        'color': textColor,
-        'background': backgroundColor
-      }"
-      :class="textAndBackgroundClass"
-      class="vs-divider--text">
-      <template v-if="!icon">
-        <slot></slot>
-      </template>
+      class="vs-divider-border after"></span> <span
+        v-if=" icon || $slots.default"
+        :class="textAndBackgroundClass"
+        :style="{
+          'color': textColor,
+          'background': backgroundColor
+        }"
+        class="vs-divider--text">
+        <template v-if="!icon">
+          <slot></slot>
+        </template>
 
-      <vs-icon
-        v-else
-        :icon-pack="iconPack"
-        :icon="icon"
-        class="icon-divider notranslate vs-divider--icon"/>
-    </span>
-    <span
-      :style="beforeStyle"
+        <vs-icon
+          v-else
+          :icon="icon"
+          :icon-pack="iconPack"
+          class="icon-divider notranslate vs-divider--icon"/>
+      </span> <span
       :class="borderClass"
+      :style="beforeStyle"
       class="vs-divider-border before"></span>
   </div>
 </template>
@@ -67,13 +65,13 @@
     computed: {
       getWidthAfter() {
         let widthx = '100%';
-        if (this.position == 'left') {
+        if (this.position === 'left') {
           widthx = '0%';
-        } else if (this.position == 'left-center') {
+        } else if (this.position === 'left-center') {
           widthx = '25%';
-        } else if (this.position == 'right-center') {
+        } else if (this.position === 'right-center') {
           widthx = '75%';
-        } else if (this.position == 'right') {
+        } else if (this.position === 'right') {
           widthx = '100%';
         }
         return widthx;
