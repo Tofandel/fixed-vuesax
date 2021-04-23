@@ -93,26 +93,33 @@
     },
     mounted() {
       this.childActive = this.goTo(this.value);
+      window.addEventListener('resize', this.changePositionLine);
+    },
+    destroyed() {
+      window.removeEventListener('resize', this.changePositionLine);
     },
     methods: {
       goTo(id) {
         if (!this.childActive || this.childActive.uid !== id) {
           this.previous = this.childActive;
-          this.childActive = this.childItems.find((c) => id.toString() === c.uid.toString()) || this.sortedItems[0];
+          this.childActive = id ? this.childItems.find((c) => id.toString() === c.uid.toString()) || this.sortedItems[0] : this.sortedItems[0];
           this.$emit('input', this.childActive.uid);
-          this.changePositionLine(this.childActive.$el);
+          this.changePositionLine();
         }
       },
-      changePositionLine(elem) {
-        if (this.vertical) {
-          this.topx = elem.offsetTop;
-          this.heightx = elem.offsetHeight;
-          this.widthx = 2;
-        } else {
-          this.leftx = elem.offsetLeft;
-          this.widthx = elem.offsetWidth;
-          this.topx = (elem.offsetHeight + (elem.getBoundingClientRect().top - this.$refs.ul.getBoundingClientRect().top));
-        }
+      changePositionLine() {
+        this.$nextTick(() => {
+          const elem = this.childActive.$el;
+          if (this.vertical) {
+            this.topx = elem.offsetTop;
+            this.heightx = elem.offsetHeight;
+            this.widthx = 2;
+          } else {
+            this.leftx = elem.offsetLeft;
+            this.widthx = elem.offsetWidth;
+            this.topx = (elem.offsetHeight + (elem.getBoundingClientRect().top - this.$refs.ul.getBoundingClientRect().top));
+          }
+        });
       },
     },
   };
