@@ -1,7 +1,7 @@
 <template>
   <div
     class="con-tab vs-tabs--content">
-    <vnodes v-if="tab.$scopedSlots.default" :vnodes="tab.$scopedSlots.default()"/>
+    <vnodes v-if="tab.$scopedSlots.default" :key="key" :vnodes="tab.$scopedSlots.default"/>
   </div>
 </template>
 
@@ -11,11 +11,19 @@
     components: {
       Vnodes: {
         functional: true,
-        render: (h, ctx) => ctx.props.vnodes,
+        render: (h, ctx) => ctx.props.vnodes(),
       },
     },
     props: {
       tab: Object,
+    },
+    data() {
+      return {
+        key: 0,
+      };
+    },
+    beforeUpdate() {
+      this.key++;
     },
   };
 </script>
