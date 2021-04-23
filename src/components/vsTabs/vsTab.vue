@@ -71,6 +71,7 @@
     data: () => ({
       vertical: false,
       invert: false,
+      ctxKey: 0,
     }),
     computed: {
       cleanColor() {
@@ -92,6 +93,9 @@
       uid() {
         return this.id || this.index + 1;
       },
+    },
+    beforeUpdate() {
+      this.ctxKey++;
     },
     methods: {
       clicked() {
