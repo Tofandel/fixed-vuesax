@@ -8,6 +8,8 @@ dist
 *.map
 dist/demo.html
 docs/.vuepress/dist/
+docs/.vuepress/.cache/
+docs/.vuepress/.temp/
 
 # Log files
 npm-debug.log*
