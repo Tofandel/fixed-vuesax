@@ -1,7 +1,7 @@
 <template>
-  <div
-    class="con-tab vs-tabs--content">
-    <vnodes v-if="tab.$scopedSlots.default" :key="tab.ctxKey" :vnodes="tab.$scopedSlots.default"/>
+  <div :key="tab.ctxKey"
+       class="con-tab vs-tabs--content">
+    <vnodes v-if="tab.$scopedSlots.default" :vnodes="tab.$scopedSlots.default"/>
   </div>
 </template>
 
