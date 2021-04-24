@@ -1,49 +1,18 @@
 <template lang="html">
-  <li
-    :class="{'activeChild':active}"
-    :style="styleTab"
-    class="vs-tabs--li"
-    @mouseout="hover = false"
-    @mouseover="hover = true">
-    <button
-      v-bind="$attrs"
-      :disabled="disabled"
-      :style="styleAlignIcon"
-      class="vs-tabs--btn"
-      type="button"
-      v-on="$listeners"
-      @click="clicked">
-      <vs-icon
-        v-if="icon"
-        :color="cleanColor"
-        :icon="icon"
-        :icon-pack="iconPack"
-        class="vs-tabs--btn-icon"/>
-      <span v-if="label">{{label}}</span>
-    </button>
-
-    <button
-      v-if="tag"
-      class="vs-tabs--btn-tag"
-      @click="$emit('click-tag')">
-      <vs-icon
-        :color="tagColor || cleanColor"
-        :icon="tag"
-        :icon-pack="iconPack"/>
-    </button>
-  </li>
+  <transition :name="!parent.forward?parent.vertical?'fade-tab-vertical-invert':'fade-tab-invert':parent.vertical?'fade-tab-vertical':'fade-tab'">
+    <div v-show="active"
+         class="con-tab vs-tabs--content">
+      <slot></slot>
+    </div>
+  </transition>
 </template>
 
 <script>
   import InjectedChildMixin, { Sorted } from '../../utils/InjectedChildMixin';
-  import vsIcon from '../../components/vsIcon/vsIcon';
   import _color from '../../utils/color';
 
   export default {
     name: 'VsTab',
-    components: {
-      vsIcon,
-    },
     mixins: [InjectedChildMixin('vsTabs', Sorted)],
     inheritAttrs: false,
     props: {

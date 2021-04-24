@@ -8,18 +8,46 @@
         ref="ul"
         :class="[`ul-tabs-${alignment}`]"
         class="ul-tabs vs-tabs--ul">
-        <slot></slot>
+        <li v-for="tab in sortedItems"
+            ref="li"
+            :key="tab.uid"
+            :class="{'activeChild':tab.active}"
+            :style="tab.styleTab"
+            class="vs-tabs--li">
+          <button
+            v-bind="tab.$attrs"
+            :disabled="tab.disabled"
+            :style="tab.styleAlignIcon"
+            class="vs-tabs--btn"
+            type="button"
+            v-on="tab.$listeners"
+            @click="tab.clicked">
+            <vs-icon
+              v-if="tab.icon"
+              :color="tab.cleanColor"
+              :icon="tab.icon"
+              :icon-pack="tab.iconPack"
+              class="vs-tabs--btn-icon"/>
+            <span v-if="tab.label">{{tab.label}}</span>
+          </button>
+
+          <button
+            v-if="tab.tag"
+            class="vs-tabs--btn-tag"
+            @click="$emit('click-tag')">
+            <vs-icon
+              :color="tab.tagColor || tab.cleanColor"
+              :icon="tab.tag"
+              :icon-pack="tab.iconPack"/>
+          </button>
+        </li>
       </ul>
       <span
         :style="stylex"
         class="line-vs-tabs"></span>
     </div>
     <div class="con-slot-tabs">
-      <transition :name="!forward?vertical?'fade-tab-vertical-invert':'fade-tab-invert':vertical?'fade-tab-vertical':'fade-tab'">
-        <keep-alive>
-          <vs-tab-content v-if="childActive" :key="childActive._uid" :tab="childActive"/>
-        </keep-alive>
-      </transition>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -27,11 +55,9 @@
 <script>
   import _color from '../../utils/color.js';
   import ProviderParentMixin, { Sorted } from '../../utils/ProviderParentMixin';
-  import VsTabContent from './vsTabContent';
 
   export default {
     name: 'VsTabs',
-    components: { VsTabContent },
     mixins: [ProviderParentMixin('vsTabs', Sorted)],
     props: {
       value: {
@@ -54,7 +80,6 @@
     data: () => ({
       topx: 'auto',
       heightx: 2,
-      hover: false,
       previous: null,
       childActive: null,
       leftx: 0,
@@ -109,7 +134,11 @@
       },
       changePositionLine() {
         this.$nextTick(() => {
-          const elem = this.childActive.$el;
+          if (!this.childActive) { return; }
+          const elem = this.$refs.li[this.childActive.index];
+          if (!elem) {
+            return;
+          }
           if (this.vertical) {
             this.topx = elem.offsetTop;
             this.heightx = elem.offsetHeight;
