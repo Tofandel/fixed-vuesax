@@ -1,9 +1,12 @@
 <template lang="html">
   <transition :name="!parent.forward?parent.vertical?'fade-tab-vertical-invert':'fade-tab-invert':parent.vertical?'fade-tab-vertical':'fade-tab'">
-    <div v-show="active"
-         class="con-tab vs-tabs--content">
-      <slot></slot>
-    </div>
+    <keep-alive>
+      <KeepSlot
+        v-if="active"
+        :key="uid" class="con-tab vs-tabs--content">
+        <slot></slot>
+      </KeepSlot>
+    </keep-alive>
   </transition>
 </template>
 
@@ -13,6 +16,17 @@
 
   export default {
     name: 'VsTab',
+    components: {
+      KeepSlot: {
+        name: 'KeepSlot',
+        render(createElement, context) {
+          return createElement(
+            'div', // tag name
+            this.$slots.default, // array of children
+          );
+        },
+      },
+    },
     mixins: [InjectedChildMixin('vsTabs', Sorted)],
     inheritAttrs: false,
     props: {

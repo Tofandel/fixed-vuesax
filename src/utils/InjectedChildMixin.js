@@ -18,13 +18,11 @@ export default (parentItemName, flags = 0, prop = 'parent') => {
       } else if (this[prop]._registerItem) {
         this[prop]._registerItem(this);
       }
-      console.log(this[prop].childItems);
     },
     beforeDestroy() {
       if (this[prop] && this[prop]._unregisterItem) {
         this[prop]._unregisterItem(this);
       }
-      console.log(this[prop].childItems);
     },
   };
   if (hasFlag(flags, sorted)) {
