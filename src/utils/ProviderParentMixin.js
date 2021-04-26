@@ -43,6 +43,9 @@ export default (itemName, flags = 0) => {
 
             const deepSearch = (children) => {
               for (const child of children) {
+                if (!child) {
+                  return;
+                }
                 if (child.tag === tag) {
                   // An item with the same tag will for sure be found
                   const it = items.find((i) => i.$vnode === child);
@@ -56,14 +59,14 @@ export default (itemName, flags = 0) => {
                         : child.componentInstance.$children)
                     : child.children;
                   if (Array.isArray(sub) && sub.length > 0) {
-                    deepSearch(sub.map((e) => e.$vnode));
+                    deepSearch(sub.map((e) => e.tag ? e : e.$vnode));
                   }
                 }
               }
               return false;
             };
 
-            deepSearch(this.$scopedSlots.default());
+            deepSearch(this.$scopedSlots.default() || this.$children);
           }
         },
       };

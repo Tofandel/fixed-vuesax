@@ -2,9 +2,11 @@ import hasFlag from './hasFlag';
 
 const sorted = 1;
 const optional = 2;
+const noRegister = 4;
 
 export const Sorted = sorted;
 export const Optional = optional;
+export const NoRegister = noRegister;
 
 export default (parentItemName, flags = 0, prop = 'parent') => {
   const mixin = {
@@ -15,12 +17,12 @@ export default (parentItemName, flags = 0, prop = 'parent') => {
           this.$destroy();
           throw new Error('You should wrap ' + this.$options.name + ' in a ' + parentItemName);
         }
-      } else if (this[prop]._registerItem) {
+      } else if (!hasFlag(flags, noRegister) && this[prop]._registerItem) {
         this[prop]._registerItem(this);
       }
     },
     beforeDestroy() {
-      if (this[prop] && this[prop]._unregisterItem) {
+      if (hasFlag(flags, noRegister) && this[prop] && this[prop]._unregisterItem) {
         this[prop]._unregisterItem(this);
       }
     },

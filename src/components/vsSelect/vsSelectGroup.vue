@@ -1,34 +1,28 @@
 <template>
-  <div class="vs-select-group">
-    <h4 v-if="!filterx">
+  <li v-show="shouldShow" class="vs-select-group">
+    <h4>
       {{title}}
     </h4>
-    <slot></slot>
-  </div>
+    <ul>
+      <slot></slot>
+    </ul>
+  </li>
 </template>
 <script>
+  import InjectedChildMixin, { NoRegister } from '../../utils/InjectedChildMixin';
+
   export default {
     name: 'VsSelectGroup',
+    mixins: [InjectedChildMixin('VsSelect', NoRegister)],
     props: {
       title: {
         default: 'Group',
         type: String,
       },
     },
-    data: () => ({
-      activeTitle: true,
-    }),
     computed: {
-      filterx() {
-        return this.$parent.filterx;
-      },
-      parent() {
-        return this.$parent;
-      },
-    },
-    methods: {
-      focusValue(index) {
-        this.$children[0].focusValue(index);
+      shouldShow() {
+        return this.$children.some((child) => child.visible);
       },
     },
   };

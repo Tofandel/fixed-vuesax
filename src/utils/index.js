@@ -9,6 +9,9 @@ export default {
     } else if (parent && !(parent instanceof Node)) {
       parent = parent.$el;
     }
+    if (!elx) {
+      return;
+    }
     elx = elx instanceof Node ? elx : elx.$el;
     if (!elx) {
       return;
@@ -30,11 +33,14 @@ export default {
     } else if (parent && !(parent instanceof Node)) {
       parent = parent.$el;
     }
-    elx = elx instanceof Node ? elx : elx.$el;
-    const bodyx = parent || document.body;
     if (!elx) {
       return;
     }
+    elx = elx instanceof Node ? elx : elx.$el;
+    if (!elx) {
+      return;
+    }
+    const bodyx = parent || document.body;
     try {
       bodyx.removeChild(elx);
     } catch (e) {

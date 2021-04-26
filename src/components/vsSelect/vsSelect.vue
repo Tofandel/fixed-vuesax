@@ -1,22 +1,23 @@
 <template lang="html">
   <div
-    :class="{
+    :class="[`vs-select-${color}`, {
       'autocompletex':autocomplete,
       'activeOptions':active,
       'input-select-validate-success':success,
       'input-select-validate-danger':danger,
-      'input-select-validate-warning':warning}"
+      'input-select-validate-warning':warning}]"
     :style="getWidth"
     class="con-select">
     <label
       v-if="label"
-      ref="inputSelectLabel"
+      :for="'input-select-'+_uid"
       class="vs-select--label">{{label}}</label>
     <div class="input-select-con">
       <!-- v-model="valueFilter" -->
       <input
-        ref="inputselect"
         v-bind="$attrs"
+        :id="'input-select-'+_uid"
+        ref="inputselect"
         :readonly="!autocomplete"
         class="input-select vs-select--input"
         type="text"
@@ -27,7 +28,7 @@
         :class="{'activeBtnClear': activeBtnClear}"
         class="icon-select-clear vs-select--icon-clear"
         @click="clearValue">
-        <i class="material-icons"> close </i>
+        <i class="material-icons">close</i>
       </button>
 
       <vs-icon
@@ -40,16 +41,14 @@
         <div
           v-show="active"
           ref="vsSelectOptions"
-          :class="[`vs-select-${color}`,{'scrollx':scrollx}]"
+          :class="{'scrollx':scrollx}"
           :style="cords"
           class="vs-select--options">
           <ul ref="ulx">
-            <slot></slot>
-          </ul>
-          <ul v-show="clear">
-            <li @click="filterItems(''),changeValue()">
+            <li v-if="childItems.length === 0 || empty" @click="changeValue(null)">
               {{noData}}
             </li>
+            <slot></slot>
           </ul>
         </div>
       </transition>
@@ -63,25 +62,25 @@
         v-if="success"
         key="success"
         class="con-text-validation">
-        <span class="span-text-validation span-text-validation-success"> {{successText}} </span>
+        <span class="span-text-validation span-text-validation-success">{{successText}}</span>
       </div>
       <div
         v-else-if="danger"
         key="danger"
         class="con-text-validation span-text-validation-danger">
-        <span class="span-text-validation"> {{dangerText}} </span>
+        <span class="span-text-validation">{{dangerText}}</span>
       </div>
       <div
         v-else-if="warning"
         key="warning"
         class="con-text-validation span-text-validation-warning">
-        <span class="span-text-validation"> {{warningText}} </span>
+        <span class="span-text-validation">{{warningText}}</span>
       </div>
       <div
         v-if="descriptionText"
         key="description"
         class="con-text-validation span-text-validation">
-        <span class="span-text-validation"> {{descriptionText}} </span>
+        <span class="span-text-validation">{{descriptionText}}</span>
       </div>
     </transition-group>
   </div>
@@ -89,9 +88,11 @@
 
 <script>
   import utils from '../../utils';
+  import ProviderParentMixin, { Sorted } from '../../utils/ProviderParentMixin';
 
   export default {
     name: 'VsSelect',
+    mixins: [ProviderParentMixin('VsSelect', Sorted)],
     props: {
       value: null,
       noData: {
@@ -151,15 +152,14 @@
     data: () => ({
       valueFilter: '',
       active: false,
-      valuex: '',
-      clear: false,
+      empty: false,
       scrollx: false,
       cords: {},
-      filterx: false,
+      searching: '',
     }),
     computed: {
       activeBtnClear() {
-        return this.autocomplete && this.filterx;
+        return this.autocomplete && this.searching;
       },
       getWidth() {
         return this.width ? `width:${this.width};` : null;
@@ -198,254 +198,203 @@
           keyup: event => {
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
               event.preventDefault();
-              const childrens = this.$children.filter(item => {
+              const children = this.childItems.find(item => {
                 return item.visible;
               });
-              childrens[0].$el.querySelector('.vs-select--item').focus();
+              if (children) {
+                children.focus();
+              }
             } else {
               if (this.autocomplete) {
-                this.filterItems(event.target.value);
+                this.filterItems(this.$refs.inputselect.value);
               }
             }
-
-            this.$children.forEach(item => {
-              item.valueInputx = this.$refs.inputselect.value;
-            });
           },
         };
       },
     },
     watch: {
       value(event) {
-        this.valuex = this.value;
         this.$emit('change', event);
       },
-      active() {
+      active(a) {
+        if (a) {
+          this.openOptions();
+        }
         this.$nextTick(() => {
-          if (this.active) {
-            utils.insertBody(this.$refs.vsSelectOptions);
-            setTimeout(() => {
-              this.$children.forEach(item => {
-                if (item.focusValue) {
-                  item.focusValue();
-                }
-              });
-              if (this.$refs.ulx.scrollHeight >= 260) this.scrollx = true;
-            }, 100);
-          } else {
-            const [parent] = document.getElementsByTagName('body');
-            parent.removeChild(this.$refs.vsSelectOptions);
-          }
+          if (this.$refs.ulx.scrollHeight >= 260) this.scrollx = true;
         });
       },
     },
     mounted() {
-      // this.$refs.inputselect.value = this.value
-      this.changeValue();
+      this.changeValue(this.value);
       if (this.active) {
-        utils.insertBody(this.$refs.vsSelectOptions);
+        this.openOptions();
       }
     },
     beforeDestroy() {
-      const [parent] = document.getElementsByTagName('body');
-
       if (this.active) {
         this.closeOptions();
       }
-      if (
-        parent &&
-        this.$refs.vsSelectOptions &&
-        this.$refs.vsSelectOptions.parentNode === parent
-      ) {
-        parent.removeChild(this.$refs.vsSelectOptions);
-      }
-    },
-    updated() {
-      if (!this.active) {
-        this.changeValue();
-      }
     },
     methods: {
+      backspace() {
+        if (this.autocomplete) {
+          const valueInput = this.$refs.inputselect.value;
+          this.$refs.inputselect.value = valueInput.substr(0, valueInput.length - 1);
+          this.$refs.inputselect.focus();
+        }
+      },
+      navigateOptions(orientation) {
+        const children = this.sortedItems;
+
+        let i = this.index;
+        do {
+          orientation === 'prev' || orientation === -1 ? --i : ++i;
+        } while (i > 0 && i < children.length - 1 && children[i].disabled);
+
+        children[i].focus();
+      },
+      clickedValue(value) {
+        if (this.multiple) {
+          this.addMultiple(value);
+        } else {
+          this.changeValue(value);
+        }
+      },
       clearValue() {
         this.focus();
-        this.filterItems('');
-        this.changeValue();
+        this.changeValue(null);
       },
       addMultiple(value) {
         const currentValues = this.value ? this.value : [];
         if (currentValues.includes(value)) {
           currentValues.splice(currentValues.indexOf(value), 1);
-          this.$emit('input', currentValues);
-          this.changeValue();
           if (this.autocomplete) {
             this.$refs.inputselect.focus();
           }
         } else {
+          currentValues.push(value);
           if (this.autocomplete) {
-            currentValues.push(value);
-            this.$emit('input', currentValues);
-            this.filterItems('');
-            this.changeValue();
-            // this.$refs.inputselect.value += ','
+            this.filterItems();
             this.$refs.inputselect.focus();
-          } else {
-            currentValues.push(value);
-            this.$emit('input', currentValues);
-            this.changeValue();
           }
         }
+        this.changeValue(currentValues);
       },
-      filterItems(value) {
-        if (value) {
-          this.filterx = true;
-        } else {
-          this.filterx = false;
-        }
-        let items = this.$children;
+      filterItems(value = '') {
+        this.searching = value;
 
-        items.forEach(item => {
-          if (item.$children.length > 0) {
-            items = [...items, ...item.$children];
-          }
+        let count = 0;
+        this.childItems.forEach(item => {
+          item.visible = value === '' || item.getText().toUpperCase().indexOf(value.toUpperCase()) >= 0;
+          item.visible && count++;
         });
 
-        items.forEach(item => {
-          if (!('text' in item)) return;
+        this.empty = count === 0;
 
-          const text = item.text;
-
+        this.changePosition();
+      },
+      changeValue(val = null) {
+        if (val === null) {
+          this.filterItems();
           if (this.multiple) {
-            const valuesx = value.split(',');
-            valuesx.forEach(value_multi => {
-              item.visible = text.toUpperCase().indexOf(value_multi.toUpperCase()) >= 0;
-            });
-          } else {
-            item.visible = text.toUpperCase().indexOf(value.toUpperCase()) >= 0;
-          }
-        });
-
-        const lengthx = items.filter(item => {
-          return item.visible;
-        });
-
-        this.clear = lengthx.length === 0;
-
-        this.$nextTick(() => {
-          this.cords = this.changePosition();
-        });
-      },
-      changeValue() {
-        this.filterx = false;
-        if (this.multiple) {
-          const values = this.value ? this.value : [];
-          let options = this.$children;
-
-          options.forEach(item => {
-            if (item.$children.length > 0) {
-              options = [...options, ...item.$children];
-            }
-          });
-
-          const optionsValues = [];
-          values.forEach(item => {
-            options.forEach(item_option => {
-              if (item_option.value === item) {
-                let text = item_option.text;
-                text = text.replace('check_circle', '');
-                optionsValues.push(text.trim());
-              }
-            });
-          });
-          this.$refs.inputselect.value = optionsValues.toString();
-        } else {
-          if (this.$refs.inputselect) {
-            this.$refs.inputselect.value = this.valuex;
+            val = [];
           }
         }
+        if (val !== this.value) {
+          this.$emit('input', val);
+        }
+        if (val !== null && !this.multiple) {
+          this.closeOptions();
+        }
+        setTimeout(() => {
+          if (this.$refs.inputselect) {
+            this.$refs.inputselect.value = this.sortedItems
+              .filter(item => item.isActive).map((child) => child.getText()).toString();
+          }
+        }, 0);
       },
       focus() {
         this.active = true;
-        document.addEventListener('click', this.clickBlur);
-        this.setLabelClass(this.$refs.inputSelectLabel, true);
-        const inputx = this.$refs.inputselect;
-        if (this.autocomplete && this.multiple) {
-          setTimeout(() => {
-            if (inputx.value) {
-              this.$refs.inputselect.value = inputx.value += ',';
-            }
-            inputx.selectionStart = inputx.selectionEnd = 10000;
-          }, 10);
-        } else if (this.autocomplete && !this.multiple) {
-          this.$refs.inputselect.select();
-        }
-
-        if (!this.autocomplete) {
-          if (
-            this.multiple ? this.value.length === 0 : !this.value || this.multiple
-          ) {
-            setTimeout(() => {
-              const el = this.$children[0].$el.querySelector('.vs-select--item');
-              if (el) el.focus();
-            }, 50);
-          }
-        }
-        this.$nextTick(() => {
-          this.cords = this.changePosition();
-        });
       },
       clickBlur(event) {
         if (event.target === this.$refs.inputselect) {
           return;
         }
-        const closestx = event.target.closest('.vs-select--option');
+        const closestx = event.target.closest('.vs-select--item');
 
         if (!closestx) {
           this.closeOptions();
           if (this.autocomplete) {
             this.filterItems('');
           }
-          this.changeValue();
         }
+      },
+      openOptions() {
+        utils.insertBody(this.$refs.vsSelectOptions);
+        document.addEventListener('click', this.clickBlur);
+
+        const inputx = this.$refs.inputselect;
+        if (this.autocomplete && this.multiple) {
+          this.$nextTick(() => {
+            if (inputx.value) {
+              inputx.value += ',';
+            }
+            inputx.selectionStart = inputx.selectionEnd = 0;
+          });
+        } else if (this.autocomplete && !this.multiple) {
+          this.$refs.inputselect.select();
+        }
+
+        if (!this.autocomplete && (this.multiple ? this.value.length === 0 : this.value === null)) {
+          this.$nextTick(() => {
+            const el = this.childItems[0];
+            if (el) el.focus();
+          });
+        }
+
+        this.changePosition();
       },
       closeOptions() {
         this.active = false;
-        this.setLabelClass(this.$refs.inputSelectLabel, false);
+        utils.removeBody(this.$refs.vsSelectOptions);
         document.removeEventListener('click', this.clickBlur);
       },
       changePosition() {
-        const elx = this.$refs.inputselect;
-        const content = this.$refs.vsSelectOptions;
-        const conditional = this.autocomplete;
-        let topx = 0;
-        let leftx = 0;
-        let widthx = 0;
-        const scrollTopx = window.pageYOffset || document.documentElement.scrollTop;
-        if (
-          elx.getBoundingClientRect().top + content.scrollHeight + 20 >=
-          window.innerHeight
-        ) {
-          topx =
-            elx.getBoundingClientRect().top +
-            elx.clientHeight +
-            scrollTopx -
-            content.scrollHeight;
-          if (conditional) {
-            topx = topx - elx.clientHeight - 5;
+        this.$nextTick(() => {
+          const elx = this.$refs.inputselect;
+          const content = this.$refs.vsSelectOptions;
+          const conditional = this.autocomplete;
+          let topx;
+          const scrollTopx = window.pageYOffset || document.documentElement.scrollTop;
+          if (
+            elx.getBoundingClientRect().top + content.scrollHeight + 20 >=
+            window.innerHeight
+          ) {
+            topx =
+              elx.getBoundingClientRect().top +
+              elx.clientHeight +
+              scrollTopx -
+              content.scrollHeight;
+            if (conditional) {
+              topx = topx - elx.clientHeight - 5;
+            }
+          } else {
+            topx = conditional
+              ? elx.getBoundingClientRect().top + elx.clientHeight + scrollTopx + 5
+              : elx.getBoundingClientRect().top + scrollTopx;
           }
-        } else {
-          topx = conditional
-            ? elx.getBoundingClientRect().top + elx.clientHeight + scrollTopx + 5
-            : elx.getBoundingClientRect().top + scrollTopx;
-        }
 
-        leftx = elx.getBoundingClientRect().left;
-        widthx = elx.offsetWidth;
+          const leftx = elx.getBoundingClientRect().left;
+          const widthx = elx.offsetWidth;
 
-        return {
-          left: `${leftx}px`,
-          top: `${topx}px`,
-          width: `${widthx}px`,
-        };
+          this.cords = {
+            left: `${leftx}px`,
+            top: `${topx}px`,
+            width: `${widthx}px`,
+          };
+        });
       },
       beforeEnter(el) {
         el.style.height = 0;
@@ -455,20 +404,8 @@
         el.style.height = h + 'px';
         done();
       },
-      leave: function (el) {
-        el.style.height = 0 + 'px';
-      },
-      setLabelClass: function (label, focusing) {
-        if (!label) {
-          return;
-        }
-
-        if (focusing) {
-          label.classList.add('input-select-label-' + this.color + '--active');
-          return;
-        }
-
-        label.classList.remove('input-select-label-' + this.color + '--active');
+      leave(el) {
+        el.style.height = 0;
       },
     },
   };
