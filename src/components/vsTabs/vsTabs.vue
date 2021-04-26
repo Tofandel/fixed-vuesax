@@ -133,7 +133,7 @@
         }
       },
       changePositionLine() {
-        this.$nextTick(() => {
+        setTimeout(() => {
           if (!this.childActive) { return; }
           const elem = this.$refs.li[this.childActive.index];
           if (!elem) {
@@ -148,7 +148,7 @@
             this.widthx = elem.offsetWidth;
             this.topx = (elem.offsetHeight + (elem.getBoundingClientRect().top - this.$refs.ul.getBoundingClientRect().top));
           }
-        });
+        }, 0);
       },
     },
   };

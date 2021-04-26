@@ -10,6 +10,7 @@ dist/demo.html
 docs/.vuepress/dist/
 docs/.vuepress/.cache/
 docs/.vuepress/.temp/
+.git-rewrite
 
 # Log files
 npm-debug.log*
