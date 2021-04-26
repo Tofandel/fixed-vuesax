@@ -336,12 +336,14 @@
         document.addEventListener('click', this.clickBlur);
 
         const inputx = this.$refs.inputselect;
+        this.$nextTick(() => {
+          inputx.selectionStart = inputx.selectionEnd = 0;
+        });
         if (this.autocomplete && this.multiple) {
           this.$nextTick(() => {
             if (inputx.value) {
               inputx.value += ',';
             }
-            inputx.selectionStart = inputx.selectionEnd = 0;
           });
         } else if (this.autocomplete && !this.multiple) {
           this.$refs.inputselect.select();
