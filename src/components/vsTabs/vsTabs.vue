@@ -128,7 +128,7 @@
         if (!this.childActive || this.childActive.uid !== id) {
           this.previous = this.childActive;
           this.childActive = id ? this.childItems.find((c) => id.toString() === c.uid.toString()) || this.sortedItems[0] : this.sortedItems[0];
-          this.$emit('input', this.childActive.uid);
+          this.$emit('input', this.childActive ? this.childActive.uid : null);
           this.changePositionLine();
         }
       },
