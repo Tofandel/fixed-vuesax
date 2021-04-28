@@ -291,7 +291,7 @@
           item.visible && count++;
         });
 
-        this.empty = count === 0;
+        this.empty = value !== '' && count === 0;
 
         this.changePosition();
       },

@@ -81,7 +81,7 @@
         };
       },
       getValue() {
-        return this.parent.value;
+        return this.parent.value === undefined ? null : this.parent.value;
       },
     },
     watch: {
