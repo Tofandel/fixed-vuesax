@@ -48,7 +48,7 @@
         };
       },
       isChecked() {
-        return this.vsValue.toString() === this.value.toString();
+        return this.vsValue === this.value || this.vsValue + '' === this.value + '';
       },
       styles() {
         return {
