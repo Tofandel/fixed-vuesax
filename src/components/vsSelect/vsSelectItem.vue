@@ -44,7 +44,7 @@
       },
       value: {
         type: null,
-        default: null,
+        default: '',
       },
       text: {
         default: null,
@@ -72,7 +72,7 @@
         }
       },
       isActive() {
-        return this.parent.multiple ? this.getValue.indexOf(this.value) !== -1 : this.getValue !== null && this.getValue.toString() === this.value.toString();
+        return this.parent.multiple ? this.getValue.indexOf(this.value) !== -1 : this.getValue.toString() === this.value.toString();
       },
       styles() {
         return {
@@ -81,7 +81,7 @@
         };
       },
       getValue() {
-        return this.parent.value === undefined ? null : this.parent.value;
+        return this.parent.value === undefined || this.parent.value === null ? '' : this.parent.value;
       },
     },
     watch: {
@@ -108,7 +108,7 @@
         this.$nextTick(() => {
           this.$emit('update:isSelected', this.parent.multiple
             ? this.getValue.indexOf(this.value) !== -1
-            : this.getValue !== null && this.getValue.toString() === this.value.toString());
+            : this.getValue.toString() === this.value.toString());
         });
       },
       backspace() {
