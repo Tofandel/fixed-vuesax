@@ -81,7 +81,7 @@
         };
       },
       getValue() {
-        return this.parent.value === undefined || this.parent.value === null ? '' : this.parent.value;
+        return this.parent.value;
       },
     },
     watch: {

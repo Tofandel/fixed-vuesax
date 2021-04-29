@@ -22,6 +22,11 @@
     "v": "npm version patch",
     "v2": "npm version minor"
   },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "main": "dist/vuesax.common.js",
   "unpkg": "dist/vuesax.umd.min.js",
   "dependencies": {
