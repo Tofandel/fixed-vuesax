@@ -305,7 +305,7 @@
         if (val !== this.value) {
           this.$emit('input', val);
         }
-        if (val !== null && !this.multiple) {
+        if (!this.multiple) {
           this.closeOptions();
         }
         setTimeout(() => {
