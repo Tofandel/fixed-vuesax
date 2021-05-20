@@ -264,7 +264,6 @@
             this.target ? window.open(this.href.url) : window.location.href = this.href.url;
           }
         }
-        this.isActive = true;
         const btn = this.$el;
         let xEvent = event.offsetX;
         let yEvent = event.offsetY;
@@ -287,6 +286,7 @@
           this.opacity = 1;
         }
 
+        this.isActive = true;
         if (this.is('filled')) {
           setTimeout(() => {
             this.time = this.timeOpacity = this.radio = 0;
@@ -296,6 +296,7 @@
         } else {
           setTimeout(() => {
             this.timeOpacity = 0.15;
+            this.isActive = false;
           }, this.time * 1100);
         }
         this.$emit('click', event);

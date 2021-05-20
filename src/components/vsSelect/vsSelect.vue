@@ -215,8 +215,8 @@
     },
     watch: {
       value(event) {
-        this.$emit('change', event);
         this.changeValue(this.value);
+        this.$emit('change', event);
       },
       active(a) {
         if (a) {
