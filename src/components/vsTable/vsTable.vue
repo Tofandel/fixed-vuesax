@@ -173,7 +173,7 @@
         return this.items.length === 0;
       },
       isCheckedLine() {
-        return this.data.length !== this.value.length;
+        return !this.data || !this.value || this.data.length !== this.value.length;
       },
       isCheckedMultiple() {
         return this.value.length > 0;
