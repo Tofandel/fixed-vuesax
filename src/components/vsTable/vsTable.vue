@@ -132,6 +132,7 @@
         type: Boolean,
         default: false,
       },
+      allSelected: Boolean,
     },
     data() {
       return {
@@ -172,9 +173,7 @@
         return this.items.length === 0;
       },
       isCheckedLine() {
-        const lengthx = this.data.length;
-        const lengthSelected = this.value.length;
-        return lengthx !== lengthSelected;
+        return this.data.length !== this.value.length;
       },
       isCheckedMultiple() {
         return this.value.length > 0;
@@ -203,6 +202,14 @@
       },
     },
     watch: {
+      allSelected(v) {
+        if (this.value.length !== this.data.length) {
+          this.changeCheckedMultiple(v);
+        }
+      },
+      isCheckedLine(v) {
+        this.$emit('update:allSelected', !v);
+      },
       currentPage() {
         this.currentx = this.currentPage;
       },
@@ -281,9 +288,9 @@
       },
       changeCheckedMultiple(v) {
         if (v) {
-          this.$emit('input', this.data.slice());
+          this.$emit('input', this.data.slice(), this.isCheckedLine);
         } else {
-          this.$emit('input', []);
+          this.$emit('input', [], this.isCheckedLine);
         }
       },
       setSelected(val, sel) {
