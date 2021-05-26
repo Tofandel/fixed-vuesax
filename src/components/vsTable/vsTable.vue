@@ -147,6 +147,9 @@
       };
     },
     computed: {
+      colspan() {
+        return this.$refs.thead.querySelectorAll('th').length;
+      },
       totalPages() {
         return Math.ceil((this.sst && this.total ? this.total : this.queriedResults.length) / this.maxItems);
       },

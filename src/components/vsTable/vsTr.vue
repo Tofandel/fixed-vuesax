@@ -47,7 +47,6 @@
       },
     },
     data: () => ({
-      colspan: 0,
       expanded: false,
       activeEdit: false,
       expandedInstance: null,
@@ -62,14 +61,8 @@
         }
       },
     },
-    mounted() {
-      this.$nextTick(() => {
-        this.colspan = this.parent.$refs.thead.querySelectorAll('th').length;
-        if (this.$slots.expand) {
-          this.colspan++;
-        }
-        if (this.$slots.expand) this.parent.hasExpandableData = true;
-      });
+    created() {
+      if (this.$slots.expand) this.parent.hasExpandableData = true;
     },
     updated() {
       if (this.expandedInstance) {
@@ -105,7 +98,7 @@
           const trx = Vue.extend(trExpand);
           const instance = new trx({
             propsData: {
-              colspan: this.colspan,
+              colspan: this.parent.colspan,
             },
             parent: this,
           });
