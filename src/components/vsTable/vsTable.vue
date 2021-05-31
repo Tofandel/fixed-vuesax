@@ -34,7 +34,6 @@
                 v-if="multiple"
                 class="td-check">
                 <span
-                  v-if="multiple"
                   class="con-td-check">
                   <vs-checkbox
                     :icon="isCheckedLine ? 'remove' : 'check'"

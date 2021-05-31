@@ -61,8 +61,10 @@
         }
       },
     },
-    created() {
-      if (this.$slots.expand) this.parent.hasExpandableData = true;
+    mounted() {
+      if (this.$slots.expand) {
+        this.parent.hasExpandableData = true;
+      }
     },
     updated() {
       if (this.expandedInstance) {
