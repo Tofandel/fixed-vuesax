@@ -14,6 +14,16 @@
           type="text">
         <vs-icon icon="search"/>
       </div>
+      <div
+        v-if="topPagination"
+        class="con-pagination-table vs-table--pagination">
+        <slot v-bind="{...paginationBind, ...paginationOn}" name="pagination">
+          <vs-pagination
+            v-model="currentx"
+            v-bind="paginationBind"
+            v-on="paginationOn"/>
+        </slot>
+      </div>
     </header>
     <div class="con-tablex vs-table--content">
       <div
@@ -57,22 +67,11 @@
       <div
         v-if="pagination"
         class="con-pagination-table vs-table--pagination">
-        <slot
-          :changeMaxItems="changeMaxItems" :description="description" :description-items="descriptionItems"
-          :max-items="maxItemsx"
-          :size-array="items.length"
-          :total="totalPages"
-          :value="currentx"
-          name="pagination">
+        <slot v-bind="{...paginationBind, ...paginationOn}" name="pagination">
           <vs-pagination
             v-model="currentx"
-            :description="description"
-            :description-items="descriptionItems"
-            :max="paginationMax"
-            :max-items="maxItemsx"
-            :size-array="items.length"
-            :total="totalPages"
-            @changeMaxItems="changeMaxItems"/>
+            v-bind="paginationBind"
+            v-on="paginationOn"/>
         </slot>
       </div>
     </div>
@@ -112,6 +111,7 @@
         type: [Number, String],
       },
       pagination: Boolean,
+      topPagination: Boolean,
       paginationMax: Number,
       description: Boolean,
       descriptionItems: {
@@ -146,6 +146,22 @@
       };
     },
     computed: {
+      paginationBind() {
+        return {
+          description: this.description,
+          descriptionItems: this.descriptionItems,
+          maxItems: this.maxItemsx,
+          sizeArray: this.items.length,
+          total: this.totalPages,
+          value: this.currentx,
+          max: this.paginationMax,
+        };
+      },
+      paginationOn() {
+        return {
+          changeMaxItems: this.changeMaxItems,
+        };
+      },
       colspan() {
         return this.$refs.thead.querySelectorAll('th').length;
       },
@@ -165,7 +181,7 @@
         }
       },
       paginatedResults() {
-        if (!this.sst && this.pagination) {
+        if (!this.sst && (this.pagination || this.topPagination)) {
           return this.queriedResults.slice(this.min, this.max);
         } else {
           return this.queriedResults;
