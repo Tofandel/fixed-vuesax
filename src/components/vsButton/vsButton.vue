@@ -61,7 +61,9 @@
         type: String,
       },
       textColor: {
-        default: null,
+        default() {
+          return _color.contrastColor(this.color);
+        },
         type: String,
       },
       lineOrigin: {

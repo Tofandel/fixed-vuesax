@@ -84,7 +84,6 @@
       childActive: null,
       leftx: 0,
       widthx: 0,
-      these: false,
     }),
     computed: {
       forward() {
@@ -102,7 +101,7 @@
           height: `${this.heightx}px`,
           background: `linear-gradient(30deg, ${_color.getColor(this.childActive ? this.childActive.cleanColor : this.color, 1)} 0%, ${col_a} 100%)`,
           boxShadow: `0px 0px 8px 0px ${col_a}`,
-          transform: `scaleX(${this.these ? 1.3 : 1})`,
+          transform: 'scaleX(1)',
         };
       },
     },
@@ -117,7 +116,7 @@
       },
     },
     mounted() {
-      this.childActive = this.goTo(this.value);
+      this.goTo(this.value);
       window.addEventListener('resize', this.changePositionLine);
     },
     destroyed() {
