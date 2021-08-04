@@ -77,10 +77,7 @@ export default {
     if (!c) {
       return '#fff';
     }
-    if (/^[#]/.test(c)) {
-      const rgbx = this.hexToRgb(c);
-      c = `rgb(${rgbx.r},${rgbx.g},${rgbx.b})`;
-    }
+    c = this.getColor(elementx);
     const match = c.match(/rgba?\(var\(--vs-([^)]*)/);
     if (match) {
       c = `rgb(${this.getVariable(match[1])})`;
