@@ -182,6 +182,7 @@
       },
       styleText() {
         return {
+          color: _color.contrastColor(this.color),
           background: _color.getColor(this.color, 1),
         };
       },
