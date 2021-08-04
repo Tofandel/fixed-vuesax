@@ -61,9 +61,7 @@
         type: String,
       },
       textColor: {
-        default() {
-          return _color.contrastColor(this.color);
-        },
+        default: null,
         type: String,
       },
       lineOrigin: {
@@ -137,7 +135,7 @@
       styles() {
         if (this.is('filled')) {
           return {
-            color: _color.getColor(this.textColor, 1),
+            color: _color.getColor(this.textColor, 1) || _color.contrastColor(this.color),
             background: _color.getColor(this.color, 1),
             boxShadow: this.hoverx ? `0px 8px 25px -8px ${_color.getColor(this.color, 1)}` : null,
           };
