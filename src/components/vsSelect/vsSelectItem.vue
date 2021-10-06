@@ -72,7 +72,7 @@
         }
       },
       isActive() {
-        return this.parent.multiple ? this.getValue.indexOf(this.value) !== -1 : this.getValue === this.value || this.getValue + '' === this.value + '';
+        return this.parent.multiple ? this.getValue && this.getValue.indexOf(this.value) !== -1 : this.getValue === this.value || this.getValue + '' === this.value + '';
       },
       styles() {
         return {
