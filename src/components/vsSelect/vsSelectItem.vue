@@ -65,7 +65,7 @@
           if (this.isActive) {
             return false;
           } else {
-            return parseInt(this.parent.maxSelected) === this.parent.value.length;
+            return this.getValue && parseInt(this.parent.maxSelected) === this.getValue.length;
           }
         } else {
           return this.disabled;
