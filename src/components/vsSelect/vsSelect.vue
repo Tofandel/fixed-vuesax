@@ -296,7 +296,7 @@
 
         this.changePosition();
       },
-      changeValue(val = null) {
+      changeValue(val) {
         if (val === null) {
           this.filterItems();
           if (this.multiple) {
@@ -314,7 +314,7 @@
             this.$refs.inputselect.value = this.sortedItems
               .filter(item => item.isActive).map((child) => child.getText()).toString();
           }
-        }, 0);
+        }, 10);
       },
       focus() {
         this.active = true;
