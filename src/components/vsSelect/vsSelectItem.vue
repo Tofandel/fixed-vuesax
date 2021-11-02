@@ -106,9 +106,7 @@
       },
       init() {
         this.$nextTick(() => {
-          this.$emit('update:isSelected', this.parent.multiple
-            ? this.getValue.indexOf(this.value) !== -1
-            : this.getValue === this.value || this.getValue + '' === this.value + '');
+          this.$emit('update:isSelected', this.isActive);
         });
       },
       backspace() {
