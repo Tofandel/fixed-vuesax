@@ -350,7 +350,7 @@
           this.$refs.inputselect.select();
         }
 
-        if (!this.autocomplete && (this.multiple ? this.value.length === 0 : this.value === null)) {
+        if (!this.autocomplete && (this.multiple ? !this.value || this.value.length === 0 : this.value === null)) {
           this.$nextTick(() => {
             const el = this.childItems[0];
             if (el) el.focus();
