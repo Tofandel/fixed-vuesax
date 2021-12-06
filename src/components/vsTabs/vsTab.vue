@@ -78,6 +78,7 @@
       },
     },
     beforeUpdate() {
+      this.childItems = this.childItems.filter((v) => v.$el.nodeType !== Node.COMMENT_NODE);
       this.ctxKey++;
     },
     methods: {

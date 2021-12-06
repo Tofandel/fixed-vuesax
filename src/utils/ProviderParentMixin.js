@@ -23,7 +23,7 @@ export default (itemName, flags = 0) => {
     };
     mixin.methods = {
       _registerItem(item) {
-        this.childItems.push(item);
+        !this.childItems.includes(item) && this.childItems.push(item);
       },
       _unregisterItem(item) {
         this.childItems = this.childItems.filter((i) => i !== item);
