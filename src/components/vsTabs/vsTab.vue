@@ -77,11 +77,6 @@
         return this.id || this.index + 1;
       },
     },
-    deactivated() {
-      if (this.parent.childActive === this) {
-        this.parent.goTo(this.parent.sortedItems[0].uid);
-      }
-    },
     beforeUpdate() {
       this.ctxKey++;
     },

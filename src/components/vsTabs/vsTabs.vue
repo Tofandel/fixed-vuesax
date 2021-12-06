@@ -112,6 +112,8 @@
       childItems() {
         if (!this.childActive) {
           this.goTo(this.value);
+        } else if (!this.childItems.find((f) => f === this.childActive)) {
+          this.goTo(this.sortedItems[0]);
         }
       },
     },
