@@ -27,12 +27,12 @@ export default (parentItemName, flags = 0, prop = 'parent') => {
       }
     },
     deactivated() {
-      if (hasFlag(flags, noRegister) && this[prop] && this[prop]._unregisterItem) {
+      if (!hasFlag(flags, noRegister) && this[prop] && this[prop]._unregisterItem) {
         this[prop]._unregisterItem(this);
       }
     },
     beforeDestroy() {
-      if (hasFlag(flags, noRegister) && this[prop] && this[prop]._unregisterItem) {
+      if (!hasFlag(flags, noRegister) && this[prop] && this[prop]._unregisterItem) {
         this[prop]._unregisterItem(this);
       }
     },
