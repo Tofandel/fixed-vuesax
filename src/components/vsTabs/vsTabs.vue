@@ -84,6 +84,7 @@
       childActive: null,
       leftx: 0,
       widthx: 0,
+      interval: null,
     }),
     computed: {
       forward() {
@@ -120,9 +121,11 @@
     mounted() {
       this.goTo(this.value);
       window.addEventListener('resize', this.changePositionLine);
+      this.interval = setInterval(this.changePositionLine, 1000);
     },
     destroyed() {
       window.removeEventListener('resize', this.changePositionLine);
+      clearInterval(this.interval);
     },
     methods: {
       goTo(id) {
