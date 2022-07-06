@@ -42,6 +42,7 @@
   import vsIcon from '../../components/vsIcon/vsIcon.vue';
 
   export default {
+    name: 'VsNotifications',
     components: {
       vsIcon,
     },

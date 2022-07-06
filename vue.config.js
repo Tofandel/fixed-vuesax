@@ -22,7 +22,7 @@ module.exports = {
     plugins: [
       new TerserPlugin({
         terserOptions: {
-          ecma: 6,
+          ecma: 7,
           compress: {
             drop_console: true,
             unsafe_methods: true,

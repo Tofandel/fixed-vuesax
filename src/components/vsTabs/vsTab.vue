@@ -3,7 +3,8 @@
     <keep-alive>
       <KeepSlot
         v-if="active"
-        :key="uid" class="con-tab vs-tabs--content">
+        :key="uid"
+        class="con-tab vs-tabs--content">
         <slot></slot>
       </KeepSlot>
     </keep-alive>

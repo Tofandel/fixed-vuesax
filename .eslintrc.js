@@ -39,14 +39,11 @@ module.exports = {
       alignAttributesVertically: true,
       ignores: ['VElement[name=strong].children', 'VElement[name=b].children', 'VElement[name=i].children', 'VElement[name=br].children'],
     }],
-    'vue/name-property-casing': ['error', 'PascalCase'],
+    'vue/component-definition-name-casing': ['error', 'PascalCase'],
     'vue/mustache-interpolation-spacing': ['error', 'never'],
     'vue/max-attributes-per-line': ['error', {
       singleline: 5,
-      multiline: {
-        max: 3,
-        allowFirstLine: true,
-      },
+      multiline: 1,
     }],
     camelcase: 'off',
     'vue/html-closing-bracket-newline': ['error', {

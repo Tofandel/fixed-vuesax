@@ -358,7 +358,7 @@
           const tdsx = [];
 
           tds.forEach((td, index) => {
-            tdsx.push({ index: index, widthx: td.offsetWidth });
+            tdsx.push({ index, widthx: td.offsetWidth });
           });
 
           const colgrouptable = this.$refs.colgrouptable;

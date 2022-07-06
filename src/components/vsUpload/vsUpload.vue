@@ -222,7 +222,7 @@
         function switchImage(image, orientation) {
           _this.srcs.push({
             src: image.src,
-            orientation: orientation,
+            orientation,
             type: _this.typex,
             percent: null,
             error: false,

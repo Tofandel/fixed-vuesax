@@ -8,12 +8,13 @@
         ref="ul"
         :class="[`ul-tabs-${alignment}`]"
         class="ul-tabs vs-tabs--ul">
-        <li v-for="tab in sortedItems"
-            ref="li"
-            :key="tab.uid"
-            :class="{'activeChild':tab.active}"
-            :style="tab.styleTab"
-            class="vs-tabs--li">
+        <li
+          v-for="tab in sortedItems"
+          ref="li"
+          :key="tab.uid"
+          :class="{'activeChild':tab.active}"
+          :style="tab.styleTab"
+          class="vs-tabs--li">
           <button
             v-bind="tab.$attrs"
             :disabled="tab.disabled"

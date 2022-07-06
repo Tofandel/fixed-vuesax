@@ -14,7 +14,7 @@ const unfreeze = (object, property, value = null) => {
   Object.defineProperty(object, property, {
     configurable: true,
     writable: true,
-    value: value,
+    value,
   });
 };
 

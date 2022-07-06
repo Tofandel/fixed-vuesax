@@ -64,6 +64,7 @@
   import _utils from '../../utils';
 
   export default {
+    name: 'VsLoading',
     components: {},
     props: {
       type: {
