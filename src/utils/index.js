@@ -1,5 +1,5 @@
 export default {
-  insertBody(elx, parent = null, prepend = false, containerClass = null) {
+  insertBody(elx, parent = null, prepend = false) {
     if (Array.isArray(parent)) {
       parent.forEach((par) => this.insertBody(elx, par, prepend));
       return;
@@ -17,9 +17,12 @@ export default {
       return;
     }
     const bodyx = parent || document.body;
-    if (prepend) {
+    if (prepend === true) {
       bodyx.prepend(elx);
     } else {
+      if (typeof prepend === 'string') {
+        bodyx.classList.add(prepend);
+      }
       bodyx.appendChild(elx);
     }
   },

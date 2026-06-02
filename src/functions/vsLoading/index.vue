@@ -176,7 +176,7 @@
     },
     methods: {
       insert() {
-        _utils.insertBody(this, this.container, false, 'vs-con-loading__container');
+        _utils.insertBody(this, this.container, 'vs-con-loading__container');
       },
       remove() {
         _utils.removeBody(this, this.container, 'vs-con-loading__container');
