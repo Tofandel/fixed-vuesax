@@ -158,23 +158,29 @@
     watch: {
       value(val) {
         if (val) {
-          _utils.insertBody(this, this.container);
+          this.insert();
         } else {
-          _utils.removeBody(this, this.container);
+          this.remove();
         }
       },
     },
     mounted() {
       if (this.value) {
-        _utils.insertBody(this, this.container);
+        this.insert();
       }
     },
     beforeDestroy() {
       if (this.value) {
-        _utils.removeBody(this, this.container);
+        this.remove();
       }
     },
     methods: {
+      insert() {
+        _utils.insertBody(this, this.container, false, 'vs-con-loading__container');
+      },
+      remove() {
+        _utils.removeBody(this, this.container, 'vs-con-loading__container');
+      },
       effectClick(evt) {
         this.leftx = evt.offsetX;
         this.topx = evt.offsetY;

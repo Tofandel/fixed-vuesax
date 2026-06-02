@@ -1,5 +1,5 @@
 export default {
-  insertBody(elx, parent = null, prepend = false) {
+  insertBody(elx, parent = null, prepend = false, containerClass = null) {
     if (Array.isArray(parent)) {
       parent.forEach((par) => this.insertBody(elx, par, prepend));
       return;
@@ -23,7 +23,7 @@ export default {
       bodyx.appendChild(elx);
     }
   },
-  removeBody(elx, parent = null) {
+  removeBody(elx, parent = null, containerClass = null) {
     if (Array.isArray(parent)) {
       parent.forEach((par) => this.removeBody(elx, par));
       return;
@@ -42,6 +42,9 @@ export default {
     }
     const bodyx = parent || document.body;
     try {
+      if (containerClass) {
+        bodyx.classList.remove(containerClass);
+      }
       bodyx.removeChild(elx);
     } catch (e) {
       // Already removed so ignore
